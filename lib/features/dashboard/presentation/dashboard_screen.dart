@@ -18,8 +18,6 @@ class DashboardScreen extends ConsumerStatefulWidget {
 class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   Map<String, dynamic>? _dashboardData;
   bool _isLoading = true;
-  String? _error;
-
   @override
   void initState() {
     super.initState();
@@ -29,7 +27,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   Future<void> _loadDashboard() async {
     setState(() {
       _isLoading = true;
-      _error = null;
     });
 
     try {
@@ -47,7 +44,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     } catch (e) {
       if (mounted) {
         setState(() {
-          _error = e.toString();
           _isLoading = false;
         });
       }
@@ -419,8 +415,6 @@ class _KpiCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final trendValue = trend is num ? trend as num : null;
     final isUp = trendValue != null && trendValue > 0;
-    final isDown = trendValue != null && trendValue < 0;
-
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(

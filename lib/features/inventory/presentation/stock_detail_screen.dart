@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme.dart';
-import '../models/stock_balance.dart';
 import 'inventory_provider.dart';
 import 'stock_movement_screen.dart';
 

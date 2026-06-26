@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 class NotificationBadge extends StatelessWidget {
   final int count;

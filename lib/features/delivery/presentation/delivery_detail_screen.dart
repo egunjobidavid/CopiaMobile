@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/delivery.dart';
 import 'delivery_provider.dart';
 
 class DeliveryDetailScreen extends ConsumerWidget {

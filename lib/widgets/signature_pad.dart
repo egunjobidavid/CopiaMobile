@@ -1,3 +1,4 @@
+import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -13,7 +14,6 @@ class SignaturePad extends StatefulWidget {
 class SignaturePadState extends State<SignaturePad> {
   final _points = <Offset>[];
   final _renderKey = GlobalKey();
-  bool _isDrawing = false;
 
   void clear() => setState(() => _points.clear());
 
@@ -40,16 +40,13 @@ class SignaturePadState extends State<SignaturePad> {
           child: GestureDetector(
             onPanStart: (details) {
               setState(() {
-                _isDrawing = true;
                 _points.add(details.localPosition);
               });
             },
             onPanUpdate: (details) {
               setState(() => _points.add(details.localPosition));
             },
-            onPanEnd: (_) {
-              _isDrawing = false;
-            },
+            onPanEnd: (_) {},
             child: CustomPaint(
               painter: _SignaturePainter(_points),
               size: Size.infinite,

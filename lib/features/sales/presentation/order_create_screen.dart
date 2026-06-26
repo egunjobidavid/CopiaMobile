@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme.dart';
 import '../../../widgets/customer_picker.dart';
-import '../../../widgets/cart_summary_card.dart';
 import '../../products/models/product.dart';
 import '../../products/presentation/product_provider.dart';
 import '../models/order_item.dart';
@@ -190,8 +189,9 @@ class _OrderCreateScreenState extends ConsumerState<OrderCreateScreen> {
                               onPressed: () async {
                                 final barcode = await Navigator.pushNamed(context, '/products/scan');
                                 if (barcode != null) {
-                                  _productSearchController.text = barcode as String;
-                                  _searchProducts(barcode as String);
+                                  final barcodeStr = barcode as String;
+                                  _productSearchController.text = barcodeStr;
+                                  _searchProducts(barcodeStr);
                                 }
                               },
                             ),

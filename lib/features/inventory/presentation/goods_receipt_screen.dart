@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../widgets/barcode_scanner.dart';
 import 'inventory_provider.dart';
 
 class GoodsReceiptScreen extends ConsumerStatefulWidget {

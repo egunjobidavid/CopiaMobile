@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'package:drift/drift.dart';
 import 'drift_database.dart';
-import 'tables/cached_products.dart';
-import 'tables/cached_customers.dart';
-import 'tables/cached_orders.dart';
+
 
 class CacheService {
   final AppDatabase _db;

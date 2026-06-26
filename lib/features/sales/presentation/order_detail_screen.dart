@@ -79,8 +79,6 @@ class OrderDetailScreen extends ConsumerWidget {
             );
           }
 
-          final statusColor = _getStatusColor(order.status);
-
           return CustomScrollView(
             slivers: [
               SliverAppBar(

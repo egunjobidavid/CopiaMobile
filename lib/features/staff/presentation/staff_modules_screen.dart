@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme.dart';
 import '../../../core/network/api_client.dart';
 import '../../../core/storage/secure_storage.dart';
-import '../../auth/presentation/auth_provider.dart';
 
 final staffListProvider =
     FutureProvider<List<Map<String, dynamic>>>((ref) async {

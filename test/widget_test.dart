@@ -1,30 +1,30 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:copiaos_mobile/main.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:copiaos_mobile/app.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+  testWidgets('App renders login screen', (WidgetTester tester) async {
+    await tester.pumpWidget(const ProviderScope(child: CopiaOSApp()));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.byType(MaterialApp), findsOneWidget);
+  });
+
+  testWidgets('App has correct title', (WidgetTester tester) async {
+    await tester.pumpWidget(const ProviderScope(child: CopiaOSApp()));
+    await tester.pump();
+
+    final MaterialApp app = tester.widget(find.byType(MaterialApp));
+    expect(app.title, 'CopiaOS');
+  });
+
+  testWidgets('App uses correct theme', (WidgetTester tester) async {
+    await tester.pumpWidget(const ProviderScope(child: CopiaOSApp()));
+    await tester.pump();
+
+    final MaterialApp app = tester.widget(find.byType(MaterialApp));
+    expect(app.theme, isNotNull);
+    expect(app.debugShowCheckedModeBanner, false);
   });
 }

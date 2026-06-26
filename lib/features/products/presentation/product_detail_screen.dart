@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme.dart';
-import '../models/product.dart';
 import 'product_provider.dart';
 
 class ProductDetailScreen extends ConsumerWidget {

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../widgets/barcode_scanner.dart';
-import '../data/inventory_repository.dart';
 import 'inventory_provider.dart';
-import '../models/stock_balance.dart';
 
 class StockTakeScreen extends ConsumerStatefulWidget {
   const StockTakeScreen({super.key});
