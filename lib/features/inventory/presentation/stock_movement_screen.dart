@@ -85,13 +85,13 @@ class _StockMovementScreenState extends ConsumerState<StockMovementScreen> {
                     Container(
                       padding: const EdgeInsets.all(24),
                       decoration: BoxDecoration(
-                        color: AppTheme.error.withOpacity(0.1),
+                        color: AppTheme.error.withValues(alpha: 0.1),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
+                      child: const Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
                     ),
                     const SizedBox(height: 16),
-                    Text(
+                    const Text(
                       'Failed to load movements',
                       style: TextStyle(
                         fontSize: 16,
@@ -146,13 +146,13 @@ class _StockMovementScreenState extends ConsumerState<StockMovementScreen> {
             Container(
               padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
-                color: AppTheme.primary.withOpacity(0.08),
+                color: AppTheme.primary.withValues(alpha: 0.08),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.swap_vert_rounded, size: 64, color: AppTheme.primary.withOpacity(0.4)),
+              child: Icon(Icons.swap_vert_rounded, size: 64, color: AppTheme.primary.withValues(alpha: 0.4)),
             ),
             const SizedBox(height: 24),
-            Text(
+            const Text(
               'No movements yet',
               style: TextStyle(
                 fontSize: 18,
@@ -161,7 +161,7 @@ class _StockMovementScreenState extends ConsumerState<StockMovementScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            Text(
+            const Text(
               'Stock movements will appear here',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -284,7 +284,7 @@ class _MovementCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -296,7 +296,7 @@ class _MovementCard extends StatelessWidget {
             width: 44,
             height: 44,
             decoration: BoxDecoration(
-              color: typeColor.withOpacity(0.1),
+              color: typeColor.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(12),
             ),
             child: Icon(typeIcon, color: typeColor, size: 22),
@@ -320,7 +320,7 @@ class _MovementCard extends StatelessWidget {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                       decoration: BoxDecoration(
-                        color: typeColor.withOpacity(0.1),
+                        color: typeColor.withValues(alpha: 0.1),
                         borderRadius: BorderRadius.circular(4),
                       ),
                       child: Text(
@@ -335,7 +335,7 @@ class _MovementCard extends StatelessWidget {
                     const SizedBox(width: 6),
                     Text(
                       movement.reference ?? '',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 11,
                         color: AppTheme.textSecondary,
                       ),
@@ -349,7 +349,7 @@ class _MovementCard extends StatelessWidget {
                       : movement.createdAt,
                   style: TextStyle(
                     fontSize: 11,
-                    color: AppTheme.textSecondary.withOpacity(0.7),
+                    color: AppTheme.textSecondary.withValues(alpha: 0.7),
                   ),
                 ),
               ],
@@ -370,7 +370,7 @@ class _MovementCard extends StatelessWidget {
               if (movement.warehouseName.isNotEmpty)
                 Text(
                   movement.warehouseName,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 11,
                     color: AppTheme.textSecondary,
                   ),

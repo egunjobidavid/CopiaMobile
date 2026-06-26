@@ -10,6 +10,7 @@ class BiometricAuthScreen extends ConsumerWidget {
     final localAuth = LocalAuthentication();
     final isAvailable = await localAuth.canCheckBiometrics;
     if (!isAvailable) {
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Biometrics not available on this device')),
       );

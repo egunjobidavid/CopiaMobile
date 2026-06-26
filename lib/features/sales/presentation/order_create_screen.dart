@@ -152,7 +152,7 @@ class _OrderCreateScreenState extends ConsumerState<OrderCreateScreen> {
                     borderRadius: BorderRadius.circular(16),
                     boxShadow: [
                       BoxShadow(
-                        color: AppTheme.primary.withOpacity(0.08),
+                        color: AppTheme.primary.withValues(alpha: 0.08),
                         blurRadius: 20,
                         offset: const Offset(0, 4),
                       ),
@@ -163,13 +163,13 @@ class _OrderCreateScreenState extends ConsumerState<OrderCreateScreen> {
                     style: const TextStyle(fontSize: 15),
                     decoration: InputDecoration(
                       hintText: 'Search products to add...',
-                      prefixIcon: Icon(Icons.search_rounded, color: AppTheme.textSecondary),
+                      prefixIcon: const Icon(Icons.search_rounded, color: AppTheme.textSecondary),
                       suffixIcon: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           if (_productSearchController.text.isNotEmpty)
                             IconButton(
-                              icon: Icon(Icons.clear_rounded, color: AppTheme.textSecondary),
+                              icon: const Icon(Icons.clear_rounded, color: AppTheme.textSecondary),
                               onPressed: () {
                                 _productSearchController.clear();
                                 setState(() {
@@ -181,7 +181,7 @@ class _OrderCreateScreenState extends ConsumerState<OrderCreateScreen> {
                           Container(
                             margin: const EdgeInsets.only(right: 6),
                             decoration: BoxDecoration(
-                              color: AppTheme.primary.withOpacity(0.1),
+                              color: AppTheme.primary.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: IconButton(
@@ -205,11 +205,11 @@ class _OrderCreateScreenState extends ConsumerState<OrderCreateScreen> {
                     onSubmitted: (query) async {
                       if (query.trim().isEmpty) return;
                       final products = await ref.read(productSearchProvider(query.trim()).future);
+                      if (!mounted) return;
                       if (products.isNotEmpty) {
                         _addProduct(products.first);
-                      } else {
-                        if (mounted) {
-                          ScaffoldMessenger.of(context).showSnackBar(
+                      } else if (context.mounted) {
+                        ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: const Text('Product not found'),
                               backgroundColor: AppTheme.error,
@@ -217,7 +217,6 @@ class _OrderCreateScreenState extends ConsumerState<OrderCreateScreen> {
                               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                             ),
                           );
-                        }
                       }
                     },
                   ),
@@ -233,7 +232,7 @@ class _OrderCreateScreenState extends ConsumerState<OrderCreateScreen> {
                       borderRadius: BorderRadius.circular(16),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.08),
+                          color: Colors.black.withValues(alpha: 0.08),
                           blurRadius: 20,
                           offset: const Offset(0, 8),
                         ),
@@ -250,7 +249,7 @@ class _OrderCreateScreenState extends ConsumerState<OrderCreateScreen> {
                           leading: Container(
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
-                              color: AppTheme.primary.withOpacity(0.1),
+                              color: AppTheme.primary.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: const Icon(
@@ -268,7 +267,7 @@ class _OrderCreateScreenState extends ConsumerState<OrderCreateScreen> {
                           ),
                           subtitle: Text(
                             '${product.sku}  |  ₦${product.unitPrice.toStringAsFixed(2)}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12,
                               color: AppTheme.textSecondary,
                             ),
@@ -319,17 +318,17 @@ class _OrderCreateScreenState extends ConsumerState<OrderCreateScreen> {
                         Container(
                           padding: const EdgeInsets.all(24),
                           decoration: BoxDecoration(
-                            color: AppTheme.primary.withOpacity(0.08),
+                            color: AppTheme.primary.withValues(alpha: 0.08),
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
                             Icons.shopping_cart_outlined,
                             size: 48,
-                            color: AppTheme.primary.withOpacity(0.4),
+                            color: AppTheme.primary.withValues(alpha: 0.4),
                           ),
                         ),
                         const SizedBox(height: 16),
-                        Text(
+                        const Text(
                           'Your cart is empty',
                           style: TextStyle(
                             fontSize: 16,
@@ -338,7 +337,7 @@ class _OrderCreateScreenState extends ConsumerState<OrderCreateScreen> {
                           ),
                         ),
                         const SizedBox(height: 8),
-                        Text(
+                        const Text(
                           'Search and add products to start an order',
                           style: TextStyle(
                             fontSize: 13,
@@ -362,7 +361,7 @@ class _OrderCreateScreenState extends ConsumerState<OrderCreateScreen> {
                 color: Colors.white,
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.06),
+                    color: Colors.black.withValues(alpha: 0.06),
                     blurRadius: 20,
                     offset: const Offset(0, -8),
                   ),
@@ -379,7 +378,7 @@ class _OrderCreateScreenState extends ConsumerState<OrderCreateScreen> {
                         children: [
                           Text(
                             '${cart.length} item${cart.length == 1 ? '' : 's'}',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 13,
                               color: AppTheme.textSecondary,
                             ),
@@ -437,7 +436,7 @@ class _OrderCreateScreenState extends ConsumerState<OrderCreateScreen> {
   Widget _buildSectionTitle(String title) {
     return Text(
       title,
-      style: TextStyle(
+      style: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w600,
         color: AppTheme.textPrimary,
@@ -469,7 +468,7 @@ class _CartItemCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.03),
+            color: Colors.black.withValues(alpha: 0.03),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -492,7 +491,7 @@ class _CartItemCard extends StatelessWidget {
                 const SizedBox(height: 4),
                 Text(
                   'SKU: ${item.sku}  |  ₦${item.unitPrice.toStringAsFixed(2)} each',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12,
                     color: AppTheme.textSecondary,
                   ),
@@ -547,7 +546,7 @@ class _CartItemCard extends StatelessWidget {
               const SizedBox(height: 4),
               GestureDetector(
                 onTap: onRemove,
-                child: Icon(
+                child: const Icon(
                   Icons.delete_outline_rounded,
                   size: 18,
                   color: AppTheme.error,
@@ -580,7 +579,7 @@ class _QuantityButton extends StatelessWidget {
         width: 32,
         height: 32,
         decoration: BoxDecoration(
-          color: isRemove ? AppTheme.error.withOpacity(0.1) : AppTheme.primary.withOpacity(0.1),
+          color: isRemove ? AppTheme.error.withValues(alpha: 0.1) : AppTheme.primary.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(8),
         ),
         child: Icon(

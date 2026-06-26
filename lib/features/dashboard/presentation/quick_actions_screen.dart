@@ -29,7 +29,7 @@ class QuickActionsScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 6),
-                    Text(
+                    const Text(
                       'Create, manage, and track everything',
                       style: TextStyle(
                         fontSize: 15,
@@ -40,7 +40,7 @@ class QuickActionsScreen extends StatelessWidget {
                     _buildSection(
                       'Create',
                       [
-                        _ActionItem(
+                        const _ActionItem(
                           icon: Icons.receipt_long_rounded,
                           label: 'New Invoice',
                           description: 'Bill your customer',
@@ -48,7 +48,7 @@ class QuickActionsScreen extends StatelessWidget {
                           gradient: AppTheme.primaryGradient,
                           route: '/sales/create',
                         ),
-                        _ActionItem(
+                        const _ActionItem(
                           icon: Icons.request_quote_rounded,
                           label: 'New Quote',
                           description: 'Send a price estimate',
@@ -56,7 +56,7 @@ class QuickActionsScreen extends StatelessWidget {
                           gradient: AppTheme.tealGradient,
                           route: '/sales/create',
                         ),
-                        _ActionItem(
+                        const _ActionItem(
                           icon: Icons.shopping_cart_rounded,
                           label: 'New Order',
                           description: 'Create a sales order',
@@ -70,22 +70,22 @@ class QuickActionsScreen extends StatelessWidget {
                     _buildSection(
                       'Inventory',
                       [
-                        _ActionItem(
+                        const _ActionItem(
                           icon: Icons.inventory_2_rounded,
                           label: 'Stock Take',
                           description: 'Count physical stock',
-                          color: const Color(0xFFF59E0B),
-                          gradient: const LinearGradient(
+                          color: Color(0xFFF59E0B),
+                          gradient: LinearGradient(
                             colors: [Color(0xFFF59E0B), Color(0xFFFBBF24)],
                           ),
                           route: '/inventory/stocktake',
                         ),
-                        _ActionItem(
+                        const _ActionItem(
                           icon: Icons.qr_code_scanner_rounded,
                           label: 'Scan Product',
                           description: 'Find by barcode',
-                          color: const Color(0xFF8B5CF6),
-                          gradient: const LinearGradient(
+                          color: Color(0xFF8B5CF6),
+                          gradient: LinearGradient(
                             colors: [Color(0xFF8B5CF6), Color(0xFFA78BFA)],
                           ),
                           route: '/products/scan',
@@ -96,12 +96,12 @@ class QuickActionsScreen extends StatelessWidget {
                     _buildSection(
                       'Finance',
                       [
-                        _ActionItem(
+                        const _ActionItem(
                           icon: Icons.payments_rounded,
                           label: 'Record Expense',
                           description: 'Track business spending',
-                          color: const Color(0xFFEF4444),
-                          gradient: const LinearGradient(
+                          color: Color(0xFFEF4444),
+                          gradient: LinearGradient(
                             colors: [Color(0xFFEF4444), Color(0xFFF87171)],
                           ),
                           route: '/sales',
@@ -112,12 +112,12 @@ class QuickActionsScreen extends StatelessWidget {
                     _buildSection(
                       'People',
                       [
-                        _ActionItem(
+                        const _ActionItem(
                           icon: Icons.person_add_rounded,
                           label: 'Add Customer',
                           description: 'New customer profile',
-                          color: const Color(0xFF10B981),
-                          gradient: const LinearGradient(
+                          color: Color(0xFF10B981),
+                          gradient: LinearGradient(
                             colors: [Color(0xFF10B981), Color(0xFF34D399)],
                           ),
                           route: '/sales',
@@ -128,12 +128,12 @@ class QuickActionsScreen extends StatelessWidget {
                     _buildSection(
                       'Insights',
                       [
-                        _ActionItem(
+                        const _ActionItem(
                           icon: Icons.bar_chart_rounded,
                           label: 'View Reports',
                           description: 'Sales & performance data',
-                          color: const Color(0xFF3B82F6),
-                          gradient: const LinearGradient(
+                          color: Color(0xFF3B82F6),
+                          gradient: LinearGradient(
                             colors: [Color(0xFF3B82F6), Color(0xFF60A5FA)],
                           ),
                           route: '/home',
@@ -212,10 +212,10 @@ class _ActionCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: AppTheme.border.withOpacity(0.5), width: 0.5),
+          border: Border.all(color: AppTheme.border.withValues(alpha: 0.5), width: 0.5),
           boxShadow: [
             BoxShadow(
-              color: item.color.withOpacity(0.06),
+              color: item.color.withValues(alpha: 0.06),
               blurRadius: 10,
               offset: const Offset(0, 4),
             ),
@@ -245,7 +245,7 @@ class _ActionCard extends StatelessWidget {
             const SizedBox(height: 2),
             Text(
               item.description,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 11,
                 color: AppTheme.textSecondary,
               ),

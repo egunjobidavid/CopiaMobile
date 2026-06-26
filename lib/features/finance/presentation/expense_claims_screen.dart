@@ -80,7 +80,7 @@ class _ExpenseClaimsScreenState extends ConsumerState<ExpenseClaimsScreen> {
                     color: AppTheme.textPrimary,
                   ),
                   const SizedBox(width: 8),
-                  Text(
+                  const Text(
                     'Expense Claims',
                     style: TextStyle(
                       fontSize: 28,
@@ -149,7 +149,7 @@ class _ExpenseClaimsScreenState extends ConsumerState<ExpenseClaimsScreen> {
                             ),
                           ),
                         ),
-                        SliverToBoxAdapter(child: const SizedBox(height: 20)),
+                        const SliverToBoxAdapter(child: SizedBox(height: 20)),
                         SliverPadding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           sliver: SliverList.separated(
@@ -208,7 +208,7 @@ class _ExpenseClaimsScreenState extends ConsumerState<ExpenseClaimsScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              Text(
+              const Text(
                 'New Expense Claim',
                 style: TextStyle(
                   fontSize: 20,
@@ -241,7 +241,7 @@ class _ExpenseClaimsScreenState extends ConsumerState<ExpenseClaimsScreen> {
                     builder: (context, child) {
                       return Theme(
                         data: Theme.of(context).copyWith(
-                          colorScheme: ColorScheme.light(primary: AppTheme.primary),
+                          colorScheme: const ColorScheme.light(primary: AppTheme.primary),
                         ),
                         child: child!,
                       );
@@ -259,11 +259,11 @@ class _ExpenseClaimsScreenState extends ConsumerState<ExpenseClaimsScreen> {
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.calendar_today_rounded, size: 20, color: AppTheme.textSecondary),
+                      const Icon(Icons.calendar_today_rounded, size: 20, color: AppTheme.textSecondary),
                       const SizedBox(width: 12),
                       Text(
                         '${selectedDate.day}/${selectedDate.month}/${selectedDate.year}',
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 15,
                           color: AppTheme.textPrimary,
                         ),
@@ -309,8 +309,8 @@ class _ExpenseClaimsScreenState extends ConsumerState<ExpenseClaimsScreen> {
                       ref.invalidate(expenseClaimsProvider);
                       if (mounted) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: const Text('Expense claim created'),
+                          const SnackBar(
+                            content: Text('Expense claim created'),
                             backgroundColor: AppTheme.success,
                           ),
                         );
@@ -371,13 +371,13 @@ class _ExpenseClaimsScreenState extends ConsumerState<ExpenseClaimsScreen> {
           Container(
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: AppTheme.error.withOpacity(0.1),
+              color: AppTheme.error.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
+            child: const Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
           ),
           const SizedBox(height: 16),
-          Text(
+          const Text(
             'Failed to load expense claims',
             style: TextStyle(
               fontSize: 16,
@@ -405,17 +405,17 @@ class _ExpenseClaimsScreenState extends ConsumerState<ExpenseClaimsScreen> {
             Container(
               padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
-                color: AppTheme.primary.withOpacity(0.08),
+                color: AppTheme.primary.withValues(alpha: 0.08),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.receipt_long_outlined,
                 size: 64,
-                color: AppTheme.primary.withOpacity(0.4),
+                color: AppTheme.primary.withValues(alpha: 0.4),
               ),
             ),
             const SizedBox(height: 24),
-            Text(
+            const Text(
               'No expense claims',
               style: TextStyle(
                 fontSize: 18,
@@ -424,7 +424,7 @@ class _ExpenseClaimsScreenState extends ConsumerState<ExpenseClaimsScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            Text(
+            const Text(
               'Tap the + button to create your first expense claim',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -462,7 +462,7 @@ class _SummaryCard extends StatelessWidget {
         border: Border.all(color: AppTheme.border),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -474,7 +474,7 @@ class _SummaryCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(8),
             ),
             child: Icon(icon, size: 16, color: color),
@@ -482,7 +482,7 @@ class _SummaryCard extends StatelessWidget {
           const SizedBox(height: 10),
           Text(
             value,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.bold,
               color: AppTheme.textPrimary,
@@ -493,7 +493,7 @@ class _SummaryCard extends StatelessWidget {
           const SizedBox(height: 2),
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 11,
               color: AppTheme.textSecondary,
             ),
@@ -554,7 +554,7 @@ class _ExpenseCard extends StatelessWidget {
         border: Border.all(color: AppTheme.border),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -569,7 +569,7 @@ class _ExpenseCard extends StatelessWidget {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: AppTheme.primary.withOpacity(0.1),
+                  color: AppTheme.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(
@@ -594,7 +594,7 @@ class _ExpenseCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       _formatDate(claim.expenseDate),
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
                         color: AppTheme.textSecondary,
                       ),
@@ -605,7 +605,7 @@ class _ExpenseCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: statusColor.withOpacity(0.1),
+                  color: statusColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -623,7 +623,7 @@ class _ExpenseCard extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               claim.description,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 13,
                 color: AppTheme.textSecondary,
               ),
@@ -636,7 +636,7 @@ class _ExpenseCard extends StatelessWidget {
             alignment: Alignment.centerRight,
             child: Text(
               '₦${claim.amount.toStringAsFixed(2)}',
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
                 color: AppTheme.primary,

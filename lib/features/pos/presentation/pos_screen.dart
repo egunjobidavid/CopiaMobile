@@ -53,6 +53,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
   String _selectedCategory = 'All';
+  // ignore: prefer_final_fields
   List<CartItem> _cart = [];
   bool _showFullCart = false;
   String _paymentMethod = 'cash';
@@ -253,9 +254,9 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Icon(Icons.error_outline, size: 48, color: AppTheme.error),
+                            const Icon(Icons.error_outline, size: 48, color: AppTheme.error),
                             const SizedBox(height: 12),
-                            Text('Failed to load products', style: TextStyle(color: AppTheme.textSecondary)),
+                            const Text('Failed to load products', style: TextStyle(color: AppTheme.textSecondary)),
                             const SizedBox(height: 16),
                             ElevatedButton(
                               onPressed: () => ref.invalidate(posProductsProvider),
@@ -305,7 +306,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                 decoration: BoxDecoration(
-                  color: AppTheme.primary.withOpacity(0.1),
+                  color: AppTheme.primary.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -325,7 +326,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
                 width: 36,
                 height: 36,
                 decoration: BoxDecoration(
-                  color: AppTheme.error.withOpacity(0.08),
+                  color: AppTheme.error.withValues(alpha: 0.08),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: const Icon(Icons.delete_outline_rounded, size: 18, color: AppTheme.error),
@@ -360,7 +361,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
                   icon: Container(
                     padding: const EdgeInsets.all(6),
                     decoration: BoxDecoration(
-                      color: AppTheme.primary.withOpacity(0.1),
+                      color: AppTheme.primary.withValues(alpha: 0.1),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: const Icon(Icons.barcode_reader, size: 18, color: AppTheme.primary),
@@ -383,7 +384,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
-            borderSide: BorderSide(color: AppTheme.border, width: 1),
+            borderSide: const BorderSide(color: AppTheme.border, width: 1),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(14),
@@ -419,7 +420,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
                   width: 1.5,
                 ),
                 boxShadow: selected
-                    ? [BoxShadow(color: AppTheme.primary.withOpacity(0.25), blurRadius: 8, offset: const Offset(0, 2))]
+                    ? [BoxShadow(color: AppTheme.primary.withValues(alpha: 0.25), blurRadius: 8, offset: const Offset(0, 2))]
                     : null,
               ),
               child: Text(
@@ -449,7 +450,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: AppTheme.primary.withOpacity(0.08),
+                  color: AppTheme.primary.withValues(alpha: 0.08),
                   shape: BoxShape.circle,
                 ),
                 child: const Icon(Icons.shopping_bag_outlined, size: 36, color: AppTheme.primary),
@@ -503,11 +504,11 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-            color: qtyInCart > 0 ? AppTheme.primary.withOpacity(0.4) : AppTheme.border,
+            color: qtyInCart > 0 ? AppTheme.primary.withValues(alpha: 0.4) : AppTheme.border,
             width: qtyInCart > 0 ? 1.5 : 1,
           ),
           boxShadow: qtyInCart > 0
-              ? [BoxShadow(color: AppTheme.primary.withOpacity(0.1), blurRadius: 8, offset: const Offset(0, 2))]
+              ? [BoxShadow(color: AppTheme.primary.withValues(alpha: 0.1), blurRadius: 8, offset: const Offset(0, 2))]
               : null,
         ),
         child: Stack(
@@ -539,7 +540,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
                           shape: BoxShape.circle,
                           boxShadow: [
                             BoxShadow(
-                              color: (inStock ? AppTheme.success : AppTheme.error).withOpacity(0.4),
+                              color: (inStock ? AppTheme.success : AppTheme.error).withValues(alpha: 0.4),
                               blurRadius: 4,
                             ),
                           ],
@@ -580,7 +581,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
                     color: AppTheme.primary,
                     shape: BoxShape.circle,
                     boxShadow: [
-                      BoxShadow(color: AppTheme.primary.withOpacity(0.4), blurRadius: 6),
+                      BoxShadow(color: AppTheme.primary.withValues(alpha: 0.4), blurRadius: 6),
                     ],
                   ),
                   child: Center(
@@ -599,7 +600,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
               Positioned.fill(
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.7),
+                    color: Colors.white.withValues(alpha: 0.7),
                     borderRadius: BorderRadius.circular(14),
                   ),
                   child: const Center(
@@ -661,7 +662,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
                     height: 48,
                     margin: const EdgeInsets.symmetric(horizontal: 16),
                     decoration: BoxDecoration(
-                      color: AppTheme.primary.withOpacity(0.08),
+                      color: AppTheme.primary.withValues(alpha: 0.08),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
@@ -721,7 +722,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
         width: 48,
         height: 48,
         decoration: BoxDecoration(
-          color: AppTheme.primary.withOpacity(0.08),
+          color: AppTheme.primary.withValues(alpha: 0.08),
           borderRadius: BorderRadius.circular(12),
         ),
         child: Icon(icon, color: AppTheme.primary, size: 24),
@@ -738,7 +739,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.08),
+              color: Colors.black.withValues(alpha: 0.08),
               blurRadius: 20,
               offset: const Offset(0, -4),
             ),
@@ -752,15 +753,15 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
               children: [
                 Expanded(
                   child: _cart.isEmpty
-                      ? Column(
+                      ? const Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               children: [
                                 Icon(Icons.shopping_cart_outlined, size: 20, color: AppTheme.textLight),
-                                const SizedBox(width: 8),
-                                const Text(
+                                SizedBox(width: 8),
+                                Text(
                                   'Tap products to add',
                                   style: TextStyle(fontSize: 14, color: AppTheme.textLight),
                                 ),
@@ -777,7 +778,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                                   decoration: BoxDecoration(
-                                    color: AppTheme.primary.withOpacity(0.1),
+                                    color: AppTheme.primary.withValues(alpha: 0.1),
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Text(
@@ -821,7 +822,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
                       ),
                       borderRadius: BorderRadius.circular(14),
                       boxShadow: [
-                        BoxShadow(color: AppTheme.success.withOpacity(0.3), blurRadius: 8, offset: const Offset(0, 2)),
+                        BoxShadow(color: AppTheme.success.withValues(alpha: 0.3), blurRadius: 8, offset: const Offset(0, 2)),
                       ],
                     ),
                     child: const Row(
@@ -896,7 +897,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
                         width: 80,
                         height: 80,
                         decoration: BoxDecoration(
-                          color: AppTheme.primary.withOpacity(0.08),
+                          color: AppTheme.primary.withValues(alpha: 0.08),
                           shape: BoxShape.circle,
                         ),
                         child: const Icon(Icons.shopping_cart_outlined, size: 36, color: AppTheme.primary),
@@ -1020,7 +1021,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [
-          BoxShadow(color: Colors.black.withOpacity(0.05), blurRadius: 10, offset: const Offset(0, -2)),
+          BoxShadow(color: Colors.black.withValues(alpha: 0.05), blurRadius: 10, offset: const Offset(0, -2)),
         ],
       ),
       child: Column(
@@ -1040,7 +1041,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
               onPressed: _isProcessingSale ? null : _completeSale,
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppTheme.success,
-                disabledBackgroundColor: AppTheme.success.withOpacity(0.5),
+                disabledBackgroundColor: AppTheme.success.withValues(alpha: 0.5),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
                 elevation: 0,
               ),
@@ -1125,7 +1126,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
                   width: 1.5,
                 ),
                 boxShadow: selected
-                    ? [BoxShadow(color: AppTheme.primary.withOpacity(0.2), blurRadius: 6)]
+                    ? [BoxShadow(color: AppTheme.primary.withValues(alpha: 0.2), blurRadius: 6)]
                     : null,
               ),
               child: Column(

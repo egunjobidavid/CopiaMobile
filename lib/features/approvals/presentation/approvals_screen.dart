@@ -120,7 +120,7 @@ class _ApprovalsScreenState extends ConsumerState<ApprovalsScreen>
                     color: AppTheme.textPrimary,
                   ),
                   const SizedBox(width: 8),
-                  Text(
+                  const Text(
                     'Approvals',
                     style: TextStyle(
                       fontSize: 28,
@@ -346,13 +346,13 @@ class _ApprovalsScreenState extends ConsumerState<ApprovalsScreen>
           Container(
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: AppTheme.error.withOpacity(0.1),
+              color: AppTheme.error.withValues(alpha: 0.1),
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
+            child: const Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
           ),
           const SizedBox(height: 16),
-          Text(
+          const Text(
             'Failed to load approvals',
             style: TextStyle(
               fontSize: 16,
@@ -380,17 +380,17 @@ class _ApprovalsScreenState extends ConsumerState<ApprovalsScreen>
             Container(
               padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
-                color: AppTheme.success.withOpacity(0.08),
+                color: AppTheme.success.withValues(alpha: 0.08),
                 shape: BoxShape.circle,
               ),
               child: Icon(
                 Icons.check_circle_outline_rounded,
                 size: 64,
-                color: AppTheme.success.withOpacity(0.5),
+                color: AppTheme.success.withValues(alpha: 0.5),
               ),
             ),
             const SizedBox(height: 24),
-            Text(
+            const Text(
               'All caught up!',
               style: TextStyle(
                 fontSize: 18,
@@ -399,7 +399,7 @@ class _ApprovalsScreenState extends ConsumerState<ApprovalsScreen>
               ),
             ),
             const SizedBox(height: 8),
-            Text(
+            const Text(
               'No pending approvals at the moment',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -497,7 +497,7 @@ class _ApprovalCard extends StatelessWidget {
         border: Border.all(color: AppTheme.border),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -512,7 +512,7 @@ class _ApprovalCard extends StatelessWidget {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
+                  color: color.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Icon(_typeIcon(item.type), color: color, size: 20),
@@ -535,7 +535,7 @@ class _ApprovalCard extends StatelessWidget {
                     const SizedBox(height: 2),
                     Text(
                       '${item.requester}${item.department != null ? ' · ${item.department}' : ''}',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 12,
                         color: AppTheme.textSecondary,
                       ),
@@ -546,7 +546,7 @@ class _ApprovalCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
+                  color: color.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
@@ -564,7 +564,7 @@ class _ApprovalCard extends StatelessWidget {
             const SizedBox(height: 12),
             Text(
               item.description,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 13,
                 color: AppTheme.textSecondary,
               ),
@@ -578,7 +578,7 @@ class _ApprovalCard extends StatelessWidget {
               if (item.amount != null) ...[
                 Text(
                   '₦${item.amount!.toStringAsFixed(2)}',
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: AppTheme.textPrimary,
@@ -589,7 +589,7 @@ class _ApprovalCard extends StatelessWidget {
                 const Spacer(),
               Text(
                 _formatDate(item.date),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12,
                   color: AppTheme.textLight,
                 ),

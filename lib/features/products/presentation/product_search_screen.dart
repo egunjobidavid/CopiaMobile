@@ -52,8 +52,8 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
               child: Text(
                 'Products',
                 style: TextStyle(
@@ -64,8 +64,8 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
               ),
             ),
             const SizedBox(height: 4),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 16),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(20, 0, 20, 16),
               child: Text(
                 'Browse and manage your product catalog',
                 style: TextStyle(
@@ -84,7 +84,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: AppTheme.primary.withOpacity(0.08),
+                      color: AppTheme.primary.withValues(alpha: 0.08),
                       blurRadius: 20,
                       offset: const Offset(0, 4),
                     ),
@@ -95,13 +95,13 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                   style: const TextStyle(fontSize: 15),
                   decoration: InputDecoration(
                     hintText: 'Search by name or SKU...',
-                    prefixIcon: Icon(Icons.search_rounded, color: AppTheme.textSecondary),
+                    prefixIcon: const Icon(Icons.search_rounded, color: AppTheme.textSecondary),
                     suffixIcon: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         if (_query.isNotEmpty)
                           IconButton(
-                            icon: Icon(Icons.clear_rounded, color: AppTheme.textSecondary),
+                            icon: const Icon(Icons.clear_rounded, color: AppTheme.textSecondary),
                             onPressed: () {
                               _searchController.clear();
                               setState(() => _query = '');
@@ -110,7 +110,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                         Container(
                           margin: const EdgeInsets.only(right: 6),
                           decoration: BoxDecoration(
-                            color: AppTheme.primary.withOpacity(0.1),
+                            color: AppTheme.primary.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: IconButton(
@@ -198,13 +198,13 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                       Container(
                         padding: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
-                          color: AppTheme.error.withOpacity(0.1),
+                          color: AppTheme.error.withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
+                        child: const Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
                       ),
                       const SizedBox(height: 16),
-                      Text(
+                      const Text(
                         'Failed to load products',
                         style: TextStyle(
                           color: AppTheme.textSecondary,
@@ -276,7 +276,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: AppTheme.primary.withOpacity(0.3),
+              color: AppTheme.primary.withValues(alpha: 0.3),
               blurRadius: 12,
               offset: const Offset(0, 6),
             ),
@@ -309,15 +309,15 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
             Container(
               padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
-                color: AppTheme.primary.withOpacity(0.08),
+                color: AppTheme.primary.withValues(alpha: 0.08),
                 shape: BoxShape.circle,
               ),
-              child: Icon(icon, size: 64, color: AppTheme.primary.withOpacity(0.4)),
+              child: Icon(icon, size: 64, color: AppTheme.primary.withValues(alpha: 0.4)),
             ),
             const SizedBox(height: 24),
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
                 color: AppTheme.textPrimary,
@@ -327,7 +327,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
             Text(
               subtitle,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 14,
                 color: AppTheme.textSecondary,
               ),
@@ -359,9 +359,9 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
             Expanded(
               flex: 3,
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppTheme.dividerColor,
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                 ),
               ),
             ),
@@ -450,7 +450,7 @@ class _ProductCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.04),
+              color: Colors.black.withValues(alpha: 0.04),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -464,14 +464,14 @@ class _ProductCard extends StatelessWidget {
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: _getProductColor().withOpacity(0.08),
+                  color: _getProductColor().withValues(alpha: 0.08),
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
                 ),
                 child: Center(
                   child: Container(
                     padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
-                      color: _getProductColor().withOpacity(0.15),
+                      color: _getProductColor().withValues(alpha: 0.15),
                       shape: BoxShape.circle,
                     ),
                     child: Icon(
@@ -504,7 +504,7 @@ class _ProductCard extends StatelessWidget {
                     const SizedBox(height: 4),
                     Text(
                       product.sku,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 11,
                         color: AppTheme.textSecondary,
                       ),
@@ -525,10 +525,10 @@ class _ProductCard extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                           decoration: BoxDecoration(
                             color: isInStock
-                                ? AppTheme.success.withOpacity(0.1)
+                                ? AppTheme.success.withValues(alpha: 0.1)
                                 : isLow
-                                    ? AppTheme.warning.withOpacity(0.1)
-                                    : AppTheme.error.withOpacity(0.1),
+                                    ? AppTheme.warning.withValues(alpha: 0.1)
+                                    : AppTheme.error.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(

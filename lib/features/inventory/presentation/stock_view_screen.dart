@@ -38,7 +38,7 @@ class _StockViewScreenState extends ConsumerState<StockViewScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -49,7 +49,7 @@ class _StockViewScreenState extends ConsumerState<StockViewScreen> {
                           color: AppTheme.textPrimary,
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      SizedBox(height: 4),
                       Text(
                         'Stock levels and movements',
                         style: TextStyle(
@@ -65,7 +65,7 @@ class _StockViewScreenState extends ConsumerState<StockViewScreen> {
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.04),
+                          color: Colors.black.withValues(alpha: 0.04),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
@@ -96,7 +96,7 @@ class _StockViewScreenState extends ConsumerState<StockViewScreen> {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: AppTheme.primary.withOpacity(0.08),
+                      color: AppTheme.primary.withValues(alpha: 0.08),
                       blurRadius: 20,
                       offset: const Offset(0, 4),
                     ),
@@ -107,10 +107,10 @@ class _StockViewScreenState extends ConsumerState<StockViewScreen> {
                   style: const TextStyle(fontSize: 15),
                   decoration: InputDecoration(
                     hintText: 'Search inventory...',
-                    prefixIcon: Icon(Icons.search_rounded, color: AppTheme.textSecondary),
+                    prefixIcon: const Icon(Icons.search_rounded, color: AppTheme.textSecondary),
                     suffixIcon: _query.isNotEmpty
                         ? IconButton(
-                            icon: Icon(Icons.clear_rounded, color: AppTheme.textSecondary),
+                            icon: const Icon(Icons.clear_rounded, color: AppTheme.textSecondary),
                             onPressed: () {
                               _searchController.clear();
                               setState(() => _query = '');
@@ -137,13 +137,13 @@ class _StockViewScreenState extends ConsumerState<StockViewScreen> {
                       Container(
                         padding: const EdgeInsets.all(24),
                         decoration: BoxDecoration(
-                          color: AppTheme.error.withOpacity(0.1),
+                          color: AppTheme.error.withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
+                        child: const Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
                       ),
                       const SizedBox(height: 16),
-                      Text(
+                      const Text(
                         'Failed to load stock',
                         style: TextStyle(
                           fontSize: 16,
@@ -274,13 +274,13 @@ class _StockViewScreenState extends ConsumerState<StockViewScreen> {
             Container(
               padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
-                color: AppTheme.primary.withOpacity(0.08),
+                color: AppTheme.primary.withValues(alpha: 0.08),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.inventory_2_outlined, size: 64, color: AppTheme.primary.withOpacity(0.4)),
+              child: Icon(Icons.inventory_2_outlined, size: 64, color: AppTheme.primary.withValues(alpha: 0.4)),
             ),
             const SizedBox(height: 24),
-            Text(
+            const Text(
               'No stock balances',
               style: TextStyle(
                 fontSize: 18,
@@ -289,7 +289,7 @@ class _StockViewScreenState extends ConsumerState<StockViewScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            Text(
+            const Text(
               'Stock data will appear here once products are added',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -387,7 +387,7 @@ class _SummaryCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -401,7 +401,7 @@ class _SummaryCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
-                  color: color.withOpacity(0.1),
+                  color: color.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Icon(icon, size: 16, color: color),
@@ -420,7 +420,7 @@ class _SummaryCard extends StatelessWidget {
           const Spacer(),
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 12,
               color: AppTheme.textSecondary,
             ),
@@ -463,7 +463,7 @@ class _StockCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.04),
+              color: Colors.black.withValues(alpha: 0.04),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -475,7 +475,7 @@ class _StockCard extends StatelessWidget {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: stockColor.withOpacity(0.1),
+                color: stockColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
@@ -504,7 +504,7 @@ class _StockCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     'SKU: $sku',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 12,
                       color: AppTheme.textSecondary,
                     ),
@@ -535,7 +535,7 @@ class _StockCard extends StatelessWidget {
                     color: stockColor,
                   ),
                 ),
-                Text(
+                const Text(
                   'units',
                   style: TextStyle(
                     fontSize: 11,

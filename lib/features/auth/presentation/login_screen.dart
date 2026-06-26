@@ -90,8 +90,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                 shape: BoxShape.circle,
                 gradient: LinearGradient(
                   colors: [
-                    AppTheme.primary.withOpacity(0.08),
-                    AppTheme.accent.withOpacity(0.05),
+                    AppTheme.primary.withValues(alpha: 0.08),
+                    AppTheme.accent.withValues(alpha: 0.05),
                   ],
                 ),
               ),
@@ -107,8 +107,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                 shape: BoxShape.circle,
                 gradient: LinearGradient(
                   colors: [
-                    AppTheme.secondary.withOpacity(0.06),
-                    AppTheme.primary.withOpacity(0.03),
+                    AppTheme.secondary.withValues(alpha: 0.06),
+                    AppTheme.primary.withValues(alpha: 0.03),
                   ],
                 ),
               ),
@@ -124,8 +124,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                 shape: BoxShape.circle,
                 gradient: LinearGradient(
                   colors: [
-                    AppTheme.accent.withOpacity(0.06),
-                    AppTheme.primary.withOpacity(0.03),
+                    AppTheme.accent.withValues(alpha: 0.06),
+                    AppTheme.primary.withValues(alpha: 0.03),
                   ],
                 ),
               ),
@@ -163,7 +163,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                           ),
                         ),
                         const SizedBox(height: 20),
-                        Center(
+                        const Center(
                           child: Text(
                             'CopiaOS',
                             style: TextStyle(
@@ -175,7 +175,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                           ),
                         ),
                         const SizedBox(height: 8),
-                        Center(
+                        const Center(
                           child: Text(
                             'Business management, simplified',
                             style: TextStyle(
@@ -185,7 +185,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                           ),
                         ),
                         SizedBox(height: size.height * 0.06),
-                        Text(
+                        const Text(
                           'Welcome back',
                           style: TextStyle(
                             fontSize: 24,
@@ -194,7 +194,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                           ),
                         ),
                         const SizedBox(height: 6),
-                        Text(
+                        const Text(
                           'Sign in to manage your business',
                           style: TextStyle(
                             fontSize: 15,
@@ -250,7 +250,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                           alignment: Alignment.centerRight,
                           child: TextButton(
                             onPressed: () {},
-                            child: Text(
+                            child: const Text(
                               'Forgot password?',
                               style: TextStyle(
                                 color: AppTheme.primary,
@@ -266,15 +266,15 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                             margin: const EdgeInsets.only(bottom: 16),
                             padding: const EdgeInsets.all(14),
                             decoration: BoxDecoration(
-                              color: AppTheme.error.withOpacity(0.08),
+                              color: AppTheme.error.withValues(alpha: 0.08),
                               borderRadius: BorderRadius.circular(14),
                               border: Border.all(
-                                color: AppTheme.error.withOpacity(0.2),
+                                color: AppTheme.error.withValues(alpha: 0.2),
                               ),
                             ),
                             child: Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.error_outline_rounded,
                                   color: AppTheme.error,
                                   size: 20,
@@ -319,7 +319,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                                   borderRadius: BorderRadius.circular(16),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: AppTheme.primary.withOpacity(0.3),
+                                      color: AppTheme.primary.withValues(alpha: 0.3),
                                       blurRadius: 12,
                                       offset: const Offset(0, 6),
                                     ),
@@ -349,7 +349,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
+                              const Text(
                                 "New here? ",
                                 style: TextStyle(
                                   color: AppTheme.textSecondary,
@@ -358,7 +358,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                               ),
                               GestureDetector(
                                 onTap: () {},
-                                child: Text(
+                                child: const Text(
                                   'Create account',
                                   style: TextStyle(
                                     color: AppTheme.primary,

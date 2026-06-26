@@ -11,7 +11,7 @@ class FirebaseMessagingService {
   Stream<RemoteMessage> get onMessageOpenedApp => FirebaseMessaging.onMessageOpenedApp;
 
   Future<String?> init() async {
-    NotificationSettings settings = await _fcm.requestPermission(
+    final NotificationSettings settings = await _fcm.requestPermission(
       alert: true, badge: true, sound: true,
     );
 

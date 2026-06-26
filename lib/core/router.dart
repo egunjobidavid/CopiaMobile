@@ -61,7 +61,7 @@ class _MainShellState extends State<MainShell> {
           color: Colors.white,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.05),
+              color: Colors.black.withValues(alpha: 0.05),
               blurRadius: 20,
               offset: const Offset(0, -5),
             ),
@@ -91,7 +91,7 @@ class _MainShellState extends State<MainShell> {
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
-                            color: AppTheme.primary.withOpacity(0.35),
+                            color: AppTheme.primary.withValues(alpha: 0.35),
                             blurRadius: 12,
                             offset: const Offset(0, 4),
                           ),
@@ -123,7 +123,7 @@ class _MainShellState extends State<MainShell> {
                               horizontal: 12, vertical: 4),
                           decoration: BoxDecoration(
                             color: isSelected
-                                ? AppTheme.primary.withOpacity(0.1)
+                                ? AppTheme.primary.withValues(alpha: 0.1)
                                 : Colors.transparent,
                             borderRadius: BorderRadius.circular(12),
                           ),

@@ -25,13 +25,13 @@ class OrderDetailScreen extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: AppTheme.error.withOpacity(0.1),
+                  color: AppTheme.error.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
+                child: const Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 'Order not found',
                 style: TextStyle(
                   fontSize: 16,
@@ -54,13 +54,13 @@ class OrderDetailScreen extends ConsumerWidget {
                     Container(
                       padding: const EdgeInsets.all(32),
                       decoration: BoxDecoration(
-                        color: AppTheme.primary.withOpacity(0.08),
+                        color: AppTheme.primary.withValues(alpha: 0.08),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.receipt_long_outlined, size: 64, color: AppTheme.primary.withOpacity(0.4)),
+                      child: Icon(Icons.receipt_long_outlined, size: 64, color: AppTheme.primary.withValues(alpha: 0.4)),
                     ),
                     const SizedBox(height: 24),
-                    Text(
+                    const Text(
                       'Order not found',
                       style: TextStyle(
                         fontSize: 18,
@@ -101,7 +101,7 @@ class OrderDetailScreen extends ConsumerWidget {
                         end: Alignment.bottomRight,
                         colors: [
                           AppTheme.primary,
-                          AppTheme.primary.withOpacity(0.8),
+                          AppTheme.primary.withValues(alpha: 0.8),
                         ],
                       ),
                     ),
@@ -112,7 +112,7 @@ class OrderDetailScreen extends ConsumerWidget {
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.2),
+                            color: Colors.white.withValues(alpha: 0.2),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
@@ -145,7 +145,7 @@ class OrderDetailScreen extends ConsumerWidget {
                             borderRadius: BorderRadius.circular(16),
                             boxShadow: [
                               BoxShadow(
-                                color: Colors.black.withOpacity(0.04),
+                                color: Colors.black.withValues(alpha: 0.04),
                                 blurRadius: 12,
                                 offset: const Offset(0, 4),
                               ),
@@ -156,7 +156,7 @@ class OrderDetailScreen extends ConsumerWidget {
                               Container(
                                 padding: const EdgeInsets.all(12),
                                 decoration: BoxDecoration(
-                                  color: AppTheme.accent.withOpacity(0.1),
+                                  color: AppTheme.accent.withValues(alpha: 0.1),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
                                 child: const Icon(
@@ -179,7 +179,7 @@ class OrderDetailScreen extends ConsumerWidget {
                                       ),
                                     ),
                                     const SizedBox(height: 2),
-                                    Text(
+                                    const Text(
                                       'Customer',
                                       style: TextStyle(
                                         fontSize: 12,
@@ -195,7 +195,7 @@ class OrderDetailScreen extends ConsumerWidget {
                       const SizedBox(height: 24),
 
                       // Items section
-                      Text(
+                      const Text(
                         'Order Items',
                         style: TextStyle(
                           fontSize: 16,
@@ -212,7 +212,7 @@ class OrderDetailScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(14),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.03),
+                              color: Colors.black.withValues(alpha: 0.03),
                               blurRadius: 8,
                               offset: const Offset(0, 2),
                             ),
@@ -235,7 +235,7 @@ class OrderDetailScreen extends ConsumerWidget {
                                   const SizedBox(height: 4),
                                   Text(
                                     'SKU: ${item.sku}  |  ₦${item.unitPrice.toStringAsFixed(2)} × ${item.quantity.toStringAsFixed(0)}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 12,
                                       color: AppTheme.textSecondary,
                                     ),
@@ -265,7 +265,7 @@ class OrderDetailScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.04),
+                              color: Colors.black.withValues(alpha: 0.04),
                               blurRadius: 12,
                               offset: const Offset(0, 4),
                             ),
@@ -303,12 +303,12 @@ class OrderDetailScreen extends ConsumerWidget {
                           width: double.infinity,
                           padding: const EdgeInsets.all(14),
                           decoration: BoxDecoration(
-                            color: AppTheme.primary.withOpacity(0.05),
+                            color: AppTheme.primary.withValues(alpha: 0.05),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           child: Row(
                             children: [
-                              Icon(
+                              const Icon(
                                 Icons.calendar_today_rounded,
                                 size: 16,
                                 color: AppTheme.primary,
@@ -316,7 +316,7 @@ class OrderDetailScreen extends ConsumerWidget {
                               const SizedBox(width: 8),
                               Text(
                                 'Created: ${order.createdAt}',
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 13,
                                   color: AppTheme.textSecondary,
                                 ),
@@ -401,18 +401,6 @@ class OrderDetailScreen extends ConsumerWidget {
     );
   }
 
-  Color _getStatusColor(String status) {
-    switch (status) {
-      case 'confirmed':
-        return AppTheme.success;
-      case 'invoiced':
-        return AppTheme.accent;
-      case 'cancelled':
-        return AppTheme.error;
-      default:
-        return AppTheme.warning;
-    }
-  }
 }
 
 class _SummaryRow extends StatelessWidget {

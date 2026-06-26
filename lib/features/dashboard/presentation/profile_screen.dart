@@ -64,7 +64,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             title: 'Biometric Login',
                             trailing: Switch(
                               value: _biometricEnabled,
-                              activeColor: AppTheme.primary,
+                              activeThumbColor: AppTheme.primary,
                               onChanged: (v) {
                                 setState(() => _biometricEnabled = v);
                                 ref.read(authStateProvider.notifier).setBiometricEnabled(v);
@@ -147,10 +147,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             title: 'Terms of Service',
                             onTap: () {},
                           ),
-                          _SettingsTile(
+                          const _SettingsTile(
                             icon: Icons.info_outline_rounded,
                             title: 'App Version',
-                            trailing: const Text(
+                            trailing: Text(
                               'v1.0.0',
                               style: TextStyle(
                                 fontSize: 14,
@@ -221,7 +221,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   ),
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: IconButton(
@@ -236,9 +236,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Colors.white.withValues(alpha: 0.2),
                   shape: BoxShape.circle,
-                  border: Border.all(color: Colors.white.withOpacity(0.4), width: 2),
+                  border: Border.all(color: Colors.white.withValues(alpha: 0.4), width: 2),
                 ),
                 child: Center(
                   child: Text(
@@ -265,14 +265,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 email,
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.white.withOpacity(0.8),
+                  color: Colors.white.withValues(alpha: 0.8),
                 ),
               ),
               const SizedBox(height: 10),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.2),
+                  color: Colors.white.withValues(alpha: 0.2),
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Text(
@@ -346,7 +346,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -357,7 +357,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
           for (int i = 0; i < children.length; i++) ...[
             children[i],
             if (i < children.length - 1)
-              Divider(
+              const Divider(
                 height: 1,
                 indent: 52,
                 color: AppTheme.dividerColor,
@@ -381,7 +381,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(ctx),
-            child: Text(
+            child: const Text(
               'Cancel',
               style: TextStyle(color: AppTheme.textSecondary),
             ),
@@ -430,7 +430,7 @@ class _StatCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -443,7 +443,7 @@ class _StatCard extends StatelessWidget {
             width: 36,
             height: 36,
             decoration: BoxDecoration(
-              color: color.withOpacity(0.1),
+              color: color.withValues(alpha: 0.1),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Icon(icon, size: 18, color: color),
@@ -462,7 +462,7 @@ class _StatCard extends StatelessWidget {
           const SizedBox(height: 2),
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 12,
               color: AppTheme.textSecondary,
             ),
@@ -498,7 +498,7 @@ class _SettingsTile extends StatelessWidget {
               width: 36,
               height: 36,
               decoration: BoxDecoration(
-                color: AppTheme.primary.withOpacity(0.08),
+                color: AppTheme.primary.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(10),
               ),
               child: Icon(icon, size: 18, color: AppTheme.primary),
@@ -517,7 +517,7 @@ class _SettingsTile extends StatelessWidget {
             if (trailing != null)
               trailing!
             else
-              Icon(
+              const Icon(
                 Icons.chevron_right_rounded,
                 size: 20,
                 color: AppTheme.textLight,

@@ -44,7 +44,7 @@ class _StockTransferScreenState extends ConsumerState<StockTransferScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -55,7 +55,7 @@ class _StockTransferScreenState extends ConsumerState<StockTransferScreen> {
                           color: AppTheme.textPrimary,
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      SizedBox(height: 4),
                       Text(
                         'Manage warehouse transfers',
                         style: TextStyle(
@@ -71,7 +71,7 @@ class _StockTransferScreenState extends ConsumerState<StockTransferScreen> {
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.04),
+                          color: Colors.black.withValues(alpha: 0.04),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
@@ -139,13 +139,13 @@ class _StockTransferScreenState extends ConsumerState<StockTransferScreen> {
                       Container(
                         padding: const EdgeInsets.all(24),
                         decoration: BoxDecoration(
-                          color: AppTheme.error.withOpacity(0.1),
+                          color: AppTheme.error.withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
+                        child: const Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
                       ),
                       const SizedBox(height: 16),
-                      Text(
+                      const Text(
                         'Failed to load transfers',
                         style: TextStyle(
                           fontSize: 16,
@@ -224,13 +224,13 @@ class _StockTransferScreenState extends ConsumerState<StockTransferScreen> {
             Container(
               padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
-                color: AppTheme.primary.withOpacity(0.08),
+                color: AppTheme.primary.withValues(alpha: 0.08),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.swap_horiz_rounded, size: 64, color: AppTheme.primary.withOpacity(0.4)),
+              child: Icon(Icons.swap_horiz_rounded, size: 64, color: AppTheme.primary.withValues(alpha: 0.4)),
             ),
             const SizedBox(height: 24),
-            Text(
+            const Text(
               'No transfers found',
               style: TextStyle(
                 fontSize: 18,
@@ -239,7 +239,7 @@ class _StockTransferScreenState extends ConsumerState<StockTransferScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            Text(
+            const Text(
               'Stock transfers will appear here',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -384,7 +384,7 @@ class _TransferCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.04),
+            color: Colors.black.withValues(alpha: 0.04),
             blurRadius: 12,
             offset: const Offset(0, 4),
           ),
@@ -407,7 +407,7 @@ class _TransferCard extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                 decoration: BoxDecoration(
-                  color: _statusColor.withOpacity(0.1),
+                  color: _statusColor.withValues(alpha: 0.1),
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Row(
@@ -441,7 +441,7 @@ class _TransferCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'From',
                         style: TextStyle(
                           fontSize: 11,
@@ -462,8 +462,8 @@ class _TransferCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12),
                   child: Icon(
                     Icons.arrow_forward_rounded,
                     size: 18,
@@ -474,7 +474,7 @@ class _TransferCard extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Text(
+                      const Text(
                         'To',
                         style: TextStyle(
                           fontSize: 11,
@@ -506,7 +506,7 @@ class _TransferCard extends StatelessWidget {
               if (createdAt.isNotEmpty)
                 Text(
                   _formatDate(createdAt),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 12,
                     color: AppTheme.textSecondary,
                   ),
@@ -625,7 +625,7 @@ class _CreateTransferSheetState extends ConsumerState<_CreateTransferSheet> {
               child: Column(
                 children: [
                   DropdownButtonFormField<String>(
-                    value: _fromWarehouse,
+                    initialValue: _fromWarehouse,
                     decoration: const InputDecoration(
                       labelText: 'From Warehouse',
                       prefixIcon: Icon(Icons.warehouse_outlined),
@@ -639,7 +639,7 @@ class _CreateTransferSheetState extends ConsumerState<_CreateTransferSheet> {
                   ),
                   const SizedBox(height: 16),
                   DropdownButtonFormField<String>(
-                    value: _toWarehouse,
+                    initialValue: _toWarehouse,
                     decoration: const InputDecoration(
                       labelText: 'To Warehouse',
                       prefixIcon: Icon(Icons.warehouse_outlined),

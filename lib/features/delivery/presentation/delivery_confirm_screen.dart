@@ -100,7 +100,7 @@ class _DeliveryConfirmScreenState extends ConsumerState<DeliveryConfirmScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.check_circle, size: 64, color: Colors.green),
+                  const Icon(Icons.check_circle, size: 64, color: Colors.green),
                   const SizedBox(height: 16),
                   Text('Already delivered', style: TextStyle(color: Colors.grey[600])),
                 ],

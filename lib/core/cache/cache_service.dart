@@ -101,7 +101,7 @@ class CacheService {
             status: o['status'] as String? ?? 'draft',
             total: (o['total'] as num?)?.toDouble() ?? 0,
             jsonData: jsonEncode(o),
-            isSynced: Value(true),
+            isSynced: const Value(true),
             createdAt: DateTime.now(),
             syncedAt: DateTime.now(),
           ),

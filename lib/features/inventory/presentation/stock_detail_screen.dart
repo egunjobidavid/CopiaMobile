@@ -27,13 +27,13 @@ class StockDetailScreen extends ConsumerWidget {
               Container(
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
-                  color: AppTheme.error.withOpacity(0.1),
+                  color: AppTheme.error.withValues(alpha: 0.1),
                   shape: BoxShape.circle,
                 ),
-                child: Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
+                child: const Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
               ),
               const SizedBox(height: 16),
-              Text(
+              const Text(
                 'Failed to load stock',
                 style: TextStyle(
                   fontSize: 16,
@@ -83,7 +83,7 @@ class StockDetailScreen extends ConsumerWidget {
                         end: Alignment.bottomRight,
                         colors: [
                           AppTheme.primary,
-                          AppTheme.primary.withOpacity(0.8),
+                          AppTheme.primary.withValues(alpha: 0.8),
                         ],
                       ),
                     ),
@@ -100,7 +100,7 @@ class StockDetailScreen extends ConsumerWidget {
                             Container(
                               width: 1,
                               height: 40,
-                              color: Colors.white.withOpacity(0.3),
+                              color: Colors.white.withValues(alpha: 0.3),
                             ),
                             _HeroStat(
                               label: 'Available',
@@ -110,7 +110,7 @@ class StockDetailScreen extends ConsumerWidget {
                             Container(
                               width: 1,
                               height: 40,
-                              color: Colors.white.withOpacity(0.3),
+                              color: Colors.white.withValues(alpha: 0.3),
                             ),
                             _HeroStat(
                               label: 'Reserved',
@@ -139,7 +139,7 @@ class StockDetailScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.04),
+                              color: Colors.black.withValues(alpha: 0.04),
                               blurRadius: 12,
                               offset: const Offset(0, 4),
                             ),
@@ -151,7 +151,7 @@ class StockDetailScreen extends ConsumerWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
+                                const Text(
                                   'Stock Level',
                                   style: TextStyle(
                                     fontSize: 14,
@@ -161,7 +161,7 @@ class StockDetailScreen extends ConsumerWidget {
                                 ),
                                 Text(
                                   '${totalAvailable.toStringAsFixed(0)} units available',
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 13,
                                     color: AppTheme.textSecondary,
                                   ),
@@ -190,7 +190,7 @@ class StockDetailScreen extends ConsumerWidget {
                       const SizedBox(height: 24),
 
                       // Per-warehouse breakdown
-                      Text(
+                      const Text(
                         'By Warehouse',
                         style: TextStyle(
                           fontSize: 16,
@@ -207,7 +207,7 @@ class StockDetailScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(14),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.03),
+                              color: Colors.black.withValues(alpha: 0.03),
                               blurRadius: 8,
                               offset: const Offset(0, 2),
                             ),
@@ -218,7 +218,7 @@ class StockDetailScreen extends ConsumerWidget {
                             Container(
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                color: AppTheme.accent.withOpacity(0.1),
+                                color: AppTheme.accent.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: const Icon(
@@ -243,7 +243,7 @@ class StockDetailScreen extends ConsumerWidget {
                                   const SizedBox(height: 4),
                                   Text(
                                     'Qty: ${b.quantity.toStringAsFixed(0)}  |  Reserved: ${b.reservedQuantity.toStringAsFixed(0)}',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 12,
                                       color: AppTheme.textSecondary,
                                     ),
@@ -255,8 +255,8 @@ class StockDetailScreen extends ConsumerWidget {
                               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                               decoration: BoxDecoration(
                                 color: b.availableQuantity <= 0
-                                    ? AppTheme.error.withOpacity(0.1)
-                                    : AppTheme.success.withOpacity(0.1),
+                                    ? AppTheme.error.withValues(alpha: 0.1)
+                                    : AppTheme.success.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
@@ -277,7 +277,7 @@ class StockDetailScreen extends ConsumerWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
+                          const Text(
                             'Recent Movements',
                             style: TextStyle(
                               fontSize: 16,
@@ -305,7 +305,7 @@ class StockDetailScreen extends ConsumerWidget {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(14),
                           ),
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               'No movements',
                               style: TextStyle(color: AppTheme.textSecondary),
@@ -326,10 +326,10 @@ class StockDetailScreen extends ConsumerWidget {
                                     Icon(
                                       Icons.swap_vert_rounded,
                                       size: 32,
-                                      color: AppTheme.textSecondary.withOpacity(0.3),
+                                      color: AppTheme.textSecondary.withValues(alpha: 0.3),
                                     ),
                                     const SizedBox(height: 8),
-                                    Text(
+                                    const Text(
                                       'No movements yet',
                                       style: TextStyle(
                                         fontSize: 14,
@@ -354,7 +354,7 @@ class StockDetailScreen extends ConsumerWidget {
                                   borderRadius: BorderRadius.circular(14),
                                   boxShadow: [
                                     BoxShadow(
-                                      color: Colors.black.withOpacity(0.03),
+                                      color: Colors.black.withValues(alpha: 0.03),
                                       blurRadius: 8,
                                       offset: const Offset(0, 2),
                                     ),
@@ -365,7 +365,7 @@ class StockDetailScreen extends ConsumerWidget {
                                     Container(
                                       padding: const EdgeInsets.all(8),
                                       decoration: BoxDecoration(
-                                        color: typeColor.withOpacity(0.1),
+                                        color: typeColor.withValues(alpha: 0.1),
                                         borderRadius: BorderRadius.circular(8),
                                       ),
                                       child: Icon(
@@ -390,7 +390,7 @@ class StockDetailScreen extends ConsumerWidget {
                                           const SizedBox(height: 2),
                                           Text(
                                             m.reference ?? '',
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 11,
                                               color: AppTheme.textSecondary,
                                             ),
@@ -477,7 +477,7 @@ class _HeroStat extends StatelessWidget {
           label,
           style: TextStyle(
             fontSize: 12,
-            color: Colors.white.withOpacity(0.7),
+            color: Colors.white.withValues(alpha: 0.7),
           ),
         ),
       ],

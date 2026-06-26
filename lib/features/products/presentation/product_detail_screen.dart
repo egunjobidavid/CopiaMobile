@@ -27,13 +27,13 @@ class ProductDetailScreen extends ConsumerWidget {
                 Container(
                   padding: const EdgeInsets.all(24),
                   decoration: BoxDecoration(
-                    color: AppTheme.error.withOpacity(0.1),
+                    color: AppTheme.error.withValues(alpha: 0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
+                  child: const Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
                 ),
                 const SizedBox(height: 16),
-                Text(
+                const Text(
                   'Failed to load product',
                   style: TextStyle(
                     fontSize: 16,
@@ -61,13 +61,13 @@ class ProductDetailScreen extends ConsumerWidget {
                     Container(
                       padding: const EdgeInsets.all(32),
                       decoration: BoxDecoration(
-                        color: AppTheme.primary.withOpacity(0.08),
+                        color: AppTheme.primary.withValues(alpha: 0.08),
                         shape: BoxShape.circle,
                       ),
-                      child: Icon(Icons.inventory_2_outlined, size: 64, color: AppTheme.primary.withOpacity(0.4)),
+                      child: Icon(Icons.inventory_2_outlined, size: 64, color: AppTheme.primary.withValues(alpha: 0.4)),
                     ),
                     const SizedBox(height: 24),
-                    Text(
+                    const Text(
                       'Product not found',
                       style: TextStyle(
                         fontSize: 18,
@@ -101,7 +101,7 @@ class ProductDetailScreen extends ConsumerWidget {
                         end: Alignment.bottomRight,
                         colors: [
                           AppTheme.primary,
-                          AppTheme.primary.withOpacity(0.8),
+                          AppTheme.primary.withValues(alpha: 0.8),
                         ],
                       ),
                     ),
@@ -109,13 +109,13 @@ class ProductDetailScreen extends ConsumerWidget {
                       child: Container(
                         padding: const EdgeInsets.all(32),
                         decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.15),
+                          color: Colors.white.withValues(alpha: 0.15),
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
                           _getProductIcon(product.productType),
                           size: 72,
-                          color: Colors.white.withOpacity(0.9),
+                          color: Colors.white.withValues(alpha: 0.9),
                         ),
                       ),
                     ),
@@ -148,7 +148,7 @@ class ProductDetailScreen extends ConsumerWidget {
                                 const SizedBox(height: 6),
                                 Text(
                                   product.sku,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 14,
                                     color: AppTheme.textSecondary,
                                   ),
@@ -160,8 +160,8 @@ class ProductDetailScreen extends ConsumerWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                             decoration: BoxDecoration(
                               color: product.isActive
-                                  ? AppTheme.success.withOpacity(0.1)
-                                  : AppTheme.error.withOpacity(0.1),
+                                  ? AppTheme.success.withValues(alpha: 0.1)
+                                  : AppTheme.error.withValues(alpha: 0.1),
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Text(
@@ -185,13 +185,13 @@ class ProductDetailScreen extends ConsumerWidget {
                           gradient: LinearGradient(
                             colors: [
                               AppTheme.primary,
-                              AppTheme.primary.withOpacity(0.9),
+                              AppTheme.primary.withValues(alpha: 0.9),
                             ],
                           ),
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
-                              color: AppTheme.primary.withOpacity(0.3),
+                              color: AppTheme.primary.withValues(alpha: 0.3),
                               blurRadius: 12,
                               offset: const Offset(0, 6),
                             ),
@@ -204,7 +204,7 @@ class ProductDetailScreen extends ConsumerWidget {
                               'Unit Price',
                               style: TextStyle(
                                 fontSize: 13,
-                                color: Colors.white.withOpacity(0.7),
+                                color: Colors.white.withValues(alpha: 0.7),
                               ),
                             ),
                             const SizedBox(height: 4),
@@ -221,7 +221,7 @@ class ProductDetailScreen extends ConsumerWidget {
                               'per ${product.uom}',
                               style: TextStyle(
                                 fontSize: 13,
-                                color: Colors.white.withOpacity(0.7),
+                                color: Colors.white.withValues(alpha: 0.7),
                               ),
                             ),
                           ],
@@ -247,7 +247,7 @@ class ProductDetailScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.04),
+                              color: Colors.black.withValues(alpha: 0.04),
                               blurRadius: 12,
                               offset: const Offset(0, 4),
                             ),
@@ -259,10 +259,10 @@ class ProductDetailScreen extends ConsumerWidget {
                               padding: const EdgeInsets.all(12),
                               decoration: BoxDecoration(
                                 color: product.stockQuantity > 5
-                                    ? AppTheme.success.withOpacity(0.1)
+                                    ? AppTheme.success.withValues(alpha: 0.1)
                                     : product.stockQuantity > 0
-                                        ? AppTheme.warning.withOpacity(0.1)
-                                        : AppTheme.error.withOpacity(0.1),
+                                        ? AppTheme.warning.withValues(alpha: 0.1)
+                                        : AppTheme.error.withValues(alpha: 0.1),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Icon(
@@ -303,7 +303,7 @@ class ProductDetailScreen extends ConsumerWidget {
                                         : product.stockQuantity > 0
                                             ? 'Low stock warning'
                                             : 'Out of stock',
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontSize: 13,
                                       color: AppTheme.textSecondary,
                                     ),
@@ -334,7 +334,7 @@ class ProductDetailScreen extends ConsumerWidget {
                           borderRadius: BorderRadius.circular(16),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.04),
+                              color: Colors.black.withValues(alpha: 0.04),
                               blurRadius: 12,
                               offset: const Offset(0, 4),
                             ),
@@ -412,7 +412,7 @@ class ProductDetailScreen extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(12),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.black.withOpacity(0.06),
+                                  color: Colors.black.withValues(alpha: 0.06),
                                   blurRadius: 8,
                                   offset: const Offset(0, 2),
                                 ),
@@ -470,7 +470,7 @@ class _InfoTile extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            color: AppTheme.primary.withOpacity(0.08),
+            color: AppTheme.primary.withValues(alpha: 0.08),
             borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(icon, size: 18, color: AppTheme.primary),
@@ -482,7 +482,7 @@ class _InfoTile extends StatelessWidget {
             children: [
               Text(
                 label,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12,
                   color: AppTheme.textSecondary,
                 ),

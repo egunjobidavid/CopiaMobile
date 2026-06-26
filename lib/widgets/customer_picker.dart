@@ -76,9 +76,9 @@ class CustomerPicker extends ConsumerWidget {
                       const SizedBox(height: 12),
                       TextField(
                         controller: controller,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: 'Search customers...',
-                          prefixIcon: const Icon(Icons.search),
+                          prefixIcon: Icon(Icons.search),
                         ),
                         onChanged: (_) => setModalState(() {}),
                       ),

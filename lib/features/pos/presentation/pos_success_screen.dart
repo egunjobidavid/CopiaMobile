@@ -121,7 +121,7 @@ class _PosSuccessScreenState extends State<PosSuccessScreen> with SingleTickerPr
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: AppTheme.success.withOpacity(0.35),
+                          color: AppTheme.success.withValues(alpha: 0.35),
                           blurRadius: 30,
                           offset: const Offset(0, 10),
                         ),
@@ -154,7 +154,7 @@ class _PosSuccessScreenState extends State<PosSuccessScreen> with SingleTickerPr
                     'Transaction processed successfully',
                     style: TextStyle(
                       fontSize: 15,
-                      color: AppTheme.textSecondary.withOpacity(0.8),
+                      color: AppTheme.textSecondary.withValues(alpha: 0.8),
                     ),
                   ),
                 ),

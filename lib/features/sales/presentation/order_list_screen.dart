@@ -38,7 +38,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Column(
+                  const Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -49,7 +49,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
                           color: AppTheme.textPrimary,
                         ),
                       ),
-                      const SizedBox(height: 4),
+                      SizedBox(height: 4),
                       Text(
                         'Track and manage your orders',
                         style: TextStyle(
@@ -65,7 +65,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
                       borderRadius: BorderRadius.circular(12),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.04),
+                          color: Colors.black.withValues(alpha: 0.04),
                           blurRadius: 8,
                           offset: const Offset(0, 2),
                         ),
@@ -93,7 +93,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
                   borderRadius: BorderRadius.circular(16),
                   boxShadow: [
                     BoxShadow(
-                      color: AppTheme.primary.withOpacity(0.08),
+                      color: AppTheme.primary.withValues(alpha: 0.08),
                       blurRadius: 20,
                       offset: const Offset(0, 4),
                     ),
@@ -104,10 +104,10 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
                   style: const TextStyle(fontSize: 15),
                   decoration: InputDecoration(
                     hintText: 'Search orders...',
-                    prefixIcon: Icon(Icons.search_rounded, color: AppTheme.textSecondary),
+                    prefixIcon: const Icon(Icons.search_rounded, color: AppTheme.textSecondary),
                     suffixIcon: _searchController.text.isNotEmpty
                         ? IconButton(
-                            icon: Icon(Icons.clear_rounded, color: AppTheme.textSecondary),
+                            icon: const Icon(Icons.clear_rounded, color: AppTheme.textSecondary),
                             onPressed: () {
                               _searchController.clear();
                               setState(() {});
@@ -174,13 +174,13 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
                       Container(
                         padding: const EdgeInsets.all(24),
                         decoration: BoxDecoration(
-                          color: AppTheme.error.withOpacity(0.1),
+                          color: AppTheme.error.withValues(alpha: 0.1),
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
+                        child: const Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error),
                       ),
                       const SizedBox(height: 16),
-                      Text(
+                      const Text(
                         'Failed to load orders',
                         style: TextStyle(
                           fontSize: 16,
@@ -247,7 +247,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: AppTheme.primary.withOpacity(0.3),
+              color: AppTheme.primary.withValues(alpha: 0.3),
               blurRadius: 12,
               offset: const Offset(0, 6),
             ),
@@ -276,13 +276,13 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
             Container(
               padding: const EdgeInsets.all(32),
               decoration: BoxDecoration(
-                color: AppTheme.primary.withOpacity(0.08),
+                color: AppTheme.primary.withValues(alpha: 0.08),
                 shape: BoxShape.circle,
               ),
-              child: Icon(Icons.receipt_long_outlined, size: 64, color: AppTheme.primary.withOpacity(0.4)),
+              child: Icon(Icons.receipt_long_outlined, size: 64, color: AppTheme.primary.withValues(alpha: 0.4)),
             ),
             const SizedBox(height: 24),
-            Text(
+            const Text(
               'No orders yet',
               style: TextStyle(
                 fontSize: 18,
@@ -291,7 +291,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
               ),
             ),
             const SizedBox(height: 8),
-            Text(
+            const Text(
               'Create your first sales order to get started',
               textAlign: TextAlign.center,
               style: TextStyle(
@@ -427,7 +427,7 @@ class _OrderCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.04),
+              color: Colors.black.withValues(alpha: 0.04),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),
@@ -439,7 +439,7 @@ class _OrderCard extends StatelessWidget {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: statusColor.withOpacity(0.1),
+                color: statusColor.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(
@@ -464,7 +464,7 @@ class _OrderCard extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     order.customerName ?? 'Walk-in Customer',
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 13,
                       color: AppTheme.textSecondary,
                     ),
@@ -474,7 +474,7 @@ class _OrderCard extends StatelessWidget {
                     order.createdAt.isNotEmpty ? order.createdAt.substring(0, 10) : '',
                     style: TextStyle(
                       fontSize: 11,
-                      color: AppTheme.textSecondary.withOpacity(0.7),
+                      color: AppTheme.textSecondary.withValues(alpha: 0.7),
                     ),
                   ),
                 ],
@@ -495,7 +495,7 @@ class _OrderCard extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                   decoration: BoxDecoration(
-                    color: statusColor.withOpacity(0.1),
+                    color: statusColor.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(

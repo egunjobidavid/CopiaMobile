@@ -51,7 +51,7 @@ class _MoreScreenState extends ConsumerState<MoreScreen> {
                     _buildSection(
                       'Sell',
                       [
-                        _MenuItem(
+                        const _MenuItem(
                           icon: Icons.point_of_sale_rounded,
                           title: 'Point of Sale',
                           subtitle: 'Sell products from your phone',
@@ -64,25 +64,25 @@ class _MoreScreenState extends ConsumerState<MoreScreen> {
                     _buildSection(
                       'Operations',
                       [
-                        _MenuItem(
+                        const _MenuItem(
                           icon: Icons.swap_horiz_rounded,
                           title: 'Stock Transfers',
                           subtitle: 'Move stock between locations',
-                          color: const Color(0xFF06B6D4),
+                          color: Color(0xFF06B6D4),
                           route: '/stock-transfers',
                         ),
-                        _MenuItem(
+                        const _MenuItem(
                           icon: Icons.receipt_long_rounded,
                           title: 'Expense Claims',
                           subtitle: 'Track business spending',
-                          color: const Color(0xFFEF4444),
+                          color: Color(0xFFEF4444),
                           route: '/expense-claims',
                         ),
-                        _MenuItem(
+                        const _MenuItem(
                           icon: Icons.fact_check_rounded,
                           title: 'Approvals',
                           subtitle: 'Pending approvals queue',
-                          color: const Color(0xFFF59E0B),
+                          color: Color(0xFFF59E0B),
                           route: '/approvals',
                         ),
                       ],
@@ -91,11 +91,11 @@ class _MoreScreenState extends ConsumerState<MoreScreen> {
                     _buildSection(
                       'Team',
                       [
-                        _MenuItem(
+                        const _MenuItem(
                           icon: Icons.admin_panel_settings_rounded,
                           title: 'Staff Permissions',
                           subtitle: 'Activate/deactivate modules for staff',
-                          color: const Color(0xFF8B5CF6),
+                          color: Color(0xFF8B5CF6),
                           route: '/staff-modules',
                         ),
                       ],
@@ -104,18 +104,18 @@ class _MoreScreenState extends ConsumerState<MoreScreen> {
                     _buildSection(
                       'Account',
                       [
-                        _MenuItem(
+                        const _MenuItem(
                           icon: Icons.person_rounded,
                           title: 'Profile & Settings',
                           subtitle: 'Manage your account',
                           color: AppTheme.primary,
                           route: '/profile',
                         ),
-                        _MenuItem(
+                        const _MenuItem(
                           icon: Icons.notifications_rounded,
                           title: 'Notifications',
                           subtitle: 'Manage alert preferences',
-                          color: const Color(0xFF6366F1),
+                          color: Color(0xFF6366F1),
                           route: '/notifications',
                         ),
                       ],
@@ -147,7 +147,7 @@ class _MoreScreenState extends ConsumerState<MoreScreen> {
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: AppTheme.primary.withOpacity(0.3),
+              color: AppTheme.primary.withValues(alpha: 0.3),
               blurRadius: 16,
               offset: const Offset(0, 8),
             ),
@@ -159,7 +159,7 @@ class _MoreScreenState extends ConsumerState<MoreScreen> {
               width: 56,
               height: 56,
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.25),
+                color: Colors.white.withValues(alpha: 0.25),
                 shape: BoxShape.circle,
               ),
               child: Center(
@@ -190,7 +190,7 @@ class _MoreScreenState extends ConsumerState<MoreScreen> {
                   Text(
                     email,
                     style: TextStyle(
-                      color: Colors.white.withOpacity(0.85),
+                      color: Colors.white.withValues(alpha: 0.85),
                       fontSize: 13,
                     ),
                   ),
@@ -198,7 +198,7 @@ class _MoreScreenState extends ConsumerState<MoreScreen> {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                     decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.2),
+                      color: Colors.white.withValues(alpha: 0.2),
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Text(
@@ -215,7 +215,7 @@ class _MoreScreenState extends ConsumerState<MoreScreen> {
             ),
             Icon(
               Icons.chevron_right_rounded,
-              color: Colors.white.withOpacity(0.7),
+              color: Colors.white.withValues(alpha: 0.7),
             ),
           ],
         ),
@@ -259,7 +259,7 @@ class _MoreScreenState extends ConsumerState<MoreScreen> {
             ? null
             : Border(
                 bottom: BorderSide(
-                  color: AppTheme.border.withOpacity(0.5),
+                  color: AppTheme.border.withValues(alpha: 0.5),
                   width: 0.5,
                 ),
               ),
@@ -280,7 +280,7 @@ class _MoreScreenState extends ConsumerState<MoreScreen> {
                   width: 40,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: item.color.withOpacity(0.1),
+                    color: item.color.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(item.icon, color: item.color, size: 20),
@@ -311,7 +311,7 @@ class _MoreScreenState extends ConsumerState<MoreScreen> {
                 ),
                 Icon(
                   Icons.chevron_right_rounded,
-                  color: AppTheme.textSecondary.withOpacity(0.4),
+                  color: AppTheme.textSecondary.withValues(alpha: 0.4),
                   size: 20,
                 ),
               ],
@@ -360,9 +360,9 @@ class _MoreScreenState extends ConsumerState<MoreScreen> {
         width: double.infinity,
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppTheme.error.withOpacity(0.05),
+          color: AppTheme.error.withValues(alpha: 0.05),
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: AppTheme.error.withOpacity(0.15)),
+          border: Border.all(color: AppTheme.error.withValues(alpha: 0.15)),
         ),
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.center,

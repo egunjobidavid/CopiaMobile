@@ -55,8 +55,8 @@ class _StaffModulesScreenState extends ConsumerState<StaffModulesScreen> {
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+            const Padding(
+              padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -68,7 +68,7 @@ class _StaffModulesScreenState extends ConsumerState<StaffModulesScreen> {
                       color: AppTheme.textPrimary,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4),
                   Text(
                     'Manage module access for your team',
                     style: TextStyle(
@@ -85,7 +85,7 @@ class _StaffModulesScreenState extends ConsumerState<StaffModulesScreen> {
                 onChanged: (v) => setState(() => _searchQuery = v),
                 decoration: InputDecoration(
                   hintText: 'Search staff...',
-                  prefixIcon: Icon(Icons.search, color: AppTheme.textLight),
+                  prefixIcon: const Icon(Icons.search, color: AppTheme.textLight),
                   filled: true,
                   fillColor: const Color(0xFFF5F6FA),
                   border: OutlineInputBorder(
@@ -108,13 +108,13 @@ class _StaffModulesScreenState extends ConsumerState<StaffModulesScreen> {
                               .contains(_searchQuery.toLowerCase()))
                           .toList();
                   if (filtered.isEmpty) {
-                    return Center(
+                    return const Center(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(Icons.people_outline,
                               size: 64, color: AppTheme.textLight),
-                          const SizedBox(height: 12),
+                          SizedBox(height: 12),
                           Text('No staff found',
                               style: TextStyle(
                                   color: AppTheme.textSecondary, fontSize: 16)),
@@ -141,10 +141,10 @@ class _StaffModulesScreenState extends ConsumerState<StaffModulesScreen> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.error_outline,
+                      const Icon(Icons.error_outline,
                           size: 48, color: AppTheme.error),
                       const SizedBox(height: 12),
-                      Text('Failed to load staff',
+                      const Text('Failed to load staff',
                           style: TextStyle(
                               color: AppTheme.textSecondary, fontSize: 16)),
                       const SizedBox(height: 16),
@@ -197,7 +197,7 @@ class _StaffCard extends StatelessWidget {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: AppTheme.primary.withOpacity(0.12),
+                color: AppTheme.primary.withValues(alpha: 0.12),
                 shape: BoxShape.circle,
               ),
               alignment: Alignment.center,
@@ -239,7 +239,7 @@ class _StaffCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
-                color: AppTheme.primary.withOpacity(0.1),
+                color: AppTheme.primary.withValues(alpha: 0.1),
                 borderRadius: BorderRadius.circular(20),
               ),
               child: const Text(
@@ -390,10 +390,10 @@ class _ModuleEditorScreenState extends ConsumerState<_ModuleEditorScreen> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Icon(Icons.error_outline,
+                        const Icon(Icons.error_outline,
                             size: 48, color: AppTheme.error),
                         const SizedBox(height: 12),
-                        Text('Failed to load modules',
+                        const Text('Failed to load modules',
                             style: TextStyle(
                                 color: AppTheme.textSecondary, fontSize: 16)),
                         const SizedBox(height: 16),
@@ -417,7 +417,7 @@ class _ModuleEditorScreenState extends ConsumerState<_ModuleEditorScreen> {
                               width: 52,
                               height: 52,
                               decoration: BoxDecoration(
-                                color: AppTheme.primary.withOpacity(0.12),
+                                color: AppTheme.primary.withValues(alpha: 0.12),
                                 shape: BoxShape.circle,
                               ),
                               alignment: Alignment.center,
@@ -473,7 +473,7 @@ class _ModuleEditorScreenState extends ConsumerState<_ModuleEditorScreen> {
                                 borderRadius: BorderRadius.circular(14),
                                 border: Border.all(
                                   color: active
-                                      ? AppTheme.success.withOpacity(0.4)
+                                      ? AppTheme.success.withValues(alpha: 0.4)
                                       : AppTheme.border,
                                   width: 1,
                                 ),
@@ -485,8 +485,8 @@ class _ModuleEditorScreenState extends ConsumerState<_ModuleEditorScreen> {
                                     height: 44,
                                     decoration: BoxDecoration(
                                       color: active
-                                          ? AppTheme.success.withOpacity(0.12)
-                                          : AppTheme.textLight.withOpacity(0.15),
+                                          ? AppTheme.success.withValues(alpha: 0.12)
+                                          : AppTheme.textLight.withValues(alpha: 0.15),
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     alignment: Alignment.center,
@@ -534,7 +534,7 @@ class _ModuleEditorScreenState extends ConsumerState<_ModuleEditorScreen> {
                                           _modules[def.key] = v;
                                         });
                                       },
-                                      activeColor: AppTheme.success,
+                                      activeThumbColor: AppTheme.success,
                                       inactiveTrackColor:
                                           AppTheme.border,
                                       thumbColor:
