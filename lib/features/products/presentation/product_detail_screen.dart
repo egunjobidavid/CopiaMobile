@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/theme.dart';
 import 'product_provider.dart';
 
@@ -372,7 +373,9 @@ class ProductDetailScreen extends ConsumerWidget {
                           Expanded(
                             child: OutlinedButton.icon(
                               onPressed: () {
-                                // TODO: Edit product
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Edit product coming soon')),
+                                );
                               },
                               icon: const Icon(Icons.edit_outlined, size: 18),
                               label: const Text('Edit'),
@@ -390,7 +393,9 @@ class ProductDetailScreen extends ConsumerWidget {
                           Expanded(
                             child: ElevatedButton.icon(
                               onPressed: () {
-                                // TODO: Adjust stock
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Stock adjustment coming soon')),
+                                );
                               },
                               icon: const Icon(Icons.tune_rounded, size: 18),
                               label: const Text('Adjust Stock'),
@@ -420,7 +425,7 @@ class ProductDetailScreen extends ConsumerWidget {
                             ),
                             child: IconButton(
                               onPressed: () {
-                                // TODO: View movements
+                                context.push('/inventory/product/${product.id}');
                               },
                               icon: const Icon(Icons.history_rounded, color: AppTheme.primary),
                               tooltip: 'View Movements',

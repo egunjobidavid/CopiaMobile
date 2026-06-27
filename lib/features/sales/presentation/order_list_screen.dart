@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/theme.dart';
 import 'sales_provider.dart';
-import 'order_detail_screen.dart';
 
 class OrderListScreen extends ConsumerStatefulWidget {
   const OrderListScreen({super.key});
@@ -73,7 +73,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
                     ),
                     child: IconButton(
                       onPressed: () {
-                        // TODO: Notifications
+                        context.push('/notifications');
                       },
                       icon: const Icon(Icons.notifications_outlined),
                       tooltip: 'Notifications',
@@ -225,12 +225,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
                         return _OrderCard(
                           order: order,
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => OrderDetailScreen(orderId: order.id),
-                              ),
-                            );
+                            context.push('/sales/${order.id}');
                           },
                         );
                       },

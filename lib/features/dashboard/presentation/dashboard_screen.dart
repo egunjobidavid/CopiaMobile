@@ -139,7 +139,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             ),
             const SizedBox(width: 4),
             GestureDetector(
-              onTap: () {},
+              onTap: () => context.push('/profile'),
               child: Container(
                 width: 40,
                 height: 40,

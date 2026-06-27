@@ -249,7 +249,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                         Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Visit copiaos.com to reset your password'),
+                                ),
+                              );
+                            },
                             child: const Text(
                               'Forgot password?',
                               style: TextStyle(
@@ -357,7 +363,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () => context.push('/register'),
                                 child: const Text(
                                   'Create account',
                                   style: TextStyle(

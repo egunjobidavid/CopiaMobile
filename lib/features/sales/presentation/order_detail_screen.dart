@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme.dart';
+import '../../../core/network/api_client.dart';
+import '../../../core/storage/secure_storage.dart';
 import 'sales_provider.dart';
 
 class OrderDetailScreen extends ConsumerWidget {
@@ -331,8 +333,24 @@ class OrderDetailScreen extends ConsumerWidget {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton.icon(
-                            onPressed: () {
-                              // TODO: Confirm order
+                            onPressed: () async {
+                              try {
+                                final storage = ref.read(secureStorageProvider);
+                                final api = ApiClient(storage);
+                                await api.patch('sales/orders/${order.id}', data: {'status': 'confirmed'});
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Order confirmed'), backgroundColor: AppTheme.success),
+                                  );
+                                  Navigator.pop(context);
+                                }
+                              } catch (e) {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('Failed to confirm order: $e'), backgroundColor: AppTheme.error),
+                                  );
+                                }
+                              }
                             },
                             icon: const Icon(Icons.check_circle_outline_rounded, size: 18),
                             label: const Text('Confirm Order'),
@@ -351,8 +369,24 @@ class OrderDetailScreen extends ConsumerWidget {
                         SizedBox(
                           width: double.infinity,
                           child: OutlinedButton.icon(
-                            onPressed: () {
-                              // TODO: Cancel order
+                            onPressed: () async {
+                              try {
+                                final storage = ref.read(secureStorageProvider);
+                                final api = ApiClient(storage);
+                                await api.patch('sales/orders/${order.id}', data: {'status': 'cancelled'});
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Order cancelled'), backgroundColor: AppTheme.success),
+                                  );
+                                  Navigator.pop(context);
+                                }
+                              } catch (e) {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('Failed to cancel order: $e'), backgroundColor: AppTheme.error),
+                                  );
+                                }
+                              }
                             },
                             icon: const Icon(Icons.cancel_outlined, size: 18, color: AppTheme.error),
                             label: const Text(
@@ -372,8 +406,23 @@ class OrderDetailScreen extends ConsumerWidget {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton.icon(
-                            onPressed: () {
-                              // TODO: Complete order / Generate invoice
+                            onPressed: () async {
+                              try {
+                                final storage = ref.read(secureStorageProvider);
+                                final api = ApiClient(storage);
+                                await api.post('sales/orders/${order.id}/invoice');
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(content: Text('Invoice generated'), backgroundColor: AppTheme.success),
+                                  );
+                                }
+                              } catch (e) {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(content: Text('Failed to generate invoice: $e'), backgroundColor: AppTheme.error),
+                                  );
+                                }
+                              }
                             },
                             icon: const Icon(Icons.receipt_rounded, size: 18),
                             label: const Text('Generate Invoice'),

@@ -420,7 +420,9 @@ class StockDetailScreen extends ConsumerWidget {
                         width: double.infinity,
                         child: ElevatedButton.icon(
                           onPressed: () {
-                            // TODO: Adjust stock
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Stock adjustment coming soon')),
+                            );
                           },
                           icon: const Icon(Icons.tune_rounded, size: 18),
                           label: const Text('Adjust Stock'),

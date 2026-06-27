@@ -12,14 +12,22 @@ final productRepositoryProvider = Provider<ProductRepository>((ref) {
 
 final productSearchProvider = FutureProvider.family<List<Product>, String>((ref, query) async {
   if (query.trim().isEmpty) return [];
-  final repo = ref.watch(productRepositoryProvider);
-  final results = await repo.searchProducts(query);
-  return results.map((json) => Product.fromJson(json)).toList();
+  try {
+    final repo = ref.watch(productRepositoryProvider);
+    final results = await repo.searchProducts(query);
+    return results.map((json) => Product.fromJson(json)).toList();
+  } catch (e) {
+    return [];
+  }
 });
 
 final productDetailProvider = FutureProvider.family<Product?, String>((ref, id) async {
-  final repo = ref.watch(productRepositoryProvider);
-  final json = await repo.getProduct(id);
-  if (json == null) return null;
-  return Product.fromJson(json);
+  try {
+    final repo = ref.watch(productRepositoryProvider);
+    final json = await repo.getProduct(id);
+    if (json == null) return null;
+    return Product.fromJson(json);
+  } catch (e) {
+    return null;
+  }
 });

@@ -284,7 +284,9 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
         ),
         child: FloatingActionButton.extended(
           onPressed: () {
-            // TODO: Navigate to add product
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Add product coming soon')),
+            );
           },
           icon: const Icon(Icons.add_rounded),
           label: const Text('Add Product'),

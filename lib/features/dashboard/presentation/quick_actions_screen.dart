@@ -104,7 +104,7 @@ class QuickActionsScreen extends StatelessWidget {
                           gradient: LinearGradient(
                             colors: [Color(0xFFEF4444), Color(0xFFF87171)],
                           ),
-                          route: '/sales',
+                          route: '/expense-claims',
                         ),
                       ],
                     ),
@@ -112,7 +112,7 @@ class QuickActionsScreen extends StatelessWidget {
                     _buildSection(
                       'People',
                       [
-                        const _ActionItem(
+                        _ActionItem(
                           icon: Icons.person_add_rounded,
                           label: 'Add Customer',
                           description: 'New customer profile',
@@ -120,7 +120,13 @@ class QuickActionsScreen extends StatelessWidget {
                           gradient: LinearGradient(
                             colors: [Color(0xFF10B981), Color(0xFF34D399)],
                           ),
-                          route: '/sales',
+                          onTap: (ctx) {
+                            ScaffoldMessenger.of(ctx).showSnackBar(
+                              const SnackBar(
+                                content: Text('Customer creation coming soon'),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
@@ -186,7 +192,8 @@ class _ActionItem {
   final String description;
   final Color color;
   final Gradient gradient;
-  final String route;
+  final String? route;
+  final void Function(BuildContext)? onTap;
 
   const _ActionItem({
     required this.icon,
@@ -194,7 +201,8 @@ class _ActionItem {
     required this.description,
     required this.color,
     required this.gradient,
-    required this.route,
+    this.route,
+    this.onTap,
   });
 }
 
@@ -206,7 +214,13 @@ class _ActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => context.push(item.route),
+      onTap: () {
+        if (item.onTap != null) {
+          item.onTap!(context);
+        } else if (item.route != null) {
+          context.push(item.route!);
+        }
+      },
       child: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(

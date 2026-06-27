@@ -3,17 +3,22 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme.dart';
 import '../../../core/network/api_client.dart';
 import '../../../core/storage/secure_storage.dart';
+import 'inventory_provider.dart';
 
 final transfersProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async {
-  final storage = ref.watch(secureStorageProvider);
-  final api = ApiClient(storage);
-  final response = await api.get('/inventory/transfers');
-  final data = response.data;
-  if (data is List) return data.cast<Map<String, dynamic>>();
-  if (data is Map && data.containsKey('data')) {
-    return List<Map<String, dynamic>>.from(data['data']);
+  try {
+    final storage = ref.watch(secureStorageProvider);
+    final api = ApiClient(storage);
+    final response = await api.get('/inventory/transfers');
+    final data = response.data;
+    if (data is List) return data.cast<Map<String, dynamic>>();
+    if (data is Map && data.containsKey('data')) {
+      return List<Map<String, dynamic>>.from(data['data']);
+    }
+    return [];
+  } catch (e) {
+    return [];
   }
-  return [];
 });
 
 final transferStatusFilterProvider = StateProvider<String>((ref) => 'All');
@@ -582,6 +587,8 @@ class _CreateTransferSheetState extends ConsumerState<_CreateTransferSheet> {
 
   @override
   Widget build(BuildContext context) {
+    final warehousesAsync = ref.watch(warehousesProvider);
+
     return Container(
       height: MediaQuery.of(context).size.height * 0.5,
       decoration: const BoxDecoration(
@@ -620,67 +627,85 @@ class _CreateTransferSheetState extends ConsumerState<_CreateTransferSheet> {
             ),
           ),
           Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  DropdownButtonFormField<String>(
-                    initialValue: _fromWarehouse,
-                    decoration: const InputDecoration(
-                      labelText: 'From Warehouse',
-                      prefixIcon: Icon(Icons.warehouse_outlined),
+            child: warehousesAsync.when(
+              loading: () => const Center(child: CircularProgressIndicator()),
+              error: (e, _) => Center(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.error_outline, color: Colors.red, size: 48),
+                    const SizedBox(height: 12),
+                    Text('Failed to load warehouses: $e'),
+                    const SizedBox(height: 12),
+                    TextButton(
+                      onPressed: () => ref.invalidate(warehousesProvider),
+                      child: const Text('Retry'),
                     ),
-                    items: const [
-                      DropdownMenuItem(value: 'wh-1', child: Text('Main Warehouse')),
-                      DropdownMenuItem(value: 'wh-2', child: Text('Branch Warehouse')),
-                      DropdownMenuItem(value: 'wh-3', child: Text('Store Front')),
-                    ],
-                    onChanged: (v) => setState(() => _fromWarehouse = v),
-                  ),
-                  const SizedBox(height: 16),
-                  DropdownButtonFormField<String>(
-                    initialValue: _toWarehouse,
-                    decoration: const InputDecoration(
-                      labelText: 'To Warehouse',
-                      prefixIcon: Icon(Icons.warehouse_outlined),
-                    ),
-                    items: const [
-                      DropdownMenuItem(value: 'wh-1', child: Text('Main Warehouse')),
-                      DropdownMenuItem(value: 'wh-2', child: Text('Branch Warehouse')),
-                      DropdownMenuItem(value: 'wh-3', child: Text('Store Front')),
-                    ],
-                    onChanged: (v) => setState(() => _toWarehouse = v),
-                  ),
-                  const SizedBox(height: 16),
-                  TextField(
-                    controller: _notesController,
-                    maxLines: 3,
-                    decoration: const InputDecoration(
-                      labelText: 'Notes (optional)',
-                      prefixIcon: Icon(Icons.notes_outlined),
-                      alignLabelWithHint: true,
-                    ),
-                  ),
-                  const SizedBox(height: 24),
-                  SizedBox(
-                    width: double.infinity,
-                    height: 56,
-                    child: ElevatedButton(
-                      onPressed: _isSubmitting ? null : _submitTransfer,
-                      child: _isSubmitting
-                          ? const SizedBox(
-                              width: 24,
-                              height: 24,
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
-                                color: Colors.white,
-                              ),
-                            )
-                          : const Text('Create Transfer'),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+              data: (warehouses) {
+                final items = warehouses
+                    .map((w) => DropdownMenuItem<String>(
+                          value: w['id'] as String,
+                          child: Text(w['name'] as String),
+                        ))
+                    .toList();
+                return SingleChildScrollView(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      DropdownButtonFormField<String>(
+                        initialValue: _fromWarehouse,
+                        decoration: const InputDecoration(
+                          labelText: 'From Warehouse',
+                          prefixIcon: Icon(Icons.warehouse_outlined),
+                        ),
+                        items: items,
+                        onChanged: (v) => setState(() => _fromWarehouse = v),
+                      ),
+                      const SizedBox(height: 16),
+                      DropdownButtonFormField<String>(
+                        initialValue: _toWarehouse,
+                        decoration: const InputDecoration(
+                          labelText: 'To Warehouse',
+                          prefixIcon: Icon(Icons.warehouse_outlined),
+                        ),
+                        items: items,
+                        onChanged: (v) => setState(() => _toWarehouse = v),
+                      ),
+                      const SizedBox(height: 16),
+                      TextField(
+                        controller: _notesController,
+                        maxLines: 3,
+                        decoration: const InputDecoration(
+                          labelText: 'Notes (optional)',
+                          prefixIcon: Icon(Icons.notes_outlined),
+                          alignLabelWithHint: true,
+                        ),
+                      ),
+                      const SizedBox(height: 24),
+                      SizedBox(
+                        width: double.infinity,
+                        height: 56,
+                        child: ElevatedButton(
+                          onPressed: _isSubmitting ? null : _submitTransfer,
+                          child: _isSubmitting
+                              ? const SizedBox(
+                                  width: 24,
+                                  height: 24,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    color: Colors.white,
+                                  ),
+                                )
+                              : const Text('Create Transfer'),
+                        ),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
           ),
         ],

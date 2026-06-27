@@ -12,9 +12,13 @@ final salesRepositoryProvider = Provider<SalesRepository>((ref) {
 });
 
 final orderListProvider = FutureProvider<List<SalesOrder>>((ref) async {
-  final repo = ref.watch(salesRepositoryProvider);
-  final results = await repo.getOrders();
-  return results.map((json) => SalesOrder.fromJson(json)).toList();
+  try {
+    final repo = ref.watch(salesRepositoryProvider);
+    final results = await repo.getOrders();
+    return results.map((json) => SalesOrder.fromJson(json)).toList();
+  } catch (e) {
+    return [];
+  }
 });
 
 class CartNotifier extends StateNotifier<List<OrderItem>> {
@@ -56,6 +60,10 @@ final cartCountProvider = Provider<int>((ref) => ref.watch(cartProvider).length)
 
 final customerSearchProvider = FutureProvider.family<List<Map<String, dynamic>>, String>((ref, query) async {
   if (query.trim().isEmpty) return [];
-  final repo = ref.watch(salesRepositoryProvider);
-  return await repo.getCustomers(search: query);
+  try {
+    final repo = ref.watch(salesRepositoryProvider);
+    return await repo.getCustomers(search: query);
+  } catch (e) {
+    return [];
+  }
 });
