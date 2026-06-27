@@ -51,6 +51,11 @@ final productStockMovementsProvider = FutureProvider.family<List<StockMovement>,
   }
 });
 
+final purchaseOrderProvider = FutureProvider.family<Map<String, dynamic>, String>((ref, id) async {
+  final repo = ref.watch(inventoryRepositoryProvider);
+  return repo.getPurchaseOrder(id);
+});
+
 final warehousesProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async {
   try {
     final repo = ref.watch(inventoryRepositoryProvider);

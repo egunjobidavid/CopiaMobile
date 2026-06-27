@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/theme.dart';
 import '../../../core/network/api_client.dart';
 import '../../../core/storage/secure_storage.dart';
@@ -40,6 +41,19 @@ final posProductsProvider = FutureProvider<List<Product>>((ref) async {
     items = List<Map<String, dynamic>>.from(data['data']);
   }
   return items.map((json) => Product.fromJson(json)).toList();
+});
+
+final tenantSettingsProvider = FutureProvider<Map<String, dynamic>>((ref) async {
+  try {
+    final storage = ref.watch(secureStorageProvider);
+    final api = ApiClient(storage);
+    final res = await api.get('tenants/current');
+    final data = res.data;
+    if (data is Map<String, dynamic>) return data;
+    return {};
+  } catch (e) {
+    return {'tax_rate': 0.10};
+  }
 });
 
 class PosScreen extends ConsumerStatefulWidget {
@@ -162,8 +176,10 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
     });
   }
 
+  double _taxRate = 0.10;
+
   double get _subtotal => _cart.fold(0, (s, c) => s + c.totalPrice);
-  double get _tax => _subtotal * 0.10;
+  double get _tax => _subtotal * _taxRate;
   double get _grandTotal => _subtotal + _tax;
   int get _cartItemCount => _cart.fold(0, (s, c) => s + c.quantity);
 
@@ -222,6 +238,8 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     final productsAsync = ref.watch(posProductsProvider);
+    final settingsAsync = ref.watch(tenantSettingsProvider);
+    _taxRate = settingsAsync.whenOrNull(data: (d) => (d['tax_rate'] as num?)?.toDouble()) ?? 0.10;
 
     return Scaffold(
       backgroundColor: AppTheme.background,
@@ -367,13 +385,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
                     child: const Icon(Icons.barcode_reader, size: 18, color: AppTheme.primary),
                   ),
                   onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: const Text('Barcode scanner coming soon'),
-                        behavior: SnackBarBehavior.floating,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                      ),
-                    );
+                    context.push('/products/scan');
                   },
                 ),
           filled: true,
@@ -1028,7 +1040,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
         mainAxisSize: MainAxisSize.min,
         children: [
           _summaryRow('Subtotal', '₦${_subtotal.toStringAsFixed(2)}'),
-          _summaryRow('Tax (10%)', '₦${_tax.toStringAsFixed(2)}'),
+          _summaryRow('Tax (${(_taxRate * 100).toStringAsFixed(0)}%)', '₦${_tax.toStringAsFixed(2)}'),
           const Divider(height: 16),
           _summaryRow('Total', '₦${_grandTotal.toStringAsFixed(2)}', isBold: true),
           const SizedBox(height: 12),

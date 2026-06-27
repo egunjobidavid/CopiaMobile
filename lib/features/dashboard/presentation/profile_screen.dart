@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme.dart';
+import '../../../core/network/api_client.dart';
+import '../../../core/storage/secure_storage.dart';
 import '../../auth/presentation/auth_provider.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
@@ -52,12 +54,16 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           _SettingsTile(
                             icon: Icons.person_outline_rounded,
                             title: 'Edit Profile',
-                            onTap: () {},
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Edit profile coming soon')),
+                              );
+                            },
                           ),
                           _SettingsTile(
                             icon: Icons.lock_outline_rounded,
                             title: 'Change Password',
-                            onTap: () {},
+                            onTap: () => _showChangePasswordDialog(context),
                           ),
                           _SettingsTile(
                             icon: Icons.fingerprint_rounded,
@@ -78,12 +84,20 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           _SettingsTile(
                             icon: Icons.business_center_outlined,
                             title: 'Company Info',
-                            onTap: () {},
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Company settings available on web dashboard')),
+                              );
+                            },
                           ),
                           _SettingsTile(
                             icon: Icons.location_on_outlined,
                             title: 'Locations',
-                            onTap: () {},
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Location management coming soon')),
+                              );
+                            },
                           ),
                         ]),
                         const SizedBox(height: 20),
@@ -100,7 +114,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            onTap: () {},
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Currency settings available on web dashboard')),
+                              );
+                            },
                           ),
                           _SettingsTile(
                             icon: Icons.language_rounded,
@@ -113,7 +131,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            onTap: () {},
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Language settings coming soon')),
+                              );
+                            },
                           ),
                           _SettingsTile(
                             icon: Icons.dark_mode_outlined,
@@ -126,7 +148,11 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                 fontWeight: FontWeight.w500,
                               ),
                             ),
-                            onTap: () {},
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Theme settings coming soon')),
+                              );
+                            },
                           ),
                         ]),
                         const SizedBox(height: 20),
@@ -135,17 +161,29 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           _SettingsTile(
                             icon: Icons.help_outline_rounded,
                             title: 'Help Center',
-                            onTap: () {},
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Visit help.copiaos.com for support')),
+                              );
+                            },
                           ),
                           _SettingsTile(
                             icon: Icons.privacy_tip_outlined,
                             title: 'Privacy Policy',
-                            onTap: () {},
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('View privacy policy at copiaos.com/privacy')),
+                              );
+                            },
                           ),
                           _SettingsTile(
                             icon: Icons.description_outlined,
                             title: 'Terms of Service',
-                            onTap: () {},
+                            onTap: () {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('View terms at copiaos.com/terms')),
+                              );
+                            },
                           ),
                           const _SettingsTile(
                             icon: Icons.info_outline_rounded,
@@ -403,6 +441,137 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  void _showChangePasswordDialog(BuildContext context) {
+    final currentPasswordController = TextEditingController();
+    final newPasswordController = TextEditingController();
+    final confirmPasswordController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+
+    showDialog(
+      context: context,
+      builder: (ctx) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          title: const Text(
+            'Change Password',
+            style: TextStyle(fontWeight: FontWeight.w700),
+          ),
+          content: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  controller: currentPasswordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Current Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  validator: (v) => (v == null || v.isEmpty)
+                      ? 'Enter current password'
+                      : null,
+                ),
+                const SizedBox(height: 12),
+                TextFormField(
+                  controller: newPasswordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'New Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  validator: (v) {
+                    if (v == null || v.isEmpty) return 'Enter new password';
+                    if (v.length < 6) return 'Minimum 6 characters';
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 12),
+                TextFormField(
+                  controller: confirmPasswordController,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: 'Confirm New Password',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  validator: (v) {
+                    if (v == null || v.isEmpty) return 'Confirm password';
+                    if (v != newPasswordController.text) {
+                      return 'Passwords do not match';
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                currentPasswordController.dispose();
+                newPasswordController.dispose();
+                confirmPasswordController.dispose();
+                Navigator.pop(ctx);
+              },
+              child: const Text(
+                'Cancel',
+                style: TextStyle(color: AppTheme.textSecondary),
+              ),
+            ),
+            TextButton(
+              onPressed: () async {
+                if (!formKey.currentState!.validate()) return;
+                Navigator.pop(ctx);
+                try {
+                  final storage = SecureStorage();
+                  final api = ApiClient(storage);
+                  await api.patch('/auth/password', data: {
+                    'current_password': currentPasswordController.text,
+                    'new_password': newPasswordController.text,
+                  });
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Password changed successfully'),
+                        backgroundColor: AppTheme.success,
+                      ),
+                    );
+                  }
+                } catch (e) {
+                  if (context.mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Failed to change password: $e'),
+                        backgroundColor: AppTheme.error,
+                      ),
+                    );
+                  }
+                } finally {
+                  currentPasswordController.dispose();
+                  newPasswordController.dispose();
+                  confirmPasswordController.dispose();
+                }
+              },
+              child: const Text(
+                'Save',
+                style: TextStyle(
+                  color: AppTheme.primary,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -15,13 +15,22 @@ class _GoodsReceiptScreenState extends ConsumerState<GoodsReceiptScreen> {
   final _formKey = GlobalKey<FormState>();
   final _items = <GoodsReceiptItem>[];
   bool _isSubmitting = false;
+  bool _poLoaded = false;
 
-  @override
-  void initState() {
-    super.initState();
-    if (widget.purchaseOrderId != null) {
-      // Load PO items for receiving
+  void _loadPOItems(List<dynamic> poItems) {
+    _items.clear();
+    for (final item in poItems) {
+      final name = item['productName'] ?? item['name'] ?? '';
+      final sku = item['sku'] ?? item['productSku'] ?? '';
+      final ordered = (item['quantity'] ?? item['orderedQuantity'] ?? 0).toDouble();
+      _items.add(GoodsReceiptItem(
+        sku: sku.toString(),
+        productName: name.toString(),
+        quantity: ordered,
+        orderedQuantity: ordered,
+      ));
     }
+    _poLoaded = true;
   }
 
   void _addItem() {
@@ -49,8 +58,10 @@ class _GoodsReceiptScreenState extends ConsumerState<GoodsReceiptScreen> {
         'items': _items.map((i) => {
           'sku': i.sku,
           'productName': i.productName,
-          'quantity': i.quantity,
+          'orderedQuantity': i.orderedQuantity,
+          'receivedQuantity': i.quantity,
           'warehouseId': i.warehouseId,
+          'notes': i.notes,
         }).toList(),
       });
       if (mounted) {
@@ -72,6 +83,23 @@ class _GoodsReceiptScreenState extends ConsumerState<GoodsReceiptScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final poAsync = widget.purchaseOrderId != null
+        ? ref.watch(purchaseOrderProvider(widget.purchaseOrderId!))
+        : null;
+
+    if (poAsync != null && !_poLoaded) {
+      poAsync.whenData((po) {
+        final items = po['items'] as List<dynamic>? ?? [];
+        if (items.isNotEmpty) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (mounted) setState(() => _loadPOItems(items));
+          });
+        } else {
+          _poLoaded = true;
+        }
+      });
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.purchaseOrderId != null ? 'Receive PO' : 'Goods Receipt'),
@@ -81,13 +109,25 @@ class _GoodsReceiptScreenState extends ConsumerState<GoodsReceiptScreen> {
         child: Column(
           children: [
             if (widget.purchaseOrderId != null)
-              Container(
-                width: double.infinity,
-                color: Colors.blue.shade50,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: Text('Receiving for PO: ${widget.purchaseOrderId}',
-                  style: TextStyle(fontWeight: FontWeight.w500, color: Colors.blue.shade800)),
-              ),
+              poAsync?.when(
+                loading: () => const LinearProgressIndicator(),
+                error: (e, _) => Container(
+                  width: double.infinity,
+                  color: Colors.red.shade50,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Text('Failed to load PO: $e',
+                    style: TextStyle(color: Colors.red.shade700)),
+                ),
+                data: (po) => Container(
+                  width: double.infinity,
+                  color: Colors.blue.shade50,
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  child: Text(
+                    'Receiving for PO: ${po['poNumber'] ?? widget.purchaseOrderId}',
+                    style: TextStyle(fontWeight: FontWeight.w500, color: Colors.blue.shade800),
+                  ),
+                ),
+              ) ?? const SizedBox.shrink(),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.all(16),
@@ -141,7 +181,16 @@ class _GoodsReceiptScreenState extends ConsumerState<GoodsReceiptScreen> {
                       child: Padding(
                         padding: const EdgeInsets.all(12),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            if (item.orderedQuantity > 0)
+                              Padding(
+                                padding: const EdgeInsets.only(bottom: 8),
+                                child: Text(
+                                  'Ordered: ${item.orderedQuantity.toStringAsFixed(0)}',
+                                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                                ),
+                              ),
                             Row(
                               children: [
                                 Expanded(
@@ -180,7 +229,7 @@ class _GoodsReceiptScreenState extends ConsumerState<GoodsReceiptScreen> {
                                 Expanded(
                                   child: TextFormField(
                                     decoration: const InputDecoration(
-                                      labelText: 'Quantity',
+                                      labelText: 'Received Qty',
                                       isDense: true,
                                     ),
                                     initialValue: item.quantity.toString(),
@@ -205,6 +254,15 @@ class _GoodsReceiptScreenState extends ConsumerState<GoodsReceiptScreen> {
                                   ),
                                 ),
                               ],
+                            ),
+                            const SizedBox(height: 8),
+                            TextFormField(
+                              decoration: const InputDecoration(
+                                labelText: 'Notes (optional)',
+                                isDense: true,
+                              ),
+                              initialValue: item.notes,
+                              onChanged: (v) => item.notes = v,
                             ),
                           ],
                         ),
@@ -255,12 +313,16 @@ class GoodsReceiptItem {
   String sku;
   String productName;
   double quantity;
+  double orderedQuantity;
   String warehouseId;
+  String notes;
 
   GoodsReceiptItem({
     this.sku = '',
     this.productName = '',
     this.quantity = 1,
+    this.orderedQuantity = 0,
     this.warehouseId = '',
+    this.notes = '',
   });
 }
