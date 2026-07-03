@@ -37,7 +37,7 @@ final posProductsProvider = FutureProvider<List<Product>>((ref) async {
   if (data is List) {
     items = data.map((e) => Map<String, dynamic>.from(e)).toList();
   } else if (data is Map && data.containsKey('data')) {
-    items = List<Map<String, dynamic>>.from(data['data']);
+    items = (data['data'] as List).map((e) => Map<String, dynamic>.from(e)).toList();
   }
   return items.map((json) => Product.fromJson(json)).toList();
 });

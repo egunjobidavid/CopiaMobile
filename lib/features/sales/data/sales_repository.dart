@@ -12,7 +12,7 @@ class SalesRepository {
     );
     final data = response.data;
     if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
-    if (data is Map && data.containsKey('data')) return List<Map<String, dynamic>>.from(data['data']);
+    if (data is Map && data.containsKey('data')) return (data['data'] as List).map((e) => Map<String, dynamic>.from(e)).toList();
     return [];
   }
 
@@ -40,7 +40,7 @@ class SalesRepository {
     final response = await _api.get('/customers', queryParameters: params);
     final data = response.data;
     if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
-    if (data is Map && data.containsKey('data')) return List<Map<String, dynamic>>.from(data['data']);
+    if (data is Map && data.containsKey('data')) return (data['data'] as List).map((e) => Map<String, dynamic>.from(e)).toList();
     return [];
   }
 }

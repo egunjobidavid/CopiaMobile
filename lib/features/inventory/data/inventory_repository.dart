@@ -11,7 +11,7 @@ class InventoryRepository {
     final response = await _api.get('/inventory/stock', queryParameters: params);
     final data = response.data;
     if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
-    if (data is Map && data.containsKey('data')) return List<Map<String, dynamic>>.from(data['data']);
+    if (data is Map && data.containsKey('data')) return (data['data'] as List).map((e) => Map<String, dynamic>.from(e)).toList();
     return [];
   }
 
@@ -24,7 +24,7 @@ class InventoryRepository {
     final response = await _api.get('/inventory/movements', queryParameters: params);
     final data = response.data;
     if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
-    if (data is Map && data.containsKey('data')) return List<Map<String, dynamic>>.from(data['data']);
+    if (data is Map && data.containsKey('data')) return (data['data'] as List).map((e) => Map<String, dynamic>.from(e)).toList();
     return [];
   }
 
@@ -32,7 +32,7 @@ class InventoryRepository {
     final response = await _api.get('/inventory/warehouses');
     final data = response.data;
     if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
-    if (data is Map && data.containsKey('data')) return List<Map<String, dynamic>>.from(data['data']);
+    if (data is Map && data.containsKey('data')) return (data['data'] as List).map((e) => Map<String, dynamic>.from(e)).toList();
     return [];
   }
 

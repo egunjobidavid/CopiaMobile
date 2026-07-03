@@ -28,7 +28,7 @@ class ExpenseClaim {
     return ExpenseClaim(
       id: json['id'].toString(),
       category: json['category'] ?? '',
-      amount: (json['amount'] as num).toDouble(),
+      amount: double.tryParse(json['amount']?.toString() ?? '') ?? 0,
       description: json['description'] ?? '',
       expenseDate: DateTime.tryParse(json['expense_date'] ?? '') ?? DateTime.now(),
       status: json['status'] ?? 'pending',

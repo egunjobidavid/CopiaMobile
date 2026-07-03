@@ -13,7 +13,7 @@ final transfersProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async
     final data = response.data;
     if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
     if (data is Map && data.containsKey('data')) {
-      return List<Map<String, dynamic>>.from(data['data']);
+      return (data['data'] as List).map((e) => Map<String, dynamic>.from(e)).toList();
     }
     return [];
   } catch (e) {

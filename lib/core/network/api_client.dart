@@ -7,13 +7,8 @@ class EnvelopeInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     final raw = response.data;
-    if (raw is Map && raw.containsKey('data')) {
-      final inner = raw['data'];
-      if (inner is Map && inner.containsKey('data')) {
-        response.data = inner['data'];
-      } else {
-        response.data = inner;
-      }
+    if (raw is Map && raw.containsKey('success') && raw.containsKey('data')) {
+      response.data = raw['data'];
     }
     handler.next(response);
   }
