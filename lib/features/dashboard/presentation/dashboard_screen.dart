@@ -38,7 +38,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       if (raw is Map && raw.containsKey('data') && raw['data'] is Map) {
         data = raw['data'] as Map<String, dynamic>;
       } else if (raw is Map) {
-        data = raw;
+        data = Map<String, dynamic>.from(raw);
       } else {
         data = {};
       }
