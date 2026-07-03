@@ -9,10 +9,7 @@ class InventoryRepository {
     final params = <String, String>{};
     if (productId != null) params['productId'] = productId;
     final response = await _api.get('/inventory/stock', queryParameters: params);
-    final data = response.data;
-    if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
-    if (data is Map && data.containsKey('data')) return (data['data'] as List).map((e) => Map<String, dynamic>.from(e)).toList();
-    return [];
+    return extractList(response.data);
   }
 
   Future<List<Map<String, dynamic>>> getStockMovements({
@@ -22,38 +19,26 @@ class InventoryRepository {
     final params = <String, String>{'limit': limit.toString()};
     if (productId != null) params['productId'] = productId;
     final response = await _api.get('/inventory/movements', queryParameters: params);
-    final data = response.data;
-    if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
-    if (data is Map && data.containsKey('data')) return (data['data'] as List).map((e) => Map<String, dynamic>.from(e)).toList();
-    return [];
+    return extractList(response.data);
   }
 
   Future<List<Map<String, dynamic>>> getWarehouses() async {
     final response = await _api.get('/inventory/warehouses');
-    final data = response.data;
-    if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
-    if (data is Map && data.containsKey('data')) return (data['data'] as List).map((e) => Map<String, dynamic>.from(e)).toList();
-    return [];
+    return extractList(response.data);
   }
 
   Future<Map<String, dynamic>> createGoodsReceipt(Map<String, dynamic> payload) async {
     final response = await _api.post('/procurement/goods-receipts', data: payload);
-    final data = response.data;
-    if (data is Map && data.containsKey('data')) return data['data'] as Map<String, dynamic>;
-    return data as Map<String, dynamic>;
+    return extractOne(response.data) ?? <String, dynamic>{};
   }
 
   Future<Map<String, dynamic>> getPurchaseOrder(String id) async {
     final response = await _api.get('/procurement/purchase-orders/$id');
-    final data = response.data;
-    if (data is Map && data.containsKey('data')) return data['data'] as Map<String, dynamic>;
-    return data as Map<String, dynamic>;
+    return extractOne(response.data) ?? <String, dynamic>{};
   }
 
   Future<Map<String, dynamic>> adjustStock(Map<String, dynamic> payload) async {
     final response = await _api.post('/inventory/adjust', data: payload);
-    final data = response.data;
-    if (data is Map && data.containsKey('data')) return data['data'] as Map<String, dynamic>;
-    return data as Map<String, dynamic>;
+    return extractOne(response.data) ?? <String, dynamic>{};
   }
 }

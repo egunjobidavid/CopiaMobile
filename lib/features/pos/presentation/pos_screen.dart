@@ -29,16 +29,8 @@ class CartItem {
 final posProductsProvider = FutureProvider<List<Product>>((ref) async {
   final storage = ref.watch(secureStorageProvider);
   final api = ApiClient(storage);
-  final response = await api.get('/inventory/products', queryParameters: {
-    'limit': '200',
-  });
-  final data = response.data;
-  List<Map<String, dynamic>> items = [];
-  if (data is List) {
-    items = data.map((e) => Map<String, dynamic>.from(e)).toList();
-  } else if (data is Map && data.containsKey('data')) {
-    items = (data['data'] as List).map((e) => Map<String, dynamic>.from(e)).toList();
-  }
+  final response = await api.get('/inventory/products', queryParameters: {'limit': '200'});
+  final items = extractList(response.data);
   return items.map((json) => Product.fromJson(json)).toList();
 });
 

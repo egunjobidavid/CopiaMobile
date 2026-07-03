@@ -14,6 +14,33 @@ class EnvelopeInterceptor extends Interceptor {
   }
 }
 
+/// Extracts a list from any backend response format.
+/// Handles: {data: [...]}, {rows: [...]}, or raw [...]
+List<Map<String, dynamic>> extractList(dynamic data) {
+  if (data is List) {
+    return data.map((e) => Map<String, dynamic>.from(e as Map)).toList();
+  }
+  if (data is Map) {
+    if (data.containsKey('data') && data['data'] is List) {
+      return (data['data'] as List)
+          .map((e) => Map<String, dynamic>.from(e as Map))
+          .toList();
+    }
+    if (data.containsKey('rows') && data['rows'] is List) {
+      return (data['rows'] as List)
+          .map((e) => Map<String, dynamic>.from(e as Map))
+          .toList();
+    }
+  }
+  return [];
+}
+
+/// Extracts a single object from any backend response format.
+Map<String, dynamic>? extractOne(dynamic data) {
+  if (data is Map) return Map<String, dynamic>.from(data);
+  return null;
+}
+
 class ApiClient {
   late final Dio _dio;
   final SecureStorage _storage;

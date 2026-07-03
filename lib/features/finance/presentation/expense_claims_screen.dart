@@ -41,9 +41,8 @@ final expenseClaimsProvider = FutureProvider<List<ExpenseClaim>>((ref) async {
   final storage = ref.watch(secureStorageProvider);
   final api = ApiClient(storage);
   final response = await api.get('/hr/expense-claims');
-  final envelope = response.data as Map<String, dynamic>;
-  final data = envelope['data'] as List? ?? [];
-  return data.map((json) => ExpenseClaim.fromJson(json as Map<String, dynamic>)).toList();
+  final items = extractList(response.data);
+  return items.map((json) => ExpenseClaim.fromJson(json)).toList();
 });
 
 class ExpenseClaimsScreen extends ConsumerStatefulWidget {

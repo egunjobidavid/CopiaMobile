@@ -11,13 +11,7 @@ class ProductRepository {
       '/inventory/products',
       queryParameters: {'search': query, 'limit': '20'},
     );
-    final data = response.data;
-    if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
-    if (data is Map && data.containsKey('data')) {
-      final inner = data['data'];
-      if (inner is List) return inner.map((e) => Map<String, dynamic>.from(e)).toList();
-    }
-    return [];
+    return extractList(response.data);
   }
 
   Future<Map<String, dynamic>?> getProduct(String id) async {
@@ -26,17 +20,9 @@ class ProductRepository {
         '/inventory/products',
         queryParameters: {'limit': '200'},
       );
-      final data = response.data;
-      List<dynamic> items;
-      if (data is List) {
-        items = data;
-      } else if (data is Map && data.containsKey('data')) {
-        items = data['data'] as List? ?? [];
-      } else {
-        return null;
-      }
+      final items = extractList(response.data);
       for (final item in items) {
-        if (item is Map && item['id'] == id) return Map<String, dynamic>.from(item);
+        if (item['id'] == id) return item;
       }
       return null;
     } catch (_) {
@@ -50,16 +36,8 @@ class ProductRepository {
         '/inventory/products',
         queryParameters: {'search': sku, 'limit': '1'},
       );
-      final data = response.data;
-      List<dynamic> items;
-      if (data is List) {
-        items = data;
-      } else if (data is Map && data.containsKey('data')) {
-        items = data['data'] as List? ?? [];
-      } else {
-        return null;
-      }
-      if (items.isNotEmpty) return Map<String, dynamic>.from(items[0]);
+      final items = extractList(response.data);
+      if (items.isNotEmpty) return items.first;
       return null;
     } catch (_) {
       return null;

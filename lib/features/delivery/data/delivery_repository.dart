@@ -11,16 +11,13 @@ class DeliveryRepository {
     final params = <String, String>{};
     if (status != null) params['status'] = status;
     final response = await _api.get('/deliveries', queryParameters: params);
-    final data = response.data;
-    if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
-    if (data is Map && data.containsKey('data')) return (data['data'] as List).map((e) => Map<String, dynamic>.from(e)).toList();
-    return [];
+    return extractList(response.data);
   }
 
   Future<Map<String, dynamic>?> getDelivery(String id) async {
     try {
       final response = await _api.get('/deliveries/$id');
-      return response.data as Map<String, dynamic>;
+      return extractOne(response.data);
     } catch (_) {
       return null;
     }
@@ -28,7 +25,7 @@ class DeliveryRepository {
 
   Future<Map<String, dynamic>> confirmDelivery(String id, Map<String, dynamic> payload) async {
     final response = await _api.post('/deliveries/$id/confirm', data: payload);
-    return response.data as Map<String, dynamic>;
+    return extractOne(response.data) ?? <String, dynamic>{};
   }
 
   Future<Map<String, dynamic>> recordProofOfDelivery(String id, String imagePath) async {
@@ -36,6 +33,6 @@ class DeliveryRepository {
       'photo': await MultipartFile.fromFile(imagePath),
     });
     final response = await _api.post('/deliveries/$id/pod', data: formData);
-    return response.data as Map<String, dynamic>;
+    return extractOne(response.data) ?? <String, dynamic>{};
   }
 }

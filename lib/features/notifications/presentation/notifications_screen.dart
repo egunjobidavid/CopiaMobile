@@ -84,14 +84,17 @@ class NotificationsPageNotifier extends StateNotifier<AsyncValue<List<Notificati
   Future<Map<String, dynamic>> _fetchPage(int page) async {
     final api = _api();
     final response = await api.get('/notifications', queryParameters: {'page': page});
-    final envelope = response.data as Map<String, dynamic>;
-    final data = envelope['data'] as List? ?? [];
+    final raw = response.data;
+    final data = extractList(raw);
+    final totalPages = (raw is Map && raw['totalPages'] != null)
+        ? (raw['totalPages'] as num).toInt()
+        : 1;
     final items = data
-        .map((json) => NotificationItem.fromJson(json as Map<String, dynamic>))
+        .map((json) => NotificationItem.fromJson(json))
         .toList();
     return {
       'items': items,
-      'totalPages': envelope['totalPages'] ?? 1,
+      'totalPages': totalPages,
     };
   }
 
