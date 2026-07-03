@@ -23,7 +23,7 @@ class Product {
 
   factory Product.fromJson(Map<String, dynamic> json) {
     return Product(
-      id: json['id'] as String,
+      id: json['id'] as String? ?? '',
       sku: json['sku'] as String? ?? '',
       name: json['name'] as String? ?? '',
       description: json['description'] as String?,

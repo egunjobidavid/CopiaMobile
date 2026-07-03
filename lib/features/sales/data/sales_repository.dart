@@ -18,13 +18,17 @@ class SalesRepository {
 
   Future<Map<String, dynamic>> createOrder(Map<String, dynamic> payload) async {
     final response = await _api.post('/sales/orders', data: payload);
-    return response.data as Map<String, dynamic>;
+    final data = response.data;
+    if (data is Map && data.containsKey('data')) return data['data'] as Map<String, dynamic>;
+    return data as Map<String, dynamic>;
   }
 
   Future<Map<String, dynamic>?> getOrder(String id) async {
     try {
       final response = await _api.get('/sales/orders/$id');
-      return response.data as Map<String, dynamic>;
+      final data = response.data;
+      if (data is Map && data.containsKey('data')) return data['data'] as Map<String, dynamic>;
+      return data as Map<String, dynamic>;
     } catch (_) {
       return null;
     }

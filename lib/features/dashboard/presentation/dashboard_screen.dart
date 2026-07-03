@@ -33,8 +33,15 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       final storage = ref.read(secureStorageProvider);
       final api = ApiClient(storage);
       final response = await api.get('/analytics/dashboard');
-      final envelope = response.data as Map<String, dynamic>;
-      final data = envelope['data'] as Map<String, dynamic>? ?? envelope;
+      final raw = response.data;
+      Map<String, dynamic> data;
+      if (raw is Map && raw.containsKey('data') && raw['data'] is Map) {
+        data = raw['data'] as Map<String, dynamic>;
+      } else if (raw is Map) {
+        data = raw;
+      } else {
+        data = {};
+      }
       if (mounted) {
         setState(() {
           _dashboardData = data;

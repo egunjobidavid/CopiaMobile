@@ -9,9 +9,12 @@ final staffListProvider =
   final storage = ref.read(secureStorageProvider);
   final api = ApiClient(storage);
   final response = await api.get('/staff');
-  final envelope = response.data as Map<String, dynamic>;
-  final data = envelope['data'];
+  final data = response.data;
   if (data is List) return data.cast<Map<String, dynamic>>();
+  if (data is Map && data.containsKey('data')) {
+    final inner = data['data'];
+    if (inner is List) return inner.cast<Map<String, dynamic>>();
+  }
   return [];
 });
 

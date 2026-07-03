@@ -13,13 +13,19 @@ class ProductRepository {
     );
     final data = response.data;
     if (data is List) return data.cast<Map<String, dynamic>>();
+    if (data is Map && data.containsKey('data')) {
+      final inner = data['data'];
+      if (inner is List) return inner.cast<Map<String, dynamic>>();
+    }
     return [];
   }
 
   Future<Map<String, dynamic>?> getProduct(String id) async {
     try {
       final response = await _api.get('/inventory/products/$id');
-      return response.data as Map<String, dynamic>;
+      final data = response.data;
+      if (data is Map && data.containsKey('data')) return data['data'] as Map<String, dynamic>;
+      return data as Map<String, dynamic>;
     } catch (_) {
       return null;
     }
@@ -29,10 +35,18 @@ class ProductRepository {
     try {
       final response = await _api.get(
         '/inventory/products',
-        queryParameters: {'sku': sku, 'limit': '1'},
+        queryParameters: {'search': sku, 'limit': '1'},
       );
       final data = response.data;
-      if (data is List && data.isNotEmpty) return data[0] as Map<String, dynamic>;
+      List<dynamic> items;
+      if (data is List) {
+        items = data;
+      } else if (data is Map && data.containsKey('data')) {
+        items = data['data'] as List? ?? [];
+      } else {
+        return null;
+      }
+      if (items.isNotEmpty) return items[0] as Map<String, dynamic>;
       return null;
     } catch (_) {
       return null;

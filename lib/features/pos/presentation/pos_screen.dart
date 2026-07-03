@@ -31,7 +31,6 @@ final posProductsProvider = FutureProvider<List<Product>>((ref) async {
   final api = ApiClient(storage);
   final response = await api.get('/inventory/products', queryParameters: {
     'limit': '200',
-    'isActive': 'true',
   });
   final data = response.data;
   List<Map<String, dynamic>> items = [];

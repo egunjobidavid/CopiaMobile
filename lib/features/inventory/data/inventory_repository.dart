@@ -38,7 +38,9 @@ class InventoryRepository {
 
   Future<Map<String, dynamic>> createGoodsReceipt(Map<String, dynamic> payload) async {
     final response = await _api.post('/procurement/goods-receipts', data: payload);
-    return response.data as Map<String, dynamic>;
+    final data = response.data;
+    if (data is Map && data.containsKey('data')) return data['data'] as Map<String, dynamic>;
+    return data as Map<String, dynamic>;
   }
 
   Future<Map<String, dynamic>> getPurchaseOrder(String id) async {
@@ -50,6 +52,8 @@ class InventoryRepository {
 
   Future<Map<String, dynamic>> adjustStock(Map<String, dynamic> payload) async {
     final response = await _api.post('/inventory/adjust', data: payload);
-    return response.data as Map<String, dynamic>;
+    final data = response.data;
+    if (data is Map && data.containsKey('data')) return data['data'] as Map<String, dynamic>;
+    return data as Map<String, dynamic>;
   }
 }

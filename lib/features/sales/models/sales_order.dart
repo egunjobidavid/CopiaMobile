@@ -27,7 +27,7 @@ class SalesOrder {
 
   factory SalesOrder.fromJson(Map<String, dynamic> json) {
     return SalesOrder(
-      id: json['id'] as String,
+      id: json['id'] as String? ?? '',
       orderNumber: json['orderNumber'] as String? ?? json['reference'] as String? ?? '',
       customerId: json['customerId'] as String?,
       customerName: json['customerName'] as String?,

@@ -47,8 +47,7 @@ final pendingApprovalsProvider = FutureProvider<List<ApprovalItem>>((ref) async 
   final api = ApiClient(storage);
   final response = await api.get('/approvals?status=pending');
   final envelope = response.data as Map<String, dynamic>;
-  final inner = envelope['data'] as Map<String, dynamic>;
-  final items = inner['data'] as List? ?? [];
+  final items = envelope['data'] as List? ?? [];
   return items.map((json) => ApprovalItem.fromJson(json as Map<String, dynamic>)).toList();
 });
 
