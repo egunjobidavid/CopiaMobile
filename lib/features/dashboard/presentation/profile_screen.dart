@@ -398,7 +398,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               const Divider(
                 height: 1,
                 indent: 52,
-                color: AppTheme.dividerColor,
+                color: AppTheme.divider,
               ),
           ],
         ],
@@ -688,7 +688,7 @@ class _SettingsTile extends StatelessWidget {
               const Icon(
                 Icons.chevron_right_rounded,
                 size: 20,
-                color: AppTheme.textLight,
+                color: AppTheme.textTertiary,
               ),
           ],
         ),

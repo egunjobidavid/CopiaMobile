@@ -143,7 +143,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
                         color: isSelected ? AppTheme.primary : Colors.white,
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(
-                          color: isSelected ? AppTheme.primary : AppTheme.dividerColor,
+                          color: isSelected ? AppTheme.primary : AppTheme.divider,
                         ),
                       ),
                       child: Center(
@@ -332,7 +332,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: AppTheme.dividerColor,
+                color: AppTheme.divider,
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
@@ -345,7 +345,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
                     height: 14,
                     width: 100,
                     decoration: BoxDecoration(
-                      color: AppTheme.dividerColor,
+                      color: AppTheme.divider,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -354,7 +354,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
                     height: 12,
                     width: 80,
                     decoration: BoxDecoration(
-                      color: AppTheme.dividerColor,
+                      color: AppTheme.divider,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -368,7 +368,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
                   height: 14,
                   width: 60,
                   decoration: BoxDecoration(
-                    color: AppTheme.dividerColor,
+                    color: AppTheme.divider,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -377,7 +377,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
                   height: 20,
                   width: 60,
                   decoration: BoxDecoration(
-                    color: AppTheme.dividerColor,
+                    color: AppTheme.divider,
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),

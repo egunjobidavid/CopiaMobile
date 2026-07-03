@@ -173,7 +173,7 @@ class StockDetailScreen extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(8),
                               child: LinearProgressIndicator(
                                 value: (totalAvailable / 100).clamp(0.0, 1.0),
-                                backgroundColor: AppTheme.dividerColor,
+                                backgroundColor: AppTheme.divider,
                                 valueColor: AlwaysStoppedAnimation<Color>(
                                   totalAvailable <= 0
                                       ? AppTheme.error

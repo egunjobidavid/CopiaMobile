@@ -53,7 +53,7 @@ class QuickActionsScreen extends StatelessWidget {
                           label: 'New Quote',
                           description: 'Send a price estimate',
                           color: AppTheme.accent,
-                          gradient: AppTheme.tealGradient,
+                          gradient: AppTheme.secondaryGradient,
                           route: '/sales/create',
                         ),
                         const _ActionItem(
@@ -61,7 +61,7 @@ class QuickActionsScreen extends StatelessWidget {
                           label: 'New Order',
                           description: 'Create a sales order',
                           color: AppTheme.secondary,
-                          gradient: AppTheme.coralGradient,
+                          gradient: AppTheme.warmGradient,
                           route: '/sales/create',
                         ),
                       ],

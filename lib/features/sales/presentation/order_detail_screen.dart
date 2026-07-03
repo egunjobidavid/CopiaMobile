@@ -286,7 +286,7 @@ class OrderDetailScreen extends ConsumerWidget {
                             ),
                             const Padding(
                               padding: EdgeInsets.symmetric(vertical: 12),
-                              child: Divider(color: AppTheme.dividerColor),
+                              child: Divider(color: AppTheme.divider),
                             ),
                             _SummaryRow(
                               label: 'Total',

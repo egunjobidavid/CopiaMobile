@@ -41,14 +41,9 @@ class _MainShellState extends State<MainShell> {
 
   static const _tabs = [
     _TabConfig(path: '/home', label: 'Home', icon: Icons.home_rounded),
-    _TabConfig(
-        path: '/sales', label: 'Sales', icon: Icons.receipt_long_rounded),
-    _TabConfig(
-        path: '/create', label: 'Create', icon: Icons.add_circle_rounded),
-    _TabConfig(
-        path: '/inventory',
-        label: 'Stock',
-        icon: Icons.inventory_2_rounded),
+    _TabConfig(path: '/sales', label: 'Sales', icon: Icons.receipt_long_rounded),
+    _TabConfig(path: '/create', label: 'Create', icon: Icons.add_circle_rounded),
+    _TabConfig(path: '/inventory', label: 'Stock', icon: Icons.inventory_2_rounded),
     _TabConfig(path: '/more', label: 'More', icon: Icons.more_horiz_rounded),
   ];
 
@@ -57,19 +52,15 @@ class _MainShellState extends State<MainShell> {
     return Scaffold(
       body: widget.child,
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.05),
-              blurRadius: 20,
-              offset: const Offset(0, -5),
-            ),
-          ],
+        decoration: const BoxDecoration(
+          color: AppTheme.surface,
+          border: Border(
+            top: BorderSide(color: AppTheme.border, width: 0.5),
+          ),
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: List.generate(_tabs.length, (index) {
@@ -84,15 +75,15 @@ class _MainShellState extends State<MainShell> {
                       context.go(tab.path);
                     },
                     child: Container(
-                      width: 56,
-                      height: 56,
+                      width: 52,
+                      height: 52,
                       decoration: BoxDecoration(
                         gradient: AppTheme.primaryGradient,
                         shape: BoxShape.circle,
                         boxShadow: [
                           BoxShadow(
                             color: AppTheme.primary.withValues(alpha: 0.35),
-                            blurRadius: 12,
+                            blurRadius: 16,
                             offset: const Offset(0, 4),
                           ),
                         ],
@@ -100,7 +91,7 @@ class _MainShellState extends State<MainShell> {
                       child: const Icon(
                         Icons.add_rounded,
                         color: Colors.white,
-                        size: 28,
+                        size: 26,
                       ),
                     ),
                   );
@@ -113,37 +104,39 @@ class _MainShellState extends State<MainShell> {
                   },
                   behavior: HitTestBehavior.opaque,
                   child: SizedBox(
-                    width: 64,
+                    width: 60,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         AnimatedContainer(
                           duration: const Duration(milliseconds: 200),
                           padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 4),
+                              horizontal: 12, vertical: 6),
                           decoration: BoxDecoration(
                             color: isSelected
-                                ? AppTheme.primary.withValues(alpha: 0.1)
+                                ? AppTheme.primarySurface
                                 : Colors.transparent,
-                            borderRadius: BorderRadius.circular(12),
+                            borderRadius: BorderRadius.circular(AppTheme.radiusSm),
                           ),
                           child: Icon(
                             tab.icon,
                             color: isSelected
                                 ? AppTheme.primary
-                                : AppTheme.textLight,
-                            size: 24,
+                                : AppTheme.textTertiary,
+                            size: 22,
                           ),
                         ),
                         const SizedBox(height: 4),
                         Text(
                           tab.label,
                           style: TextStyle(
-                            fontSize: 11,
+                            fontSize: 10,
                             fontWeight:
-                                isSelected ? FontWeight.w600 : FontWeight.w500,
+                                isSelected ? FontWeight.w700 : FontWeight.w500,
                             color:
-                                isSelected ? AppTheme.primary : AppTheme.textLight,
+                                isSelected ? AppTheme.primary : AppTheme.textTertiary,
+                            fontFamily: 'Inter',
+                            letterSpacing: 0.2,
                           ),
                         ),
                       ],
@@ -294,27 +287,6 @@ final appRouter = GoRouter(
       path: '/staff-modules',
       builder: (context, state) => const StaffModulesScreen(),
     ),
-    // Delivery routes — disabled until backend supports /deliveries
-    // GoRoute(
-    //   path: '/deliveries',
-    //   builder: (context, state) => const DeliveryListScreen(),
-    //   routes: [
-    //     GoRoute(
-    //       path: ':id',
-    //       builder: (context, state) {
-    //         final id = state.pathParameters['id']!;
-    //         return DeliveryDetailScreen(deliveryId: id);
-    //       },
-    //     ),
-    //     GoRoute(
-    //       path: ':id/confirm',
-    //       builder: (context, state) {
-    //         final id = state.pathParameters['id']!;
-    //         return DeliveryConfirmScreen(deliveryId: id);
-    //       },
-    //     ),
-    //   ],
-    // ),
     GoRoute(
       path: '/notifications',
       builder: (context, state) => const NotificationsScreen(),

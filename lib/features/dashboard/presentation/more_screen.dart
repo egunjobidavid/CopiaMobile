@@ -16,7 +16,7 @@ class _MoreScreenState extends ConsumerState<MoreScreen> {
   Widget build(BuildContext context) {
     final authState = ref.watch(authStateProvider);
     final user = authState.user;
-    final userName = user?['name'] as String? ?? user?['firstName'] as String? ?? 'User';
+    final userName = user?['fullName'] as String? ?? user?['name'] as String? ?? 'User';
     final userEmail = user?['email'] as String? ?? 'user@copiaos.com';
     final userRole = user?['role'] as String? ?? 'Owner';
 
@@ -36,9 +36,10 @@ class _MoreScreenState extends ConsumerState<MoreScreen> {
                       'More',
                       style: TextStyle(
                         fontSize: 26,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w800,
                         color: AppTheme.textPrimary,
                         letterSpacing: -0.5,
+                        fontFamily: 'Inter',
                       ),
                     ),
                     const SizedBox(height: 20),

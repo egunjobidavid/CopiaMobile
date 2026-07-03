@@ -86,7 +86,7 @@ class _StaffModulesScreenState extends ConsumerState<StaffModulesScreen> {
                 onChanged: (v) => setState(() => _searchQuery = v),
                 decoration: InputDecoration(
                   hintText: 'Search staff...',
-                  prefixIcon: const Icon(Icons.search, color: AppTheme.textLight),
+                  prefixIcon: const Icon(Icons.search, color: AppTheme.textTertiary),
                   filled: true,
                   fillColor: const Color(0xFFF5F6FA),
                   border: OutlineInputBorder(
@@ -114,7 +114,7 @@ class _StaffModulesScreenState extends ConsumerState<StaffModulesScreen> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Icon(Icons.people_outline,
-                              size: 64, color: AppTheme.textLight),
+                              size: 64, color: AppTheme.textTertiary),
                           SizedBox(height: 12),
                           Text('No staff found',
                               style: TextStyle(
@@ -253,7 +253,7 @@ class _StaffCard extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
-            const Icon(Icons.chevron_right, color: AppTheme.textLight),
+            const Icon(Icons.chevron_right, color: AppTheme.textTertiary),
           ],
         ),
       ),
@@ -496,7 +496,7 @@ class _ModuleEditorScreenState extends ConsumerState<_ModuleEditorScreen> {
                                     decoration: BoxDecoration(
                                       color: active
                                           ? AppTheme.success.withValues(alpha: 0.12)
-                                          : AppTheme.textLight.withValues(alpha: 0.15),
+                                          : AppTheme.textTertiary.withValues(alpha: 0.15),
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                     alignment: Alignment.center,
@@ -529,7 +529,7 @@ class _ModuleEditorScreenState extends ConsumerState<_ModuleEditorScreen> {
                                           def.description,
                                           style: const TextStyle(
                                             fontSize: 12,
-                                            color: AppTheme.textLight,
+                                            color: AppTheme.textTertiary,
                                           ),
                                         ),
                                       ],
@@ -574,7 +574,7 @@ class _ModuleEditorScreenState extends ConsumerState<_ModuleEditorScreen> {
                               gradient: _saving
                                   ? null
                                   : AppTheme.primaryGradient,
-                              color: _saving ? AppTheme.textLight : null,
+                              color: _saving ? AppTheme.textTertiary : null,
                               borderRadius: BorderRadius.circular(14),
                             ),
                             child: ElevatedButton(

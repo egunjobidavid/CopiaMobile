@@ -264,7 +264,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Icon(Icons.notifications_none_rounded, size: 72, color: AppTheme.textLight.withValues(alpha: 0.5)),
+                          Icon(Icons.notifications_none_rounded, size: 72, color: AppTheme.textTertiary.withValues(alpha: 0.5)),
                           const SizedBox(height: 16),
                           const Text(
                             'No notifications yet',
@@ -273,7 +273,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                           const SizedBox(height: 6),
                           Text(
                             'You\'ll see updates about orders, stock, and approvals here.',
-                            style: TextStyle(fontSize: 13, color: AppTheme.textLight),
+                            style: TextStyle(fontSize: 13, color: AppTheme.textTertiary),
                             textAlign: TextAlign.center,
                           ),
                         ],
@@ -399,7 +399,7 @@ class _NotificationTile extends StatelessWidget {
                       const SizedBox(height: 6),
                       Text(
                         _timeAgo(notification.createdAt),
-                        style: const TextStyle(fontSize: 11, color: AppTheme.textLight),
+                        style: const TextStyle(fontSize: 11, color: AppTheme.textTertiary),
                       ),
                     ],
                   ),

@@ -587,7 +587,7 @@ class _ApprovalCard extends StatelessWidget {
                 _formatDate(item.date),
                 style: const TextStyle(
                   fontSize: 12,
-                  color: AppTheme.textLight,
+                  color: AppTheme.textTertiary,
                 ),
               ),
             ],

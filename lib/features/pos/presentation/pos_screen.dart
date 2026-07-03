@@ -340,7 +340,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
         style: const TextStyle(fontSize: 15, color: AppTheme.textPrimary),
         decoration: InputDecoration(
           hintText: 'Search products...',
-          prefixIcon: const Icon(Icons.search_rounded, color: AppTheme.textLight, size: 22),
+          prefixIcon: const Icon(Icons.search_rounded, color: AppTheme.textTertiary, size: 22),
           suffixIcon: _searchQuery.isNotEmpty
               ? IconButton(
                   icon: const Icon(Icons.clear_rounded, size: 20, color: AppTheme.textSecondary),
@@ -745,11 +745,11 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
                           children: [
                             Row(
                               children: [
-                                Icon(Icons.shopping_cart_outlined, size: 20, color: AppTheme.textLight),
+                                Icon(Icons.shopping_cart_outlined, size: 20, color: AppTheme.textTertiary),
                                 SizedBox(width: 8),
                                 Text(
                                   'Tap products to add',
-                                  style: TextStyle(fontSize: 14, color: AppTheme.textLight),
+                                  style: TextStyle(fontSize: 14, color: AppTheme.textTertiary),
                                 ),
                               ],
                             ),

@@ -272,7 +272,7 @@ class _StockTransferScreenState extends ConsumerState<StockTransferScreen> {
                   height: 14,
                   width: 120,
                   decoration: BoxDecoration(
-                    color: AppTheme.dividerColor,
+                    color: AppTheme.divider,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -281,7 +281,7 @@ class _StockTransferScreenState extends ConsumerState<StockTransferScreen> {
                   height: 24,
                   width: 70,
                   decoration: BoxDecoration(
-                    color: AppTheme.dividerColor,
+                    color: AppTheme.divider,
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
@@ -292,7 +292,7 @@ class _StockTransferScreenState extends ConsumerState<StockTransferScreen> {
               height: 12,
               width: 180,
               decoration: BoxDecoration(
-                color: AppTheme.dividerColor,
+                color: AppTheme.divider,
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
@@ -301,7 +301,7 @@ class _StockTransferScreenState extends ConsumerState<StockTransferScreen> {
               height: 12,
               width: 100,
               decoration: BoxDecoration(
-                color: AppTheme.dividerColor,
+                color: AppTheme.divider,
                 borderRadius: BorderRadius.circular(4),
               ),
             ),
@@ -342,7 +342,7 @@ class _TransferCard extends StatelessWidget {
       case 'cancelled':
         return AppTheme.error;
       default:
-        return AppTheme.textLight;
+        return AppTheme.textTertiary;
     }
   }
 
@@ -595,7 +595,7 @@ class _CreateTransferSheetState extends ConsumerState<_CreateTransferSheet> {
             width: 40,
             height: 4,
             decoration: BoxDecoration(
-              color: AppTheme.dividerColor,
+              color: AppTheme.divider,
               borderRadius: BorderRadius.circular(2),
             ),
           ),

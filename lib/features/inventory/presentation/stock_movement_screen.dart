@@ -55,7 +55,7 @@ class _StockMovementScreenState extends ConsumerState<StockMovementScreen> {
                       color: isSelected ? color : Colors.white,
                       borderRadius: BorderRadius.circular(10),
                       border: Border.all(
-                        color: isSelected ? color : AppTheme.dividerColor,
+                        color: isSelected ? color : AppTheme.divider,
                       ),
                     ),
                     child: Center(
@@ -192,7 +192,7 @@ class _StockMovementScreenState extends ConsumerState<StockMovementScreen> {
               width: 40,
               height: 40,
               decoration: BoxDecoration(
-                color: AppTheme.dividerColor,
+                color: AppTheme.divider,
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
@@ -205,7 +205,7 @@ class _StockMovementScreenState extends ConsumerState<StockMovementScreen> {
                     height: 14,
                     width: 120,
                     decoration: BoxDecoration(
-                      color: AppTheme.dividerColor,
+                      color: AppTheme.divider,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -214,7 +214,7 @@ class _StockMovementScreenState extends ConsumerState<StockMovementScreen> {
                     height: 12,
                     width: 80,
                     decoration: BoxDecoration(
-                      color: AppTheme.dividerColor,
+                      color: AppTheme.divider,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -228,7 +228,7 @@ class _StockMovementScreenState extends ConsumerState<StockMovementScreen> {
                   height: 16,
                   width: 50,
                   decoration: BoxDecoration(
-                    color: AppTheme.dividerColor,
+                    color: AppTheme.divider,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),
@@ -237,7 +237,7 @@ class _StockMovementScreenState extends ConsumerState<StockMovementScreen> {
                   height: 12,
                   width: 40,
                   decoration: BoxDecoration(
-                    color: AppTheme.dividerColor,
+                    color: AppTheme.divider,
                     borderRadius: BorderRadius.circular(4),
                   ),
                 ),

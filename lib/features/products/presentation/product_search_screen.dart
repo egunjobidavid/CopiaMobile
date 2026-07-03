@@ -159,7 +159,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                         color: isSelected ? AppTheme.primary : Colors.white,
                         borderRadius: BorderRadius.circular(12),
                         border: Border.all(
-                          color: isSelected ? AppTheme.primary : AppTheme.dividerColor,
+                          color: isSelected ? AppTheme.primary : AppTheme.divider,
                         ),
                       ),
                       child: Row(
@@ -362,7 +362,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
               flex: 3,
               child: Container(
                 decoration: const BoxDecoration(
-                  color: AppTheme.dividerColor,
+                  color: AppTheme.divider,
                   borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
                 ),
               ),
@@ -378,7 +378,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                       height: 14,
                       width: 80,
                       decoration: BoxDecoration(
-                        color: AppTheme.dividerColor,
+                        color: AppTheme.divider,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -387,7 +387,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                       height: 10,
                       width: 50,
                       decoration: BoxDecoration(
-                        color: AppTheme.dividerColor,
+                        color: AppTheme.divider,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -396,7 +396,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                       height: 14,
                       width: 60,
                       decoration: BoxDecoration(
-                        color: AppTheme.dividerColor,
+                        color: AppTheme.divider,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),

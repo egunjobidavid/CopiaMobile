@@ -320,7 +320,7 @@ class _StockViewScreenState extends ConsumerState<StockViewScreen> {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: AppTheme.dividerColor,
+                color: AppTheme.divider,
                 borderRadius: BorderRadius.circular(12),
               ),
             ),
@@ -333,7 +333,7 @@ class _StockViewScreenState extends ConsumerState<StockViewScreen> {
                     height: 14,
                     width: 100,
                     decoration: BoxDecoration(
-                      color: AppTheme.dividerColor,
+                      color: AppTheme.divider,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -342,7 +342,7 @@ class _StockViewScreenState extends ConsumerState<StockViewScreen> {
                     height: 12,
                     width: 70,
                     decoration: BoxDecoration(
-                      color: AppTheme.dividerColor,
+                      color: AppTheme.divider,
                       borderRadius: BorderRadius.circular(4),
                     ),
                   ),
@@ -353,7 +353,7 @@ class _StockViewScreenState extends ConsumerState<StockViewScreen> {
               width: 60,
               height: 28,
               decoration: BoxDecoration(
-                color: AppTheme.dividerColor,
+                color: AppTheme.divider,
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
@@ -515,7 +515,7 @@ class _StockCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(4),
                     child: LinearProgressIndicator(
                       value: (quantity / 100).clamp(0.0, 1.0),
-                      backgroundColor: AppTheme.dividerColor,
+                      backgroundColor: AppTheme.divider,
                       valueColor: AlwaysStoppedAnimation<Color>(stockColor),
                       minHeight: 6,
                     ),
