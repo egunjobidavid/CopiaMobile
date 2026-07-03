@@ -10,7 +10,7 @@ class InventoryRepository {
     if (productId != null) params['productId'] = productId;
     final response = await _api.get('/inventory/stock', queryParameters: params);
     final data = response.data;
-    if (data is List) return data.cast<Map<String, dynamic>>();
+    if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
     if (data is Map && data.containsKey('data')) return List<Map<String, dynamic>>.from(data['data']);
     return [];
   }
@@ -23,7 +23,7 @@ class InventoryRepository {
     if (productId != null) params['productId'] = productId;
     final response = await _api.get('/inventory/movements', queryParameters: params);
     final data = response.data;
-    if (data is List) return data.cast<Map<String, dynamic>>();
+    if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
     if (data is Map && data.containsKey('data')) return List<Map<String, dynamic>>.from(data['data']);
     return [];
   }
@@ -31,7 +31,7 @@ class InventoryRepository {
   Future<List<Map<String, dynamic>>> getWarehouses() async {
     final response = await _api.get('/inventory/warehouses');
     final data = response.data;
-    if (data is List) return data.cast<Map<String, dynamic>>();
+    if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
     if (data is Map && data.containsKey('data')) return List<Map<String, dynamic>>.from(data['data']);
     return [];
   }

@@ -11,7 +11,7 @@ class SalesRepository {
       queryParameters: {'page': page.toString(), 'limit': limit.toString()},
     );
     final data = response.data;
-    if (data is List) return data.cast<Map<String, dynamic>>();
+    if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
     if (data is Map && data.containsKey('data')) return List<Map<String, dynamic>>.from(data['data']);
     return [];
   }
@@ -39,7 +39,7 @@ class SalesRepository {
     if (search != null && search.trim().isNotEmpty) params['search'] = search;
     final response = await _api.get('/customers', queryParameters: params);
     final data = response.data;
-    if (data is List) return data.cast<Map<String, dynamic>>();
+    if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
     if (data is Map && data.containsKey('data')) return List<Map<String, dynamic>>.from(data['data']);
     return [];
   }

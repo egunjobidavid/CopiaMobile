@@ -12,10 +12,10 @@ class ProductRepository {
       queryParameters: {'search': query, 'limit': '20'},
     );
     final data = response.data;
-    if (data is List) return data.cast<Map<String, dynamic>>();
+    if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
     if (data is Map && data.containsKey('data')) {
       final inner = data['data'];
-      if (inner is List) return inner.cast<Map<String, dynamic>>();
+      if (inner is List) return inner.map((e) => Map<String, dynamic>.from(e)).toList();
     }
     return [];
   }
@@ -36,7 +36,7 @@ class ProductRepository {
         return null;
       }
       for (final item in items) {
-        if (item is Map && item['id'] == id) return item;
+        if (item is Map && item['id'] == id) return Map<String, dynamic>.from(item);
       }
       return null;
     } catch (_) {
@@ -59,7 +59,7 @@ class ProductRepository {
       } else {
         return null;
       }
-      if (items.isNotEmpty) return items[0] as Map<String, dynamic>;
+      if (items.isNotEmpty) return Map<String, dynamic>.from(items[0]);
       return null;
     } catch (_) {
       return null;

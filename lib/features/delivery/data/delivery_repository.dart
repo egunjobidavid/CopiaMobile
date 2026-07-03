@@ -12,7 +12,7 @@ class DeliveryRepository {
     if (status != null) params['status'] = status;
     final response = await _api.get('/deliveries', queryParameters: params);
     final data = response.data;
-    if (data is List) return data.cast<Map<String, dynamic>>();
+    if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
     if (data is Map && data.containsKey('data')) return List<Map<String, dynamic>>.from(data['data']);
     return [];
   }

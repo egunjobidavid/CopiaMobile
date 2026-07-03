@@ -11,7 +11,7 @@ final transfersProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async
     final api = ApiClient(storage);
     final response = await api.get('/inventory/transfers');
     final data = response.data;
-    if (data is List) return data.cast<Map<String, dynamic>>();
+    if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
     if (data is Map && data.containsKey('data')) {
       return List<Map<String, dynamic>>.from(data['data']);
     }

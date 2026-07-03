@@ -10,10 +10,10 @@ final staffListProvider =
   final api = ApiClient(storage);
   final response = await api.get('/staff');
   final data = response.data;
-  if (data is List) return data.cast<Map<String, dynamic>>();
+  if (data is List) return data.map((e) => Map<String, dynamic>.from(e)).toList();
   if (data is Map && data.containsKey('data')) {
     final inner = data['data'];
-    if (inner is List) return inner.cast<Map<String, dynamic>>();
+    if (inner is List) return inner.map((e) => Map<String, dynamic>.from(e)).toList();
   }
   return [];
 });
@@ -25,7 +25,7 @@ final staffModulesProvider =
   final staffResponse = await api.get('/staff');
   final staffEnvelope = staffResponse.data as Map<String, dynamic>;
   final staffData = staffEnvelope['data'] as List? ?? [];
-  final staff = staffData.cast<Map<String, dynamic>>().firstWhere(
+  final staff = staffData.map((e) => Map<String, dynamic>.from(e)).toList().firstWhere(
         (s) => s['id'].toString() == staffId,
         orElse: () => {},
       );
