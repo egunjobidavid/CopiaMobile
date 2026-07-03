@@ -29,10 +29,10 @@ class StockBalance {
       sku: json['sku'] as String? ?? '',
       warehouseId: json['warehouseId'] as String? ?? '',
       warehouseName: json['warehouseName'] as String? ?? json['warehouse'] as String? ?? 'Main Warehouse',
-      quantity: (json['quantity'] as num?)?.toDouble() ?? 0,
-      reservedQuantity: (json['reservedQuantity'] as num?)?.toDouble() ?? 0,
-      availableQuantity: (json['availableQuantity'] as num?)?.toDouble() ??
-          ((json['quantity'] as num?)?.toDouble() ?? 0) - ((json['reservedQuantity'] as num?)?.toDouble() ?? 0),
+      quantity: double.tryParse(json['quantity']?.toString() ?? '') ?? 0,
+      reservedQuantity: double.tryParse(json['reservedQuantity']?.toString() ?? '') ?? 0,
+      availableQuantity: double.tryParse(json['availableQuantity']?.toString() ?? '') ??
+          (double.tryParse(json['quantity']?.toString() ?? '') ?? 0) - (double.tryParse(json['reservedQuantity']?.toString() ?? '') ?? 0),
     );
   }
 

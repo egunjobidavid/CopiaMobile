@@ -22,8 +22,8 @@ class OrderItem {
       productId: json['productId'] as String? ?? '',
       productName: json['productName'] as String? ?? '',
       sku: json['sku'] as String? ?? '',
-      quantity: (json['quantity'] as num?)?.toDouble() ?? 1,
-      unitPrice: (json['unitPrice'] as num?)?.toDouble() ?? 0,
+      quantity: double.tryParse(json['quantity']?.toString() ?? '') ?? 1,
+      unitPrice: double.tryParse(json['unitPrice']?.toString() ?? '') ?? 0,
     );
   }
 

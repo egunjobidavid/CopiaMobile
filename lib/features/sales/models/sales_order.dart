@@ -32,9 +32,9 @@ class SalesOrder {
       customerId: json['customerId'] as String?,
       customerName: json['customerName'] as String?,
       status: json['status'] as String? ?? 'draft',
-      subtotal: (json['subtotal'] as num?)?.toDouble() ?? 0,
-      tax: (json['tax'] as num?)?.toDouble() ?? 0,
-      total: (json['total'] as num?)?.toDouble() ?? 0,
+      subtotal: double.tryParse(json['subtotal']?.toString() ?? '') ?? 0,
+      tax: double.tryParse(json['tax']?.toString() ?? '') ?? 0,
+      total: double.tryParse(json['total']?.toString() ?? '') ?? 0,
       items: (json['items'] as List?)?.map((i) => OrderItem.fromJson(i as Map<String, dynamic>)).toList() ?? [],
       createdAt: json['createdAt'] as String? ?? '',
     );

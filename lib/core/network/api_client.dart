@@ -3,6 +3,22 @@ import '../storage/secure_storage.dart';
 import '../../core/constants.dart';
 import 'auth_interceptor.dart';
 
+class EnvelopeInterceptor extends Interceptor {
+  @override
+  void onResponse(Response response, ResponseInterceptorHandler handler) {
+    final raw = response.data;
+    if (raw is Map && raw.containsKey('data')) {
+      final inner = raw['data'];
+      if (inner is Map && inner.containsKey('data')) {
+        response.data = inner['data'];
+      } else {
+        response.data = inner;
+      }
+    }
+    handler.next(response);
+  }
+}
+
 class ApiClient {
   late final Dio _dio;
   final SecureStorage _storage;
@@ -18,7 +34,10 @@ class ApiClient {
       },
     ));
 
-    _dio.interceptors.add(AuthInterceptor(_storage));
+    _dio.interceptors.addAll([
+      EnvelopeInterceptor(),
+      AuthInterceptor(_storage),
+    ]);
   }
 
   Dio get client => _dio;

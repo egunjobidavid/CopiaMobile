@@ -27,11 +27,11 @@ class Product {
       sku: json['sku'] as String? ?? '',
       name: json['name'] as String? ?? '',
       description: json['description'] as String?,
-      unitPrice: (json['unitPrice'] as num?)?.toDouble() ?? 0,
+      unitPrice: double.tryParse(json['unitPrice']?.toString() ?? '') ?? 0,
       productType: json['productType'] as String? ?? 'finished_good',
       uom: json['uom'] as String? ?? 'pcs',
       isActive: json['isActive'] as bool? ?? true,
-      stockQuantity: (json['stockQuantity'] as num?)?.toDouble() ?? 0,
+      stockQuantity: double.tryParse(json['stockQuantity']?.toString() ?? '') ?? 0,
     );
   }
 

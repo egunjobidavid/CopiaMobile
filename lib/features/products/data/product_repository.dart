@@ -22,10 +22,23 @@ class ProductRepository {
 
   Future<Map<String, dynamic>?> getProduct(String id) async {
     try {
-      final response = await _api.get('/inventory/products/$id');
+      final response = await _api.get(
+        '/inventory/products',
+        queryParameters: {'limit': '200'},
+      );
       final data = response.data;
-      if (data is Map && data.containsKey('data')) return data['data'] as Map<String, dynamic>;
-      return data as Map<String, dynamic>;
+      List<dynamic> items;
+      if (data is List) {
+        items = data;
+      } else if (data is Map && data.containsKey('data')) {
+        items = data['data'] as List? ?? [];
+      } else {
+        return null;
+      }
+      for (final item in items) {
+        if (item is Map && item['id'] == id) return item;
+      }
+      return null;
     } catch (_) {
       return null;
     }
