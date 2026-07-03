@@ -30,16 +30,15 @@ class ExpenseClaim {
       category: json['category'] ?? '',
       amount: double.tryParse(json['amount']?.toString() ?? '') ?? 0,
       description: json['description'] ?? '',
-      expenseDate: DateTime.tryParse(json['expense_date'] ?? '') ?? DateTime.now(),
+      expenseDate: DateTime.tryParse(json['expenseDate'] ?? json['expense_date'] ?? '') ?? DateTime.now(),
       status: json['status'] ?? 'pending',
-      createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
+      createdAt: DateTime.tryParse(json['createdAt'] ?? json['created_at'] ?? '') ?? DateTime.now(),
     );
   }
 }
 
 final expenseClaimsProvider = FutureProvider<List<ExpenseClaim>>((ref) async {
-  final storage = ref.watch(secureStorageProvider);
-  final api = ApiClient(storage);
+  final api = ref.watch(apiClientProvider);
   final response = await api.get('/hr/expense-claims');
   final items = extractList(response.data);
   return items.map((json) => ExpenseClaim.fromJson(json)).toList();
@@ -298,8 +297,7 @@ class _ExpenseClaimsScreenState extends ConsumerState<ExpenseClaimsScreen> {
                     Navigator.pop(ctx);
 
                     try {
-                      final storage = ref.read(secureStorageProvider);
-                      final api = ApiClient(storage);
+                      final api = ref.read(apiClientProvider);
                       final authState = ref.read(authStateProvider);
                       final userId = authState.user?['id'] as String? ?? '';
                       await api.post('/hr/expense-claims', data: {

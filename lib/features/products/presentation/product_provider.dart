@@ -5,8 +5,7 @@ import '../data/product_repository.dart';
 import '../models/product.dart';
 
 final productRepositoryProvider = Provider<ProductRepository>((ref) {
-  final storage = ref.watch(secureStorageProvider);
-  final api = ApiClient(storage);
+  final api = ref.watch(apiClientProvider);
   return ProductRepository(api);
 });
 

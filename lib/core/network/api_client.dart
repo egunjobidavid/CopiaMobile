@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../storage/secure_storage.dart';
 import '../../core/constants.dart';
 import 'auth_interceptor.dart';
@@ -97,3 +98,9 @@ class ApiClient {
     return _dio.delete<T>(path);
   }
 }
+
+/// Shared ApiClient singleton — all screens should use this
+final apiClientProvider = Provider<ApiClient>((ref) {
+  final storage = ref.watch(secureStorageProvider);
+  return ApiClient(storage);
+});

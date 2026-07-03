@@ -27,8 +27,7 @@ class CartItem {
 }
 
 final posProductsProvider = FutureProvider<List<Product>>((ref) async {
-  final storage = ref.watch(secureStorageProvider);
-  final api = ApiClient(storage);
+  final api = ref.watch(apiClientProvider);
   final response = await api.get('/inventory/products', queryParameters: {'limit': '200'});
   final items = extractList(response.data);
   return items.map((json) => Product.fromJson(json)).toList();
@@ -171,8 +170,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
     setState(() => _isProcessingSale = true);
 
     try {
-      final storage = ref.read(secureStorageProvider);
-      final api = ApiClient(storage);
+      final api = ref.read(apiClientProvider);
 
       final items = _cart.map((c) => {
         'productId': c.productId,

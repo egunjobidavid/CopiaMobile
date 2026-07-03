@@ -6,8 +6,7 @@ import '../models/stock_balance.dart';
 import '../models/stock_movement.dart';
 
 final inventoryRepositoryProvider = Provider<InventoryRepository>((ref) {
-  final storage = ref.watch(secureStorageProvider);
-  final api = ApiClient(storage);
+  final api = ref.watch(apiClientProvider);
   return InventoryRepository(api);
 });
 

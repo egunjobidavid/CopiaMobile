@@ -87,6 +87,6 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
 final authStateProvider = StateNotifierProvider<AuthNotifier, AuthState>((ref) {
   final storage = ref.watch(secureStorageProvider);
-  final api = ApiClient(storage);
+  final api = ref.watch(apiClientProvider);
   return AuthNotifier(storage, api);
 });

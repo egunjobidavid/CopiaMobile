@@ -8,7 +8,7 @@ class AuthInterceptor extends Interceptor {
   AuthInterceptor(this._storage);
 
   @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
+  Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
     final token = await _storage.getAccessToken();
     final tenantId = await _storage.getTenantId();
 
@@ -23,7 +23,7 @@ class AuthInterceptor extends Interceptor {
   }
 
   @override
-  void onError(DioException err, ErrorInterceptorHandler handler) async {
+  Future<void> onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
       final refreshToken = await _storage.getRefreshToken();
       if (refreshToken != null) {

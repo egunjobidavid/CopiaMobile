@@ -30,21 +30,20 @@ class ApprovalItem {
   factory ApprovalItem.fromJson(Map<String, dynamic> json) {
     return ApprovalItem(
       id: json['id'].toString(),
-      type: json['entity_type'] ?? json['type'] ?? '',
+      type: json['entityType'] ?? json['entity_type'] ?? json['type'] ?? '',
       title: json['title'] ?? json['reason'] ?? '',
       description: json['description'] ?? json['reason'] ?? '',
-      requester: json['requester'] ?? json['requestor_id'] ?? '',
+      requester: json['requester'] ?? json['requestorId'] ?? json['requestor_id'] ?? '',
       department: json['department'],
-      amount: json['amount'] != null ? (json['amount'] as num).toDouble() : null,
-      date: DateTime.tryParse(json['created_at'] ?? json['date'] ?? '') ?? DateTime.now(),
+      amount: json['amount'] != null ? double.tryParse(json['amount'].toString()) : null,
+      date: DateTime.tryParse(json['createdAt'] ?? json['created_at'] ?? json['date'] ?? '') ?? DateTime.now(),
       status: json['status'] ?? 'pending',
     );
   }
 }
 
 final pendingApprovalsProvider = FutureProvider<List<ApprovalItem>>((ref) async {
-  final storage = ref.watch(secureStorageProvider);
-  final api = ApiClient(storage);
+  final api = ref.watch(apiClientProvider);
   final response = await api.get('/approvals?status=pending');
   final items = extractList(response.data);
   return items.map((json) => ApprovalItem.fromJson(json)).toList();
@@ -248,8 +247,7 @@ class _ApprovalsScreenState extends ConsumerState<ApprovalsScreen>
 
     if (confirmed == true && mounted) {
       try {
-        final storage = ref.read(secureStorageProvider);
-        final api = ApiClient(storage);
+        final api = ref.read(apiClientProvider);
         await api.patch('/approvals/${item.id}/vote', data: {'decision': 'approved'});
         ref.invalidate(pendingApprovalsProvider);
         if (mounted) {
@@ -295,8 +293,7 @@ class _ApprovalsScreenState extends ConsumerState<ApprovalsScreen>
 
     if (confirmed == true && mounted) {
       try {
-        final storage = ref.read(secureStorageProvider);
-        final api = ApiClient(storage);
+        final api = ref.read(apiClientProvider);
         await api.patch('/approvals/${item.id}/vote', data: {'decision': 'rejected'});
         ref.invalidate(pendingApprovalsProvider);
         if (mounted) {

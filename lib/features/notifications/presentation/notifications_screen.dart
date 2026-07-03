@@ -28,7 +28,7 @@ class NotificationItem {
       message: json['message'] ?? '',
       type: json['type'] ?? 'info',
       read: json['read'] ?? false,
-      createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
+      createdAt: DateTime.tryParse(json['createdAt'] ?? json['created_at'] ?? '') ?? DateTime.now(),
     );
   }
 }
@@ -49,8 +49,7 @@ class NotificationsPageNotifier extends StateNotifier<AsyncValue<List<Notificati
   NotificationsPageNotifier(this._ref) : super(const AsyncValue.loading());
 
   ApiClient _api() {
-    final storage = _ref.read(secureStorageProvider);
-    return ApiClient(storage);
+    return _ref.read(apiClientProvider);
   }
 
   Future<void> loadFirstPage() async {
@@ -113,11 +112,10 @@ class NotificationsPageNotifier extends StateNotifier<AsyncValue<List<Notificati
 }
 
 final unreadCountProvider = FutureProvider<int>((ref) async {
-  final storage = ref.watch(secureStorageProvider);
-  final api = ApiClient(storage);
+  final api = ref.watch(apiClientProvider);
   final response = await api.get('/notifications/unread-count');
-  final envelope = response.data as Map<String, dynamic>;
-  return (envelope['count'] as num?)?.toInt() ?? 0;
+  final data = extractOne(response.data) ?? <String, dynamic>{};
+  return (data['count'] as num?)?.toInt() ?? 0;
 });
 
 String _timeAgo(DateTime dt) {

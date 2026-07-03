@@ -5,8 +5,7 @@ import '../data/delivery_repository.dart';
 import '../models/delivery.dart';
 
 final deliveryRepositoryProvider = Provider<DeliveryRepository>((ref) {
-  final storage = ref.watch(secureStorageProvider);
-  final api = ApiClient(storage);
+  final api = ref.watch(apiClientProvider);
   return DeliveryRepository(api);
 });
 

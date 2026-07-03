@@ -30,8 +30,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     });
 
     try {
-      final storage = ref.read(secureStorageProvider);
-      final api = ApiClient(storage);
+      final api = ref.read(apiClientProvider);
       final response = await api.get('/analytics/dashboard');
       final data = extractOne(response.data) ?? <String, dynamic>{};
       if (mounted) {
@@ -59,7 +58,7 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   String _getUserName() {
     final user = ref.read(authStateProvider).user;
     if (user != null) {
-      return user['name'] as String? ?? user['firstName'] as String? ?? '';
+      return user['fullName'] as String? ?? user['name'] as String? ?? user['firstName'] as String? ?? '';
     }
     return '';
   }
@@ -211,8 +210,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       );
     }
 
-    final revenue = _dashboardData?['totalRevenue'] ?? 0;
-    final outstanding = _dashboardData?['outstanding'] ?? 0;
+    final revenue = _dashboardData?['revenue'] ?? 0;
+    final outstanding = _dashboardData?['outstandingInvoices'] ?? 0;
     final products = _dashboardData?['totalProducts'] ?? 0;
 
     return Row(
@@ -253,10 +252,10 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   }
 
   String _formatCurrency(dynamic value) {
-    final amount = (value is num) ? value : 0;
-    if (amount >= 1000000) return '${(amount / 1000000).toStringAsFixed(1)}M';
-    if (amount >= 1000) return '${(amount / 1000).toStringAsFixed(1)}K';
-    return amount.toStringAsFixed(0);
+    final amount = double.tryParse(value?.toString() ?? '') ?? 0;
+    if (amount >= 1000000) return '₦${(amount / 1000000).toStringAsFixed(1)}M';
+    if (amount >= 1000) return '₦${(amount / 1000).toStringAsFixed(1)}K';
+    return '₦${amount.toStringAsFixed(0)}';
   }
 
   Widget _buildQuickActions() {

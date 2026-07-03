@@ -6,28 +6,24 @@ import '../../../core/storage/secure_storage.dart';
 
 final staffListProvider =
     FutureProvider<List<Map<String, dynamic>>>((ref) async {
-  final storage = ref.read(secureStorageProvider);
-  final api = ApiClient(storage);
+  final api = ref.watch(apiClientProvider);
   final response = await api.get('/staff');
   return extractList(response.data);
 });
 
 final staffModulesProvider =
     FutureProvider.family<Map<String, bool>, String>((ref, staffId) async {
-  final storage = ref.read(secureStorageProvider);
-  final api = ApiClient(storage);
+  final api = ref.watch(apiClientProvider);
   final staffResponse = await api.get('/staff');
-  final staffEnvelope = staffResponse.data as Map<String, dynamic>;
-  final staffData = staffEnvelope['data'] as List? ?? [];
-  final staff = staffData.map((e) => Map<String, dynamic>.from(e)).toList().firstWhere(
+  final staffList = extractList(staffResponse.data);
+  final staff = staffList.firstWhere(
         (s) => s['id'].toString() == staffId,
         orElse: () => {},
       );
   final roleId = staff['roleId']?.toString() ?? staff['role_id']?.toString();
   if (roleId == null) return {};
   final response = await api.get('/tenants/roles/$roleId/modules');
-  final envelope = response.data as Map<String, dynamic>;
-  final data = envelope['data'] as Map<String, dynamic>? ?? {};
+  final data = extractOne(response.data) ?? <String, dynamic>{};
   final raw = data['modules'];
   Map<String, bool> parsed = {};
   if (raw is List) {
@@ -307,8 +303,7 @@ class _ModuleEditorScreenState extends ConsumerState<_ModuleEditorScreen> {
       _error = null;
     });
     try {
-      final storage = ref.read(secureStorageProvider);
-      final api = ApiClient(storage);
+      final api = ref.read(apiClientProvider);
       final roleId = widget.staffData['roleId']?.toString() ??
           widget.staffData['role_id']?.toString();
       if (roleId == null) {
@@ -319,8 +314,7 @@ class _ModuleEditorScreenState extends ConsumerState<_ModuleEditorScreen> {
         return;
       }
       final response = await api.get('/tenants/roles/$roleId/modules');
-      final envelope = response.data as Map<String, dynamic>;
-      final data = envelope['data'] as Map<String, dynamic>? ?? {};
+      final data = extractOne(response.data) ?? <String, dynamic>{};
       final raw = data['modules'];
       Map<String, bool> parsed = {};
       if (raw is List) {
@@ -345,8 +339,7 @@ class _ModuleEditorScreenState extends ConsumerState<_ModuleEditorScreen> {
   Future<void> _save() async {
     setState(() => _saving = true);
     try {
-      final storage = ref.read(secureStorageProvider);
-      final api = ApiClient(storage);
+      final api = ref.read(apiClientProvider);
       final roleId = widget.staffData['roleId']?.toString() ??
           widget.staffData['role_id']?.toString();
       if (roleId == null) throw Exception('Staff member has no role assigned');

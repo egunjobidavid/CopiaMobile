@@ -6,8 +6,7 @@ import '../models/sales_order.dart';
 import '../models/order_item.dart';
 
 final salesRepositoryProvider = Provider<SalesRepository>((ref) {
-  final storage = ref.watch(secureStorageProvider);
-  final api = ApiClient(storage);
+  final api = ref.watch(apiClientProvider);
   return SalesRepository(api);
 });
 

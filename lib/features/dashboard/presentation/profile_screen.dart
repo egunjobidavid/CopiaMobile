@@ -533,8 +533,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 if (!formKey.currentState!.validate()) return;
                 Navigator.pop(ctx);
                 try {
-                  final storage = SecureStorage();
-                  final api = ApiClient(storage);
+                  final api = ref.read(apiClientProvider);
                   await api.post('/auth/change-password', data: {
                     'currentPassword': currentPasswordController.text,
                     'newPassword': newPasswordController.text,

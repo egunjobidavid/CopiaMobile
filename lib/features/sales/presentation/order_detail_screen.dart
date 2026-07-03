@@ -335,8 +335,7 @@ class OrderDetailScreen extends ConsumerWidget {
                           child: ElevatedButton.icon(
                             onPressed: () async {
                               try {
-                                final storage = ref.read(secureStorageProvider);
-                                final api = ApiClient(storage);
+                                final api = ref.read(apiClientProvider);
                                 await api.patch('/sales/orders/${order.id}/status', data: {'status': 'confirmed'});
                                 if (context.mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -371,8 +370,7 @@ class OrderDetailScreen extends ConsumerWidget {
                           child: OutlinedButton.icon(
                             onPressed: () async {
                               try {
-                                final storage = ref.read(secureStorageProvider);
-                                final api = ApiClient(storage);
+                                final api = ref.read(apiClientProvider);
                                 await api.patch('/sales/orders/${order.id}/status', data: {'status': 'cancelled'});
                                 if (context.mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
@@ -408,8 +406,7 @@ class OrderDetailScreen extends ConsumerWidget {
                           child: ElevatedButton.icon(
                             onPressed: () async {
                               try {
-                                final storage = ref.read(secureStorageProvider);
-                                final api = ApiClient(storage);
+                                final api = ref.read(apiClientProvider);
                                 await api.post('/sales/orders/${order.id}/convert-to-invoice');
                                 if (context.mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(

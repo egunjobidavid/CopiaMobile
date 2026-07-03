@@ -7,8 +7,7 @@ import 'inventory_provider.dart';
 
 final transfersProvider = FutureProvider<List<Map<String, dynamic>>>((ref) async {
   try {
-    final storage = ref.watch(secureStorageProvider);
-    final api = ApiClient(storage);
+    final api = ref.watch(apiClientProvider);
     final response = await api.get('/inventory/transfers');
     return extractList(response.data);
   } catch (e) {
@@ -555,8 +554,7 @@ class _CreateTransferSheetState extends ConsumerState<_CreateTransferSheet> {
     setState(() => _isSubmitting = true);
 
     try {
-      final storage = ref.read(secureStorageProvider);
-      final api = ApiClient(storage);
+      final api = ref.read(apiClientProvider);
       await api.post('/inventory/transfers', data: {
         'fromWarehouseId': _fromWarehouse,
         'toWarehouseId': _toWarehouse,
