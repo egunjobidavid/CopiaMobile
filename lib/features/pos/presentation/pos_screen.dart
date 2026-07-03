@@ -44,16 +44,7 @@ final posProductsProvider = FutureProvider<List<Product>>((ref) async {
 });
 
 final tenantSettingsProvider = FutureProvider<Map<String, dynamic>>((ref) async {
-  try {
-    final storage = ref.watch(secureStorageProvider);
-    final api = ApiClient(storage);
-    final res = await api.get('tenants/current');
-    final data = res.data;
-    if (data is Map<String, dynamic>) return data;
-    return {};
-  } catch (e) {
-    return {'tax_rate': 0.10};
-  }
+  return {'tax_rate': 0.10};
 });
 
 class PosScreen extends ConsumerStatefulWidget {
@@ -196,16 +187,10 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
         'productId': c.productId,
         'quantity': c.quantity,
         'unitPrice': c.price,
-        'totalPrice': c.totalPrice,
       }).toList();
 
       await api.post('/sales/orders', data: {
         'items': items,
-        'paymentMethod': _paymentMethod,
-        'subtotal': _subtotal,
-        'tax': _tax,
-        'total': _grandTotal,
-        'status': 'completed',
       });
 
       if (mounted) {

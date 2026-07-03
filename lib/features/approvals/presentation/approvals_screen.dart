@@ -30,13 +30,13 @@ class ApprovalItem {
   factory ApprovalItem.fromJson(Map<String, dynamic> json) {
     return ApprovalItem(
       id: json['id'].toString(),
-      type: json['type'] ?? '',
-      title: json['title'] ?? '',
-      description: json['description'] ?? '',
-      requester: json['requester'] ?? '',
+      type: json['entity_type'] ?? json['type'] ?? '',
+      title: json['title'] ?? json['reason'] ?? '',
+      description: json['description'] ?? json['reason'] ?? '',
+      requester: json['requester'] ?? json['requestor_id'] ?? '',
       department: json['department'],
       amount: json['amount'] != null ? (json['amount'] as num).toDouble() : null,
-      date: DateTime.tryParse(json['date'] ?? '') ?? DateTime.now(),
+      date: DateTime.tryParse(json['created_at'] ?? json['date'] ?? '') ?? DateTime.now(),
       status: json['status'] ?? 'pending',
     );
   }
@@ -47,8 +47,9 @@ final pendingApprovalsProvider = FutureProvider<List<ApprovalItem>>((ref) async 
   final api = ApiClient(storage);
   final response = await api.get('/approvals?status=pending');
   final envelope = response.data as Map<String, dynamic>;
-  final data = envelope['data'] as List? ?? [];
-  return data.map((json) => ApprovalItem.fromJson(json as Map<String, dynamic>)).toList();
+  final inner = envelope['data'] as Map<String, dynamic>;
+  final items = inner['data'] as List? ?? [];
+  return items.map((json) => ApprovalItem.fromJson(json as Map<String, dynamic>)).toList();
 });
 
 class ApprovalsScreen extends ConsumerStatefulWidget {

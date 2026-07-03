@@ -337,7 +337,7 @@ class OrderDetailScreen extends ConsumerWidget {
                               try {
                                 final storage = ref.read(secureStorageProvider);
                                 final api = ApiClient(storage);
-                                await api.patch('sales/orders/${order.id}', data: {'status': 'confirmed'});
+                                await api.patch('sales/orders/${order.id}/status', data: {'status': 'confirmed'});
                                 if (context.mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(content: Text('Order confirmed'), backgroundColor: AppTheme.success),
@@ -373,7 +373,7 @@ class OrderDetailScreen extends ConsumerWidget {
                               try {
                                 final storage = ref.read(secureStorageProvider);
                                 final api = ApiClient(storage);
-                                await api.patch('sales/orders/${order.id}', data: {'status': 'cancelled'});
+                                await api.patch('sales/orders/${order.id}/status', data: {'status': 'cancelled'});
                                 if (context.mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(content: Text('Order cancelled'), backgroundColor: AppTheme.success),
@@ -410,7 +410,7 @@ class OrderDetailScreen extends ConsumerWidget {
                               try {
                                 final storage = ref.read(secureStorageProvider);
                                 final api = ApiClient(storage);
-                                await api.post('sales/orders/${order.id}/invoice');
+                                await api.post('sales/orders/${order.id}/convert-to-invoice');
                                 if (context.mounted) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(content: Text('Invoice generated'), backgroundColor: AppTheme.success),

@@ -31,8 +31,16 @@ final staffModulesProvider =
   final response = await api.get('/tenants/roles/$roleId/modules');
   final envelope = response.data as Map<String, dynamic>;
   final data = envelope['data'] as Map<String, dynamic>? ?? {};
-  final modules = data['modules'] as Map<String, dynamic>? ?? {};
-  return modules.map((k, v) => MapEntry(k, v == true));
+  final raw = data['modules'];
+  Map<String, bool> parsed = {};
+  if (raw is List) {
+    for (final m in raw) {
+      parsed[m.toString()] = true;
+    }
+  } else if (raw is Map) {
+    parsed = raw.map((k, v) => MapEntry(k.toString(), v == true));
+  }
+  return parsed;
 });
 
 class StaffModulesScreen extends ConsumerStatefulWidget {
@@ -316,9 +324,17 @@ class _ModuleEditorScreenState extends ConsumerState<_ModuleEditorScreen> {
       final response = await api.get('/tenants/roles/$roleId/modules');
       final envelope = response.data as Map<String, dynamic>;
       final data = envelope['data'] as Map<String, dynamic>? ?? {};
-      final raw = data['modules'] as Map<String, dynamic>? ?? {};
+      final raw = data['modules'];
+      Map<String, bool> parsed = {};
+      if (raw is List) {
+        for (final m in raw) {
+          parsed[m.toString()] = true;
+        }
+      } else if (raw is Map) {
+        parsed = raw.map((k, v) => MapEntry(k.toString(), v == true));
+      }
       setState(() {
-        _modules = raw.map((k, v) => MapEntry(k, v == true));
+        _modules = parsed;
         _loading = false;
       });
     } catch (e) {
@@ -337,7 +353,11 @@ class _ModuleEditorScreenState extends ConsumerState<_ModuleEditorScreen> {
       final roleId = widget.staffData['roleId']?.toString() ??
           widget.staffData['role_id']?.toString();
       if (roleId == null) throw Exception('Staff member has no role assigned');
-      await api.put('/tenants/roles/$roleId/modules', data: {'modules': _modules});
+      final enabledModules = _modules.entries
+          .where((e) => e.value)
+          .map((e) => e.key)
+          .toList();
+      await api.put('/tenants/roles/$roleId/modules', data: {'modules': enabledModules});
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme.dart';
 import '../../../core/network/api_client.dart';
 import '../../../core/storage/secure_storage.dart';
+import '../../auth/presentation/auth_provider.dart';
 
 class ExpenseClaim {
   final String id;
@@ -29,9 +30,9 @@ class ExpenseClaim {
       category: json['category'] ?? '',
       amount: (json['amount'] as num).toDouble(),
       description: json['description'] ?? '',
-      expenseDate: DateTime.tryParse(json['expenseDate'] ?? '') ?? DateTime.now(),
+      expenseDate: DateTime.tryParse(json['expense_date'] ?? '') ?? DateTime.now(),
       status: json['status'] ?? 'pending',
-      createdAt: DateTime.tryParse(json['createdAt'] ?? '') ?? DateTime.now(),
+      createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
     );
   }
 }
@@ -41,7 +42,8 @@ final expenseClaimsProvider = FutureProvider<List<ExpenseClaim>>((ref) async {
   final api = ApiClient(storage);
   final response = await api.get('/hr/expense-claims');
   final envelope = response.data as Map<String, dynamic>;
-  final data = envelope['data'] as List? ?? [];
+  final inner = envelope['data'] as Map<String, dynamic>;
+  final data = inner['data'] as List? ?? [];
   return data.map((json) => ExpenseClaim.fromJson(json as Map<String, dynamic>)).toList();
 });
 
@@ -300,7 +302,10 @@ class _ExpenseClaimsScreenState extends ConsumerState<ExpenseClaimsScreen> {
                     try {
                       final storage = ref.read(secureStorageProvider);
                       final api = ApiClient(storage);
+                      final authState = ref.read(authStateProvider);
+                      final userId = authState.user?['id'] as String? ?? '';
                       await api.post('/hr/expense-claims', data: {
+                        'employeeId': userId,
                         'category': category,
                         'amount': amount,
                         'description': description,

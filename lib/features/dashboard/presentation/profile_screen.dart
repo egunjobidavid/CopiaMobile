@@ -535,9 +535,9 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 try {
                   final storage = SecureStorage();
                   final api = ApiClient(storage);
-                  await api.patch('/auth/password', data: {
-                    'current_password': currentPasswordController.text,
-                    'new_password': newPasswordController.text,
+                  await api.post('/auth/change-password', data: {
+                    'currentPassword': currentPasswordController.text,
+                    'newPassword': newPasswordController.text,
                   });
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
