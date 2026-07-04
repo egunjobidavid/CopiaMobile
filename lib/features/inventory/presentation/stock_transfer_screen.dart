@@ -558,6 +558,7 @@ class _CreateTransferSheetState extends ConsumerState<_CreateTransferSheet> {
       await api.post('/inventory/transfers', data: {
         'fromWarehouseId': _fromWarehouse,
         'toWarehouseId': _toWarehouse,
+        'items': <Map<String, dynamic>>[],
         'notes': _notesController.text.trim(),
       });
       ref.invalidate(transfersProvider);

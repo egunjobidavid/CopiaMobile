@@ -34,7 +34,13 @@ final posProductsProvider = FutureProvider<List<Product>>((ref) async {
 });
 
 final tenantSettingsProvider = FutureProvider<Map<String, dynamic>>((ref) async {
-  return {'tax_rate': 0.10};
+  try {
+    final api = ref.read(apiClientProvider);
+    final response = await api.get('/tenants/current');
+    final data = extractOne(response.data);
+    if (data != null) return Map<String, dynamic>.from(data);
+  } catch (_) {}
+  return {'taxRate': 0.10};
 });
 
 class PosScreen extends ConsumerStatefulWidget {
@@ -213,7 +219,7 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
   Widget build(BuildContext context) {
     final productsAsync = ref.watch(posProductsProvider);
     final settingsAsync = ref.watch(tenantSettingsProvider);
-    _taxRate = settingsAsync.whenOrNull(data: (d) => (d['tax_rate'] as num?)?.toDouble()) ?? 0.10;
+    _taxRate = settingsAsync.whenOrNull(data: (d) => (d['taxRate'] as num?)?.toDouble() ?? (d['tax_rate'] as num?)?.toDouble()) ?? 0.10;
 
     return Scaffold(
       backgroundColor: AppTheme.background,
