@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme.dart';
 import '../../../core/network/api_client.dart';
-import '../../../core/storage/secure_storage.dart';
+
 
 class NotificationItem {
   final String id;
@@ -249,7 +249,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                     children: [
                       Icon(Icons.error_outline_rounded, size: 48, color: AppTheme.error.withValues(alpha: 0.6)),
                       const SizedBox(height: 12),
-                      Text('Failed to load notifications', style: TextStyle(color: AppTheme.textSecondary, fontSize: 14)),
+                      const Text('Failed to load notifications', style: TextStyle(color: AppTheme.textSecondary, fontSize: 14)),
                       const SizedBox(height: 12),
                       TextButton(
                         onPressed: () => ref.read(notificationsPageProvider.notifier).loadFirstPage(),
@@ -271,7 +271,7 @@ class _NotificationsScreenState extends ConsumerState<NotificationsScreen> {
                             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: AppTheme.textSecondary),
                           ),
                           const SizedBox(height: 6),
-                          Text(
+                           const Text(
                             'You\'ll see updates about orders, stock, and approvals here.',
                             style: TextStyle(fontSize: 13, color: AppTheme.textTertiary),
                             textAlign: TextAlign.center,
