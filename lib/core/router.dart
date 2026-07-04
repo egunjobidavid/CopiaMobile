@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../core/theme.dart';
+import '../features/auth/presentation/auth_provider.dart';
 import '../features/auth/presentation/login_screen.dart';
 import '../features/dashboard/presentation/dashboard_screen.dart';
 import '../features/dashboard/presentation/quick_actions_screen.dart';
@@ -167,6 +169,27 @@ class _TabConfig {
 final appRouter = GoRouter(
   navigatorKey: _rootNavigatorKey,
   initialLocation: '/login',
+  redirect: (context, state) {
+    final container = ProviderScope.containerOf(context);
+    final authState = container.read(authStateProvider);
+
+    // Still loading session — show nothing yet
+    if (authState.isLoading) return null;
+
+    final isAuthRoute = state.matchedLocation == '/login' || state.matchedLocation == '/register';
+
+    // Not authenticated and trying to access protected route
+    if (!authState.isAuthenticated && !isAuthRoute) {
+      return '/login';
+    }
+
+    // Authenticated and on login — redirect to home
+    if (authState.isAuthenticated && isAuthRoute) {
+      return '/home';
+    }
+
+    return null;
+  },
   routes: [
     GoRoute(
       path: '/login',

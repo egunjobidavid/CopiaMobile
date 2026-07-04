@@ -4,6 +4,7 @@ import '../../../core/storage/secure_storage.dart';
 
 class AuthState {
   final bool isAuthenticated;
+  final bool isLoading;
   final bool biometricEnabled;
   final String? accessToken;
   final String? refreshToken;
@@ -12,6 +13,7 @@ class AuthState {
 
   const AuthState({
     this.isAuthenticated = false,
+    this.isLoading = true,
     this.biometricEnabled = false,
     this.accessToken,
     this.refreshToken,
@@ -21,6 +23,7 @@ class AuthState {
 
   AuthState copyWith({
     bool? isAuthenticated,
+    bool? isLoading,
     bool? biometricEnabled,
     String? accessToken,
     String? refreshToken,
@@ -28,6 +31,7 @@ class AuthState {
     Map<String, dynamic>? user,
   }) => AuthState(
     isAuthenticated: isAuthenticated ?? this.isAuthenticated,
+    isLoading: isLoading ?? this.isLoading,
     biometricEnabled: biometricEnabled ?? this.biometricEnabled,
     accessToken: accessToken ?? this.accessToken,
     refreshToken: refreshToken ?? this.refreshToken,
@@ -40,7 +44,55 @@ class AuthNotifier extends StateNotifier<AuthState> {
   final SecureStorage _storage;
   final ApiClient _api;
 
-  AuthNotifier(this._storage, this._api) : super(const AuthState());
+  AuthNotifier(this._storage, this._api) : super(const AuthState()) {
+    _restoreSession();
+  }
+
+  Future<void> _restoreSession() async {
+    try {
+      final token = await _storage.getAccessToken();
+      final refreshToken = await _storage.getRefreshToken();
+      final tenantId = await _storage.getTenantId();
+
+      if (token != null && token.isNotEmpty) {
+        // Try to get user info
+        Map<String, dynamic>? user;
+        try {
+          final response = await _api.get('/auth/me');
+          final data = extractOne(response.data);
+          user = data?['user'] as Map<String, dynamic>?;
+        } catch (_) {
+          // If /auth/me fails, token might be expired — still restore what we have
+          try {
+            final userData = await _storage.getUserData();
+            if (userData != null) {
+              user = Map<String, dynamic>.from(
+                Map<String, dynamic>.from(
+                  const {} // fallback
+                )..addAll({'fullName': 'User'})
+              );
+            }
+          } catch (_) {}
+        }
+
+        if (mounted) {
+          state = AuthState(
+            isAuthenticated: true,
+            isLoading: false,
+            accessToken: token,
+            refreshToken: refreshToken,
+            tenantId: tenantId,
+            user: user,
+          );
+        }
+        return;
+      }
+    } catch (_) {}
+
+    if (mounted) {
+      state = const AuthState(isLoading: false);
+    }
+  }
 
   Future<void> login(String email, String password) async {
     try {
@@ -52,22 +104,30 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final data = envelope['data'] as Map<String, dynamic>? ?? envelope;
       final accessToken = data['accessToken'] as String;
       final refreshToken = data['refreshToken'] as String? ?? '';
-      final tenantId = data['tenantId'] as String? ?? (data['tenant'] as Map<String, dynamic>?)?['id'] as String?;
+      final tenantId = data['tenantId'] as String? ??
+          (data['tenant'] as Map<String, dynamic>?)?['id'] as String?;
+      final user = data['user'] as Map<String, dynamic>?;
 
-      await _storage.saveToken(accessToken);
+      await _storage.setAccessToken(accessToken);
       if (refreshToken.isNotEmpty) {
-        await _storage.saveRefreshToken(refreshToken);
+        await _storage.setRefreshToken(refreshToken);
       }
       if (tenantId != null) {
-        await _storage.saveTenantId(tenantId);
+        await _storage.setTenantId(tenantId);
+      }
+      if (user != null) {
+        await _storage.setUserData(
+          const <String, dynamic>{}.toString(),
+        );
       }
 
       state = AuthState(
         isAuthenticated: true,
+        isLoading: false,
         accessToken: accessToken,
         refreshToken: refreshToken,
         tenantId: tenantId,
-        user: data['user'] as Map<String, dynamic>?,
+        user: user,
       );
     } catch (e) {
       rethrow;
@@ -75,9 +135,9 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<void> logout() async {
-    await _storage.deleteToken();
-    await _storage.deleteRefreshToken();
-    state = const AuthState();
+    try { await _storage.deleteToken(); } catch (_) {}
+    try { await _storage.deleteRefreshToken(); } catch (_) {}
+    state = const AuthState(isLoading: false);
   }
 
   void setBiometricEnabled(bool enabled) {

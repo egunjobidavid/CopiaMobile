@@ -9,14 +9,19 @@ class AuthInterceptor extends Interceptor {
 
   @override
   Future<void> onRequest(RequestOptions options, RequestInterceptorHandler handler) async {
-    final token = await _storage.getAccessToken();
-    final tenantId = await _storage.getTenantId();
+    try {
+      final token = await _storage.getAccessToken();
+      final tenantId = await _storage.getTenantId();
 
-    if (token != null) {
-      options.headers['Authorization'] = 'Bearer $token';
-    }
-    if (tenantId != null) {
-      options.headers['x-tenant-id'] = tenantId;
+      if (token != null && token.isNotEmpty) {
+        options.headers['Authorization'] = 'Bearer $token';
+      }
+      if (tenantId != null && tenantId.isNotEmpty) {
+        options.headers['x-tenant-id'] = tenantId;
+      }
+    } catch (_) {
+      // SecureStorage may fail on web — continue without auth headers
+      // The server will return 401 if auth is required
     }
 
     handler.next(options);
@@ -25,25 +30,30 @@ class AuthInterceptor extends Interceptor {
   @override
   Future<void> onError(DioException err, ErrorInterceptorHandler handler) async {
     if (err.response?.statusCode == 401) {
-      final refreshToken = await _storage.getRefreshToken();
-      if (refreshToken != null) {
-        try {
-          final response = await Dio().post(
-            '${ApiConstants.baseUrl}/auth/refresh',
-            data: {'refreshToken': refreshToken},
-          );
-          final envelope = response.data as Map<String, dynamic>;
-          final data = envelope['data'] as Map<String, dynamic>? ?? envelope;
-          final newToken = data['accessToken'] as String;
-          await _storage.setAccessToken(newToken);
-
-          err.requestOptions.headers['Authorization'] = 'Bearer $newToken';
-          final retryResponse = await Dio().fetch(err.requestOptions);
-          handler.resolve(retryResponse);
-          return;
-        } catch (_) {
-          await _storage.clearAll();
+      try {
+        final refreshToken = await _storage.getRefreshToken();
+        if (refreshToken != null && refreshToken.isNotEmpty) {
+          try {
+            final response = await Dio().post(
+              '${ApiConstants.baseUrl}/auth/refresh',
+              data: {'refreshToken': refreshToken},
+            );
+            final envelope = response.data as Map<String, dynamic>;
+            final data = envelope['data'] as Map<String, dynamic>? ?? envelope;
+            final newToken = data['accessToken'] as String?;
+            if (newToken != null) {
+              await _storage.setAccessToken(newToken);
+              err.requestOptions.headers['Authorization'] = 'Bearer $newToken';
+              final retryResponse = await Dio().fetch(err.requestOptions);
+              handler.resolve(retryResponse);
+              return;
+            }
+          } catch (_) {
+            try { await _storage.clearAll(); } catch (_) {}
+          }
         }
+      } catch (_) {
+        // SecureStorage failure — just pass through the 401
       }
     }
     handler.next(err);

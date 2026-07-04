@@ -5,50 +5,86 @@ import '../constants.dart';
 final secureStorageProvider = Provider<SecureStorage>((ref) => SecureStorage());
 
 class SecureStorage {
-  final FlutterSecureStorage _storage;
+  FlutterSecureStorage? _storage;
 
-  SecureStorage() : _storage = const FlutterSecureStorage();
+  SecureStorage() {
+    try {
+      _storage = const FlutterSecureStorage();
+    } catch (_) {
+      _storage = null;
+    }
+  }
 
   Future<void> setAccessToken(String token) async {
-    await _storage.write(key: ApiConstants.storageKeyAccessToken, value: token);
+    try {
+      await _storage?.write(key: ApiConstants.storageKeyAccessToken, value: token);
+    } catch (_) {}
   }
 
   Future<String?> getAccessToken() async {
-    return _storage.read(key: ApiConstants.storageKeyAccessToken);
+    try {
+      return await _storage?.read(key: ApiConstants.storageKeyAccessToken);
+    } catch (_) {
+      return null;
+    }
   }
 
   Future<void> setRefreshToken(String token) async {
-    await _storage.write(key: ApiConstants.storageKeyRefreshToken, value: token);
+    try {
+      await _storage?.write(key: ApiConstants.storageKeyRefreshToken, value: token);
+    } catch (_) {}
   }
 
   Future<String?> getRefreshToken() async {
-    return _storage.read(key: ApiConstants.storageKeyRefreshToken);
+    try {
+      return await _storage?.read(key: ApiConstants.storageKeyRefreshToken);
+    } catch (_) {
+      return null;
+    }
   }
 
   Future<void> setTenantId(String id) async {
-    await _storage.write(key: ApiConstants.storageKeyTenantId, value: id);
+    try {
+      await _storage?.write(key: ApiConstants.storageKeyTenantId, value: id);
+    } catch (_) {}
   }
 
   Future<String?> getTenantId() async {
-    return _storage.read(key: ApiConstants.storageKeyTenantId);
+    try {
+      return await _storage?.read(key: ApiConstants.storageKeyTenantId);
+    } catch (_) {
+      return null;
+    }
   }
 
   Future<void> setUserData(String data) async {
-    await _storage.write(key: ApiConstants.storageKeyUser, value: data);
+    try {
+      await _storage?.write(key: ApiConstants.storageKeyUser, value: data);
+    } catch (_) {}
   }
 
   Future<String?> getUserData() async {
-    return _storage.read(key: ApiConstants.storageKeyUser);
+    try {
+      return await _storage?.read(key: ApiConstants.storageKeyUser);
+    } catch (_) {
+      return null;
+    }
   }
 
   Future<void> clearAll() async {
-    await _storage.deleteAll();
+    try {
+      await _storage?.deleteAll();
+    } catch (_) {}
   }
 
   // Legacy alias methods
   Future<void> saveToken(String token) => setAccessToken(token);
   Future<void> saveRefreshToken(String token) => setRefreshToken(token);
   Future<void> saveTenantId(String id) => setTenantId(id);
-  Future<void> deleteToken() => _storage.delete(key: ApiConstants.storageKeyAccessToken);
-  Future<void> deleteRefreshToken() => _storage.delete(key: ApiConstants.storageKeyRefreshToken);
+  Future<void> deleteToken() async {
+    try { await _storage?.delete(key: ApiConstants.storageKeyAccessToken); } catch (_) {}
+  }
+  Future<void> deleteRefreshToken() async {
+    try { await _storage?.delete(key: ApiConstants.storageKeyRefreshToken); } catch (_) {}
+  }
 }
