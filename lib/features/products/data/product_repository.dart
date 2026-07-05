@@ -5,8 +5,16 @@ class ProductRepository {
 
   ProductRepository(this._api);
 
+  Future<List<Map<String, dynamic>>> listProducts() async {
+    final response = await _api.get(
+      '/inventory/products',
+      queryParameters: {'limit': '200'},
+    );
+    return extractList(response.data);
+  }
+
   Future<List<Map<String, dynamic>>> searchProducts(String query) async {
-    if (query.trim().isEmpty) return [];
+    if (query.trim().isEmpty) return listProducts();
     final response = await _api.get(
       '/inventory/products',
       queryParameters: {'search': query, 'limit': '20'},

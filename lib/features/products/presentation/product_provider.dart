@@ -9,8 +9,20 @@ final productRepositoryProvider = Provider<ProductRepository>((ref) {
   return ProductRepository(api);
 });
 
+final productsListProvider = FutureProvider<List<Product>>((ref) async {
+  try {
+    final repo = ref.watch(productRepositoryProvider);
+    final items = await repo.listProducts();
+    return items.map((json) => Product.fromJson(json)).toList();
+  } catch (e) {
+    return [];
+  }
+});
+
 final productSearchProvider = FutureProvider.family<List<Product>, String>((ref, query) async {
-  if (query.trim().isEmpty) return [];
+  if (query.trim().isEmpty) {
+    return ref.watch(productsListProvider.future);
+  }
   try {
     final repo = ref.watch(productRepositoryProvider);
     final results = await repo.searchProducts(query);

@@ -441,8 +441,8 @@ class _ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isInStock = product.stockQuantity > 5;
-    final isLow = product.stockQuantity > 0 && product.stockQuantity <= 5;
+    final isInStock = product.isActive;
+    final isLow = false;
 
     return GestureDetector(
       onTap: onTap,
