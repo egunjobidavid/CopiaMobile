@@ -43,10 +43,14 @@ class ApprovalItem {
 }
 
 final pendingApprovalsProvider = FutureProvider<List<ApprovalItem>>((ref) async {
-  final api = ref.watch(apiClientProvider);
-  final response = await api.get('/approvals?status=pending');
-  final items = extractList(response.data);
-  return items.map((json) => ApprovalItem.fromJson(json)).toList();
+  try {
+    final api = ref.watch(apiClientProvider);
+    final response = await api.get('/approvals?status=pending');
+    final items = extractList(response.data);
+    return items.map((json) => ApprovalItem.fromJson(json)).toList();
+  } catch (e) {
+    return [];
+  }
 });
 
 class ApprovalsScreen extends ConsumerStatefulWidget {
