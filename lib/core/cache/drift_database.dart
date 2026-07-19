@@ -1,5 +1,5 @@
-import 'dart:async';
 import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
 import 'tables/cached_products.dart';
 import 'tables/cached_customers.dart';
 import 'tables/cached_orders.dart';
@@ -28,5 +28,5 @@ class AppDatabase extends _$AppDatabase {
 }
 
 DatabaseConnection _openConnection() {
-  return DatabaseConnection.memory();
+  return DatabaseConnection(NativeDatabase.memory());
 }

@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../../../core/theme.dart';
 import '../models/product.dart';
 import 'product_provider.dart';
-import 'product_detail_screen.dart';
 
 class ProductSearchScreen extends ConsumerStatefulWidget {
   const ProductSearchScreen({super.key});
@@ -443,7 +442,6 @@ class _ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isInStock = product.isActive;
-    final isLow = false;
 
     return GestureDetector(
       onTap: onTap,
@@ -529,25 +527,19 @@ class _ProductCard extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: isInStock
                                 ? AppTheme.success.withValues(alpha: 0.1)
-                                : isLow
-                                    ? AppTheme.warning.withValues(alpha: 0.1)
-                                    : AppTheme.error.withValues(alpha: 0.1),
+                                : AppTheme.error.withValues(alpha: 0.1),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Text(
                             isInStock
                                 ? 'In Stock'
-                                : isLow
-                                    ? 'Low'
-                                    : 'Out',
+                                : 'Out',
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
                               color: isInStock
                                   ? AppTheme.success
-                                  : isLow
-                                      ? AppTheme.warning
-                                      : AppTheme.error,
+                                  : AppTheme.error,
                             ),
                           ),
                         ),

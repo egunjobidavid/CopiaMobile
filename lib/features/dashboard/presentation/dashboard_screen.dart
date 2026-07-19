@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import '../../auth/presentation/auth_provider.dart';
 import '../../../core/theme.dart';
 import '../../../core/network/api_client.dart';
-import '../../../core/storage/secure_storage.dart';
 import '../../../widgets/kpi_card.dart';
 import '../../../widgets/action_widgets.dart';
 import '../../../widgets/status_badge.dart';
@@ -283,7 +282,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   Widget _buildKpiSection() {
     final revenue = _dashboardData?['revenue'] ?? 0;
     final outstanding = _dashboardData?['outstandingInvoices'] ?? 0;
-    final products = _dashboardData?['totalProducts'] ?? 0;
 
     return Row(
       children: [
