@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/network/api_client.dart';
 import '../../../core/storage/secure_storage.dart';
@@ -62,15 +63,14 @@ class AuthNotifier extends StateNotifier<AuthState> {
           final data = extractOne(response.data);
           user = data?['user'] as Map<String, dynamic>?;
         } catch (_) {
-          // If /auth/me fails, token might be expired — still restore what we have
+          // If /auth/me fails, try to restore from stored data
           try {
             final userData = await _storage.getUserData();
-            if (userData != null) {
-              user = Map<String, dynamic>.from(
-                Map<String, dynamic>.from(
-                  const {} // fallback
-                )..addAll({'fullName': 'User'})
-              );
+            if (userData != null && userData.isNotEmpty) {
+              final parsed = jsonDecode(userData);
+              if (parsed is Map<String, dynamic>) {
+                user = parsed;
+              }
             }
           } catch (_) {}
         }
@@ -100,8 +100,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         'email': email,
         'password': password,
       });
-      final envelope = response.data as Map<String, dynamic>;
-      final data = envelope['data'] as Map<String, dynamic>? ?? envelope;
+      final data = response.data as Map<String, dynamic>;
       final accessToken = data['accessToken'] as String;
       final refreshToken = data['refreshToken'] as String? ?? '';
       final tenantId = data['tenantId'] as String? ??
@@ -116,9 +115,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
         await _storage.setTenantId(tenantId);
       }
       if (user != null) {
-        await _storage.setUserData(
-          const <String, dynamic>{}.toString(),
-        );
+        await _storage.setUserData(jsonEncode(user));
       }
 
       state = AuthState(
@@ -137,6 +134,8 @@ class AuthNotifier extends StateNotifier<AuthState> {
   Future<void> logout() async {
     try { await _storage.deleteToken(); } catch (_) {}
     try { await _storage.deleteRefreshToken(); } catch (_) {}
+    try { await _storage.setTenantId(''); } catch (_) {}
+    try { await _storage.setUserData(''); } catch (_) {}
     state = const AuthState(isLoading: false);
   }
 

@@ -250,7 +250,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
         ),
         child: FloatingActionButton.extended(
           onPressed: () {
-            Navigator.pushNamed(context, '/sales/create');
+            context.push('/sales/create');
           },
           icon: const Icon(Icons.add_rounded),
           label: const Text('New Order'),
@@ -296,7 +296,7 @@ class _OrderListScreenState extends ConsumerState<OrderListScreen> {
             ),
             const SizedBox(height: 24),
             ElevatedButton.icon(
-              onPressed: () => Navigator.pushNamed(context, '/sales/create'),
+              onPressed: () => context.push('/sales/create'),
               icon: const Icon(Icons.add_rounded, size: 18),
               label: const Text('Create Order'),
               style: ElevatedButton.styleFrom(

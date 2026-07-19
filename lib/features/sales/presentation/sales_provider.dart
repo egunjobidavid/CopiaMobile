@@ -20,6 +20,17 @@ final orderListProvider = FutureProvider<List<SalesOrder>>((ref) async {
   }
 });
 
+final orderDetailProvider = FutureProvider.family<SalesOrder?, String>((ref, orderId) async {
+  try {
+    final repo = ref.watch(salesRepositoryProvider);
+    final data = await repo.getOrder(orderId);
+    if (data == null) return null;
+    return SalesOrder.fromJson(data);
+  } catch (e) {
+    return null;
+  }
+});
+
 class CartNotifier extends StateNotifier<List<OrderItem>> {
   CartNotifier() : super([]);
 

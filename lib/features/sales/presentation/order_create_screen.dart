@@ -186,13 +186,13 @@ class _OrderCreateScreenState extends ConsumerState<OrderCreateScreen> {
                             ),
                             child: IconButton(
                               icon: const Icon(Icons.qr_code_scanner_rounded, color: AppTheme.primary),
-                              onPressed: () async {
-                                final barcode = await Navigator.pushNamed(context, '/products/scan');
-                                if (barcode != null) {
-                                  final barcodeStr = barcode as String;
-                                  _productSearchController.text = barcodeStr;
-                                  _searchProducts(barcodeStr);
-                                }
+                              onPressed: () {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text('Barcode scanning available in POS'),
+                                    behavior: SnackBarBehavior.floating,
+                                  ),
+                                );
                               },
                             ),
                           ),

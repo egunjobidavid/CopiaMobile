@@ -407,7 +407,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen>
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: () => context.push('/register'),
+                                  onTap: () {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text('Please register at copia-desktop.vercel.app'),
+                                        behavior: SnackBarBehavior.floating,
+                                      ),
+                                    );
+                                  },
                                   child: const Text(
                                     'Create account',
                                     style: TextStyle(

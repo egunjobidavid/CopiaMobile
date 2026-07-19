@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../storage/secure_storage.dart';
 import '../../core/constants.dart';
 import 'auth_interceptor.dart';
+import 'dedupe_interceptor.dart';
 
 class EnvelopeInterceptor extends Interceptor {
   @override
@@ -58,6 +59,7 @@ class ApiClient {
     ));
 
     _dio.interceptors.addAll([
+      DedupeInterceptor(ttl: const Duration(seconds: 5)),
       EnvelopeInterceptor(),
       AuthInterceptor(_storage),
     ]);

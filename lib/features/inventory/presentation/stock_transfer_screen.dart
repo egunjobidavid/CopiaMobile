@@ -650,7 +650,7 @@ class _CreateTransferSheetState extends ConsumerState<_CreateTransferSheet> {
                   child: Column(
                     children: [
                       DropdownButtonFormField<String>(
-                        initialValue: _fromWarehouse,
+                        value: _fromWarehouse,
                         decoration: const InputDecoration(
                           labelText: 'From Warehouse',
                           prefixIcon: Icon(Icons.warehouse_outlined),
@@ -660,7 +660,7 @@ class _CreateTransferSheetState extends ConsumerState<_CreateTransferSheet> {
                       ),
                       const SizedBox(height: 16),
                       DropdownButtonFormField<String>(
-                        initialValue: _toWarehouse,
+                        value: _toWarehouse,
                         decoration: const InputDecoration(
                           labelText: 'To Warehouse',
                           prefixIcon: Icon(Icons.warehouse_outlined),

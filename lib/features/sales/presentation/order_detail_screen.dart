@@ -12,11 +12,11 @@ class OrderDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final ordersAsync = ref.watch(orderListProvider);
+    final orderAsync = ref.watch(orderDetailProvider(orderId));
 
     return Scaffold(
       backgroundColor: AppTheme.background,
-      body: ordersAsync.when(
+      body: orderAsync.when(
         loading: () => const Center(
           child: CircularProgressIndicator(color: AppTheme.primary),
         ),
@@ -44,8 +44,7 @@ class OrderDetailScreen extends ConsumerWidget {
             ],
           ),
         ),
-        data: (orders) {
-          final order = orders.where((o) => o.id == orderId).firstOrNull;
+        data: (order) {
           if (order == null) {
             return Center(
               child: Padding(

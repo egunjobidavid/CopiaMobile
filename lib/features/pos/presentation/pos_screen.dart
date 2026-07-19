@@ -184,8 +184,10 @@ class _PosScreenState extends ConsumerState<PosScreen> with SingleTickerProvider
         'unitPrice': c.price,
       }).toList();
 
-      await api.post('/sales/orders', data: {
+      await api.post('/pos/transactions', data: {
         'items': items,
+        'paymentMethod': _paymentMethod,
+        'total': _grandTotal,
       });
 
       if (mounted) {

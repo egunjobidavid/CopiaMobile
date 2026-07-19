@@ -8,7 +8,7 @@ import '../../../core/storage/secure_storage.dart';
 import '../../../widgets/kpi_card.dart';
 import '../../../widgets/action_widgets.dart';
 import '../../../widgets/status_badge.dart';
-import '../../../widgets/skeleton_loader.dart';
+import '../../../widgets/shimmer_skeleton.dart';
 import '../../../widgets/empty_state.dart';
 import '../../../core/notifications/notification_provider.dart';
 
@@ -21,21 +21,17 @@ class DashboardScreen extends ConsumerStatefulWidget {
 
 class _DashboardScreenState extends ConsumerState<DashboardScreen> {
   Map<String, dynamic>? _dashboardData;
-  bool _isLoading = true;
+  bool _kpiLoaded = false;
+  bool _activityLoaded = false;
   String? _error;
 
   @override
   void initState() {
     super.initState();
-    _loadDashboard();
+    _loadKPIs();
   }
 
-  Future<void> _loadDashboard() async {
-    setState(() {
-      _isLoading = true;
-      _error = null;
-    });
-
+  Future<void> _loadKPIs() async {
     try {
       final api = ref.read(apiClientProvider);
       final response = await api.get('/analytics/dashboard');
@@ -43,16 +39,25 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       if (mounted) {
         setState(() {
           _dashboardData = data;
-          _isLoading = false;
+          _kpiLoaded = true;
         });
+        // Load activity after KPIs
+        _loadActivity();
       }
     } catch (e) {
       if (mounted) {
         setState(() {
           _error = e.toString();
-          _isLoading = false;
+          _kpiLoaded = true;
         });
       }
+    }
+  }
+
+  Future<void> _loadActivity() async {
+    // Activity is already part of the dashboard response
+    if (mounted) {
+      setState(() => _activityLoaded = true);
     }
   }
 
@@ -86,14 +91,21 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     return Scaffold(
       backgroundColor: AppTheme.background,
       body: RefreshIndicator(
-        onRefresh: _loadDashboard,
+        onRefresh: () async {
+          setState(() {
+            _kpiLoaded = false;
+            _activityLoaded = false;
+            _error = null;
+          });
+          await _loadKPIs();
+        },
         color: AppTheme.primary,
         child: CustomScrollView(
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics(),
           ),
           slivers: [
-            // Header with greeting
+            // Header
             SliverToBoxAdapter(
               child: SafeArea(
                 bottom: false,
@@ -112,18 +124,18 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               ),
             ),
 
-            // KPI Cards
+            // KPI Cards — progressive load
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
-                child: _isLoading
+                child: !_kpiLoaded
                     ? Row(
-                          children: [
-                            Expanded(child: SkeletonLoader.card()),
-                            const SizedBox(width: 12),
-                            Expanded(child: SkeletonLoader.card()),
-                          ],
-                        )
+                        children: [
+                          Expanded(child: ShimmerSkeleton.kpiCard()),
+                          const SizedBox(width: 12),
+                          Expanded(child: ShimmerSkeleton.kpiCard()),
+                        ],
+                      )
                     : _error != null
                         ? _buildErrorState()
                         : _buildKpiSection(),
@@ -132,16 +144,23 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
 
             const SliverToBoxAdapter(child: SizedBox(height: 28)),
 
-            // Quick Actions
+            // Quick Actions — static, no loading
             SliverToBoxAdapter(
               child: _buildQuickActions(),
             ),
 
             const SliverToBoxAdapter(child: SizedBox(height: 28)),
 
-            // Recent Activity
+            // Recent Activity — progressive load
             SliverToBoxAdapter(
-              child: _buildRecentActivity(),
+              child: !_activityLoaded
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Column(
+                        children: List.generate(3, (_) => const _ActivitySkeletonTile()),
+                      ),
+                    )
+                  : _buildRecentActivity(),
             ),
 
             const SliverToBoxAdapter(child: SizedBox(height: 100)),
@@ -155,7 +174,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        // Logo
         Container(
           width: 40,
           height: 40,
@@ -175,10 +193,8 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
             ),
           ),
         ),
-        // Actions
         Row(
           children: [
-            // Notifications
             GestureDetector(
               onTap: () => context.push('/notifications'),
               child: Container(
@@ -214,7 +230,6 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
               ),
             ),
             const SizedBox(width: 8),
-            // Profile
             GestureDetector(
               onTap: () => context.push('/profile'),
               child: Container(
@@ -299,7 +314,13 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
       title: 'Unable to load dashboard',
       message: 'Check your connection and try again',
       actionLabel: 'Retry',
-      onAction: _loadDashboard,
+      onAction: () {
+        setState(() {
+          _kpiLoaded = false;
+          _error = null;
+        });
+        _loadKPIs();
+      },
     );
   }
 
@@ -376,6 +397,35 @@ class _DashboardScreenState extends ConsumerState<DashboardScreen> {
                   status: order['status'] ?? 'pending',
                   time: order['createdAt'] ?? '',
                 )),
+        ],
+      ),
+    );
+  }
+}
+
+/// Skeleton tile for activity loading state.
+class _ActivitySkeletonTile extends StatelessWidget {
+  const _ActivitySkeletonTile();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Row(
+        children: [
+          ShimmerSkeleton.circle(size: 36),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ShimmerSkeleton(width: 140, height: 14),
+                const SizedBox(height: 6),
+                ShimmerSkeleton(width: 100, height: 12),
+              ],
+            ),
+          ),
+          ShimmerSkeleton(width: 60, height: 14),
         ],
       ),
     );

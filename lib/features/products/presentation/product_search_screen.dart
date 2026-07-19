@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../../core/theme.dart';
 import '../models/product.dart';
 import 'product_provider.dart';
@@ -116,7 +117,12 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                           child: IconButton(
                             icon: const Icon(Icons.qr_code_scanner_rounded, color: AppTheme.primary),
                             onPressed: () {
-                              Navigator.pushNamed(context, '/products/scan');
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Text('Barcode scanning available in POS'),
+                                  behavior: SnackBarBehavior.floating,
+                                ),
+                              );
                             },
                           ),
                         ),
@@ -254,12 +260,7 @@ class _ProductSearchScreenState extends ConsumerState<ProductSearchScreen> {
                         return _ProductCard(
                           product: product,
                           onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (_) => ProductDetailScreen(productId: product.id),
-                              ),
-                            );
+                            context.push('/products/${product.id}');
                           },
                         );
                       },
