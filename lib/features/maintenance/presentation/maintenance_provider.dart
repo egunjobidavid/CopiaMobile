@@ -85,6 +85,12 @@ class MaintenanceNotifier extends StateNotifier<MaintenanceState> {
     } catch (e) {
       state = MaintenanceState(checking: false, error: e.toString());
     }
+
+    // Report session (fire-and-forget)
+    _api.post('/system/session', {'platform': 'mobile'}).catchError((_) {});
+
+    // Fetch remote config (fire-and-forget)
+    _api.get('/system/config').catchError((_) {});
   }
 }
 
