@@ -77,6 +77,20 @@ class SecureStorage {
     } catch (_) {}
   }
 
+  Future<void> setSessionId(String id) async {
+    try {
+      await _storage?.write(key: 'session_id', value: id);
+    } catch (_) {}
+  }
+
+  Future<String?> getSessionId() async {
+    try {
+      return await _storage?.read(key: 'session_id');
+    } catch (_) {
+      return null;
+    }
+  }
+
   // Legacy alias methods
   Future<void> saveToken(String token) => setAccessToken(token);
   Future<void> saveRefreshToken(String token) => setRefreshToken(token);

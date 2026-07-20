@@ -10,6 +10,7 @@ class AuthState {
   final String? accessToken;
   final String? refreshToken;
   final String? tenantId;
+  final String? sessionId;
   final Map<String, dynamic>? user;
 
   const AuthState({
@@ -19,6 +20,7 @@ class AuthState {
     this.accessToken,
     this.refreshToken,
     this.tenantId,
+    this.sessionId,
     this.user,
   });
 
@@ -29,6 +31,7 @@ class AuthState {
     String? accessToken,
     String? refreshToken,
     String? tenantId,
+    String? sessionId,
     Map<String, dynamic>? user,
   }) => AuthState(
     isAuthenticated: isAuthenticated ?? this.isAuthenticated,
@@ -37,6 +40,7 @@ class AuthState {
     accessToken: accessToken ?? this.accessToken,
     refreshToken: refreshToken ?? this.refreshToken,
     tenantId: tenantId ?? this.tenantId,
+    sessionId: sessionId ?? this.sessionId,
     user: user ?? this.user,
   );
 }
@@ -54,6 +58,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
       final token = await _storage.getAccessToken();
       final refreshToken = await _storage.getRefreshToken();
       final tenantId = await _storage.getTenantId();
+      final sessionId = await _storage.getSessionId();
 
       if (token != null && token.isNotEmpty) {
         // Try to get user info
@@ -82,6 +87,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
             accessToken: token,
             refreshToken: refreshToken,
             tenantId: tenantId,
+            sessionId: sessionId,
             user: user,
           );
         }

@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/network/api_client.dart';
+import '../../auth/presentation/auth_provider.dart';
+import '../../../core/storage/secure_storage.dart';
 
 class MaintenanceState {
   final bool checking;
@@ -67,8 +69,9 @@ class VersionState {
 
 class MaintenanceNotifier extends StateNotifier<MaintenanceState> {
   final ApiClient _api;
+  final Ref _ref;
 
-  MaintenanceNotifier(this._api) : super(const MaintenanceState()) {
+  MaintenanceNotifier(this._api, this._ref) : super(const MaintenanceState()) {
     check();
   }
 
@@ -86,8 +89,31 @@ class MaintenanceNotifier extends StateNotifier<MaintenanceState> {
       state = MaintenanceState(checking: false, error: e.toString());
     }
 
-    // Report session (fire-and-forget)
-    _api.post('/system/session', {'platform': 'mobile'}).catchError((_) {});
+    // Report session (fire-and-forget), save sessionId
+    try {
+      final res = await _api.post('/system/session', {'platform': 'mobile'});
+      final map = Map<String, dynamic>.from(res as Map);
+      if (map['id'] != null) {
+        final storage = _ref.read(secureStorageProvider);
+        await storage.setSessionId(map['id']);
+      }
+    } catch (_) {}
+
+    // Validate session is not revoked
+    final storage = _ref.read(secureStorageProvider);
+    final sessionId = await storage.getSessionId();
+    if (sessionId != null && sessionId.isNotEmpty) {
+      try {
+        final res = await _api.post('/system/session/validate', {
+          'sessionId': sessionId,
+          'platform': 'mobile',
+        });
+        final map = Map<String, dynamic>.from(res as Map);
+        if (map['valid'] == false) {
+          await _ref.read(authStateProvider.notifier).logout();
+        }
+      } catch (_) {}
+    }
 
     // Fetch remote config (fire-and-forget)
     _api.get('/system/config').catchError((_) {});
@@ -122,7 +148,7 @@ class VersionCheckNotifier extends StateNotifier<VersionState> {
 
 final maintenanceProvider = StateNotifierProvider<MaintenanceNotifier, MaintenanceState>((ref) {
   final api = ref.watch(apiClientProvider);
-  return MaintenanceNotifier(api);
+  return MaintenanceNotifier(api, ref);
 });
 
 final versionCheckProvider = StateNotifierProvider<VersionCheckNotifier, VersionState>((ref) {
