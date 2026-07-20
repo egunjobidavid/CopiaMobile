@@ -48,6 +48,7 @@ dependencies:
   shimmer: ^3.0.0
   fl_chart: ^0.68.0
   cupertino_icons: ^1.0.6
+  url_launcher: ^6.2.0
 
 dev_dependencies:
   flutter_test:

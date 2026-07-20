@@ -26,6 +26,9 @@ import '../features/approvals/presentation/approvals_screen.dart';
 import '../features/finance/presentation/expense_claims_screen.dart';
 import '../features/staff/presentation/staff_modules_screen.dart';
 import '../features/notifications/presentation/notifications_screen.dart';
+import '../features/maintenance/presentation/maintenance_screen.dart';
+import '../features/maintenance/presentation/force_update_screen.dart';
+import '../features/maintenance/presentation/maintenance_provider.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -176,7 +179,23 @@ final appRouter = GoRouter(
     // Still loading session — show nothing yet
     if (authState.isLoading) return null;
 
+    // Check maintenance mode
+    final maintenanceState = container.read(maintenanceProvider);
+    final versionState = container.read(versionCheckProvider);
+
+    final isMaintenanceRoute = state.matchedLocation == '/maintenance';
+    final isUpdateRoute = state.matchedLocation == '/force-update';
     final isAuthRoute = state.matchedLocation == '/login' || state.matchedLocation == '/register';
+
+    // Maintenance mode active — redirect to maintenance screen
+    if (maintenanceState.enabled && !isMaintenanceRoute) {
+      return '/maintenance';
+    }
+
+    // Force update required — redirect to update screen
+    if (versionState.forceUpdate && !isUpdateRoute) {
+      return '/force-update';
+    }
 
     // Not authenticated and trying to access protected route
     if (!authState.isAuthenticated && !isAuthRoute) {
@@ -191,6 +210,34 @@ final appRouter = GoRouter(
     return null;
   },
   routes: [
+    GoRoute(
+      path: '/maintenance',
+      builder: (context, state) {
+        final c = ProviderScope.containerOf(context);
+        final maintenanceState = c.read(maintenanceProvider);
+        return MaintenanceScreen(
+          message: maintenanceState.message.isNotEmpty
+              ? maintenanceState.message
+              : 'System is under maintenance. Please try again later.',
+          onRetry: () {
+            c.read(maintenanceProvider.notifier).check();
+          },
+        );
+      },
+    ),
+    GoRoute(
+      path: '/force-update',
+      builder: (context, state) {
+        final c = ProviderScope.containerOf(context);
+        final versionState = c.read(versionCheckProvider);
+        return ForceUpdateScreen(
+          currentVersion: '1.0.0',
+          latestVersion: versionState.version,
+          changelog: versionState.changelog,
+          downloadUrl: versionState.downloadUrl,
+        );
+      },
+    ),
     GoRoute(
       path: '/login',
       builder: (context, state) => const LoginScreen(),
