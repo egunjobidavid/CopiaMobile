@@ -29,6 +29,26 @@ import '../features/notifications/presentation/notifications_screen.dart';
 import '../features/maintenance/presentation/maintenance_screen.dart';
 import '../features/maintenance/presentation/force_update_screen.dart';
 import '../features/maintenance/presentation/maintenance_provider.dart';
+import '../network/api_client.dart';
+
+class _AnalyticsObserver extends NavigatorObserver {
+  @override
+  void didPush(Route<dynamic> route, Route<dynamic>? previousRoute) {
+    final path = route.settings.name;
+    if (path == null) return;
+    try {
+      final container = ProviderScope.containerOf(
+        _rootNavigatorKey.currentContext!,
+      );
+      final api = container.read(apiClientProvider);
+      api.post('/system/analytics', {
+        'platform': 'mobile',
+        'eventType': 'screen_view',
+        'eventData': {'path': path},
+      }).catchError((_) {});
+    } catch (_) {}
+  }
+}
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _shellNavigatorKey = GlobalKey<NavigatorState>();
@@ -366,4 +386,5 @@ final appRouter = GoRouter(
       redirect: (context, state) => '/login',
     ),
   ],
+  observers: [_AnalyticsObserver()],
 );
